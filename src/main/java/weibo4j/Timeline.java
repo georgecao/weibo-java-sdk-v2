@@ -656,7 +656,7 @@ public class Timeline {
     }
 
     public List<Count> getStatusCount(String statusIds) throws WeiboException {
-        return Count.constructCounts(Weibo.client.post(WeiboConfig.getValue("baseURL") + "statuses/count.json",
+        return Count.constructCounts(Weibo.client.get(WeiboConfig.getValue("baseURL") + "statuses/count.json",
                 new PostParameter[]{new PostParameter("ids", statusIds)}));
     }
 
