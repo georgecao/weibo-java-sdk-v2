@@ -19,7 +19,7 @@ import java.util.List;
  * Time: 下午4:07
  * </pre>
  */
-public class Count  implements Serializable {
+public class Count implements Serializable {
     private static final Logger LOG = LoggerFactory.getLogger(Count.class);
     private static final boolean debug = LOG.isDebugEnabled();
     private static final long serialVersionUID = 8143640162326455703L;
@@ -77,5 +77,16 @@ public class Count  implements Serializable {
             throw te;
         }
 
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Count");
+        sb.append("{id='").append(id).append('\'');
+        sb.append(", comments=").append(comments);
+        sb.append(", reposts=").append(reposts);
+        sb.append('}');
+        return sb.toString();
     }
 }
