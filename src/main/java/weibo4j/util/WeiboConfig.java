@@ -37,6 +37,10 @@ public class WeiboConfig {
         return getValue("clientId");
     }
 
+    public static String getAccessTokenURL() {
+        return getValue("accessTokenURL");
+    }
+
     public static String getClientSecret() {
         return getValue("clientSecret");
     }

@@ -71,6 +71,19 @@ public class Oauth {
 
     /*----------------------------Oauth接口--------------------------------------*/
 
+    public AccessToken getAccessTokenByUserCredential(String username, String password) throws WeiboException {
+        return new AccessToken(Weibo.client.post(
+                WeiboConfig.getAccessTokenURL(),
+                new PostParameter[]{
+                        new PostParameter("client_id", WeiboConfig
+                                .getClientId()),
+                        new PostParameter("client_secret", WeiboConfig
+                                .getClientSecret()),
+                        new PostParameter("grant_type", "password"),
+                        new PostParameter("username", username),
+                        new PostParameter("password", password)}, false));
+    }
+
     public AccessToken getAccessTokenByCode(String code) throws WeiboException {
         return getAccessTokenByCode(code, WeiboConfig.getRedirectUrl());
     }
