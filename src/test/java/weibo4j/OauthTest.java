@@ -20,8 +20,8 @@ public class OauthTest {
     @Test
     public void testGetAccessTokenByUserCredential() throws Exception {
         Weibo weibo = new Weibo();
-        String username = "1732066773@qq.com";
-        String password = "APP-DAJIE-COM";
+        String username = "username";
+        String password = "password";
         try {
             AccessToken token = weibo.getOAuthService().getAccessTokenByUserCredential(username, password);
             LOG.info("Access token: {}", token);
@@ -33,8 +33,12 @@ public class OauthTest {
     @Test
     public void testAuthorize() throws Exception {
         Weibo w = new Weibo();
-        String code = w.getOAuthService().authorize("code");
-        LOG.info("{}", code);
+        try {
+            String code = w.getOAuthService().authorize("code");
+            LOG.info("{}", code);
+        } catch (Exception e) {
+            LOG.error("", e);
+        }
     }
 
     @Test
