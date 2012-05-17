@@ -12,6 +12,10 @@ public class Weibo implements java.io.Serializable {
 
     public static HttpClient client = new HttpClient();
 
+    public static String clientId;
+    public static String clientSecret;
+    public static String redirectUrl;
+
     /**
      * Sets token information
      *
@@ -19,6 +23,44 @@ public class Weibo implements java.io.Serializable {
      */
     public synchronized void setToken(String token) {
         client.setToken(token);
+    }
+
+    public Weibo(String clientId, String clientSecret, String redirectUrl) {
+        Weibo.clientId = clientId;
+        Weibo.clientSecret = clientSecret;
+        Weibo.redirectUrl = redirectUrl;
+    }
+
+    public static HttpClient getClient() {
+        return client;
+    }
+
+    public static void setClient(HttpClient client) {
+        Weibo.client = client;
+    }
+
+    public static String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public static void setRedirectUrl(String redirectUrl) {
+        Weibo.redirectUrl = redirectUrl;
+    }
+
+    public static String getClientId() {
+        return clientId;
+    }
+
+    public static void setClientId(String clientId) {
+        Weibo.clientId = clientId;
+    }
+
+    public static String getClientSecret() {
+        return clientSecret;
+    }
+
+    public static void setClientSecret(String clientSecret) {
+        Weibo.clientSecret = clientSecret;
     }
 
     public Weibo(String accessToken) {

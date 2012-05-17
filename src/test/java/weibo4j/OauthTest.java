@@ -22,7 +22,29 @@ public class OauthTest {
         Weibo weibo = new Weibo();
         String username = "1732066773@qq.com";
         String password = "APP-DAJIE-COM";
-        AccessToken token = weibo.getOAuthService().getAccessTokenByUserCredential(username, password);
-        LOG.info("Access token: {}", token);
+        try {
+            AccessToken token = weibo.getOAuthService().getAccessTokenByUserCredential(username, password);
+            LOG.info("Access token: {}", token);
+        } catch (Exception e) {
+            LOG.error("User credential ", e);
+        }
+    }
+
+    @Test
+    public void testAuthorize() throws Exception {
+        Weibo w = new Weibo();
+        String code = w.getOAuthService().authorize("code");
+        LOG.info("{}", code);
+    }
+
+    @Test
+    public void testGetAccessTokenByCode() throws Exception {
+        Weibo w = new Weibo();
+        try {
+            AccessToken token = w.getOAuthService().getAccessTokenByCode("this is a code");
+            LOG.info("{}", token);
+        } catch (Exception e) {
+            LOG.info("Error ", e);
+        }
     }
 }
