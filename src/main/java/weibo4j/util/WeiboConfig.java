@@ -6,6 +6,7 @@ import weibo4j.Weibo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class WeiboConfig {
@@ -28,7 +29,12 @@ public class WeiboConfig {
 
     static {
         try {
-            props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("configs.properties"));
+            InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("configs.properties");
+            if (null == in) {
+                LOG.warn("Config file does NOT exist.Use default values instead.");
+            } else {
+                props.load(in);
+            }
         } catch (FileNotFoundException e) {
             LOG.error("Load config file error", e);
         } catch (IOException e) {
