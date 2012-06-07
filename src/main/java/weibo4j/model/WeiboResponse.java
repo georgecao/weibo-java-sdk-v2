@@ -46,7 +46,7 @@ import java.util.*;
  * Super class of Weibo Response objects.
  *
  * @author Yusuke Yamamoto - yusuke at mac.com
- * @see weibo4j.DirectMessage
+ * @see DirectMessage
  * @see weibo4j.model.Status
  * @see weibo4j.model.User
  */

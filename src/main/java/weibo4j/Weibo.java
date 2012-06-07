@@ -113,4 +113,8 @@ public class Weibo implements java.io.Serializable {
     public Trend getTrendService() {
         return new Trend();
     }
+
+    public Notifications getNotifications() {
+        return Notifications.getInstance();
+    }
 }

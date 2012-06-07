@@ -20,8 +20,10 @@ public class OauthTest {
     @Test
     public void testGetAccessTokenByUserCredential() throws Exception {
         Weibo weibo = new Weibo();
-        String username = "username";
-        String password = "password";
+        String username = "1732066773@qq.com";
+        String password = "APP-DAJIE-COM";
+        Weibo.setClientId("651393360");
+        Weibo.setClientSecret("a800c969df31c9ab1f77d7ca0940fe0a");
         try {
             AccessToken token = weibo.getOAuthService().getAccessTokenByUserCredential(username, password);
             LOG.info("Access token: {}", token);
