@@ -30,7 +30,7 @@ public class DirectMessages {
      */
     public DirectMessage sendDirectMessage(String userId, String text) throws WeiboException {
         return new DirectMessage(Weibo.client.post(WeiboConfig.getBaseUrl() + "direct_messages/new.json",
-                new PostParameter[]{new PostParameter("user_id", userId),
+                new PostParameter[]{new PostParameter("uid", userId),
                         new PostParameter("text", text)}, true).asJSONObject());
     }
 
