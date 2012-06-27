@@ -2,6 +2,8 @@ package weibo4j;
 
 import weibo4j.http.HttpClient;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * @author sinaWeibo
  */
@@ -90,8 +92,8 @@ public class Weibo implements java.io.Serializable {
         return new Friendships();
     }
 
-    public Oauth getOAuthService() {
-        return new Oauth();
+    public OAuth getOAuthService() {
+        return new OAuth();
     }
 
     public Search getSearchService() {
@@ -115,6 +117,9 @@ public class Weibo implements java.io.Serializable {
     }
 
     public Notifications getNotifications() {
+
         return Notifications.getInstance();
     }
+
+    private static final ConcurrentHashMap<String, Object> cache = new ConcurrentHashMap<String, Object>();
 }
