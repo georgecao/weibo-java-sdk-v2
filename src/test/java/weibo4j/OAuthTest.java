@@ -13,8 +13,8 @@ import weibo4j.http.AccessToken;
  * Time: 上午11:24
  * </pre>
  */
-public class OauthTest {
-    private static final Logger LOG = LoggerFactory.getLogger(OauthTest.class);
+public class OAuthTest {
+    private static final Logger LOG = LoggerFactory.getLogger(OAuthTest.class);
     private static final boolean debug = LOG.isDebugEnabled();
 
     @Test
