@@ -26,22 +26,21 @@ public class DirectMessage extends WeiboResponse implements Serializable {
     private static final long serialVersionUID = 6655843199922366404L;
     private Long id;
     private String text;
-    private long sender_id;
-    private long recipient_id;
-    private Date created_at;
-    private String sender_screen_name;
-    private String recipient_screen_name;
+    private long senderId;
+    private long recipientId;
+    private Date createdAt;
+    private String senderScreenName;
+    private String recipientScreenName;
 
     public DirectMessage(JSONObject json) throws WeiboException {
         try {
             id = json.getLong("id");
             text = json.getString("text");
-            sender_id = json.getInt("sender_id");
-            recipient_id = json.getInt("recipient_id");
-            created_at = parseDate(json.getString("created_at"), "EEE MMM dd HH:mm:ss z yyyy");
-            sender_screen_name = json.getString("sender_screen_name");
-            recipient_screen_name = json.getString("recipient_screen_name");
-
+            senderId = json.getInt("sender_id");
+            recipientId = json.getInt("recipient_id");
+            createdAt = parseDate(json.getString("created_at"), "EEE MMM dd HH:mm:ss z yyyy");
+            senderScreenName = json.getString("sender_screen_name");
+            recipientScreenName = json.getString("recipient_screen_name");
             if (!json.isNull("sender"))
                 sender = new User(json.getJSONObject("sender"));
         } catch (JSONException jsone) {
@@ -59,11 +58,11 @@ public class DirectMessage extends WeiboResponse implements Serializable {
     }
 
     public long getSenderId() {
-        return sender_id;
+        return senderId;
     }
 
     public long getRecipientId() {
-        return recipient_id;
+        return recipientId;
     }
 
     /**
@@ -71,15 +70,15 @@ public class DirectMessage extends WeiboResponse implements Serializable {
      * @since Weibo4J 1.1.0
      */
     public Date getCreatedAt() {
-        return created_at;
+        return createdAt;
     }
 
     public String getSenderScreenName() {
-        return sender_screen_name;
+        return senderScreenName;
     }
 
     public String getRecipientScreenName() {
-        return recipient_screen_name;
+        return recipientScreenName;
     }
 
     private User sender;
@@ -133,11 +132,11 @@ public class DirectMessage extends WeiboResponse implements Serializable {
         return "DirectMessage{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", sender_id=" + sender_id +
-                ", recipient_id=" + recipient_id +
-                ", created_at=" + created_at +
-                ", sender_screen_name='" + sender_screen_name + '\'' +
-                ", recipient_screen_name='" + recipient_screen_name + '\'' +
+                ", sender_id=" + senderId +
+                ", recipient_id=" + recipientId +
+                ", created_at=" + createdAt +
+                ", sender_screen_name='" + senderScreenName + '\'' +
+                ", recipient_screen_name='" + recipientScreenName + '\'' +
                 ", sender=" + sender +
                 ", recipient=" + recipient +
                 '}';
