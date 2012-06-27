@@ -76,6 +76,10 @@ public class Weibo implements java.io.Serializable {
         return new Users();
     }
 
+    public DirectMessages getDirectMessages() {
+        return new DirectMessages();
+    }
+
     public Account getAccountService() {
         return new Account();
     }
