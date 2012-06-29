@@ -47,6 +47,7 @@ public class Weibo implements java.io.Serializable {
     }
 
     public Weibo(String accessToken) {
+        this.token = accessToken;
         client.setToken(accessToken);
     }
 
