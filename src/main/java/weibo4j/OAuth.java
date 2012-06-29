@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public class OAuth {
-    // ----------------------------针对站内应用处理SignedRequest获取accesstoken----------------------------------------
+public class OAuth extends Weibo {
+    //针对站内应用处理SignedRequest获取access token
     public String accessToken;
     public String userId;
 
@@ -36,15 +36,12 @@ public class OAuth {
         for (int i = 0; i < padding; i++)
             t[0] += "=";
         String part1 = t[0].replace("-", "+").replace("_", "/");
-
-        SecretKey key = new SecretKeySpec(WeiboConfig
-                .getValue("client_SERCRET").getBytes(), "hmacSHA256");
+        SecretKey key = new SecretKeySpec(WeiboConfig.getClientSecret().getBytes(), "hmacSHA256");
         Mac m;
         m = Mac.getInstance("hmacSHA256");
         m.init(key);
         m.update(t[1].getBytes());
         String part1Expect = BASE64Encoder.encode(m.doFinal());
-
         sun.misc.BASE64Decoder decode = new sun.misc.BASE64Decoder();
         String s = new String(decode.decodeBuffer(t[1]));
         if (part1.equals(part1Expect)) {
@@ -75,7 +72,7 @@ public class OAuth {
     }
 
     public AccessToken getAccessTokenByCode(String code, String redirectUrl) throws WeiboException {
-        return new AccessToken(Weibo.client.post(
+        return new AccessToken(client.post(
                 WeiboConfig.getValue("accessTokenURL"),
                 new PostParameter[]{
                         new PostParameter("client_id", WeiboConfig
@@ -88,7 +85,7 @@ public class OAuth {
     }
 
     public AccessToken getAccessTokenByUserCredential(String username, String password) throws WeiboException {
-        return new AccessToken(Weibo.client.post(
+        return new AccessToken(client.post(
                 WeiboConfig.getAccessTokenURL(),
                 new PostParameter[]{
                         new PostParameter("client_id", WeiboConfig

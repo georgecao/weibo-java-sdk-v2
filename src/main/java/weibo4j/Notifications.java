@@ -15,7 +15,7 @@ import weibo4j.util.WeiboConfig;
  * Time: 上午10:11
  * </pre>
  */
-public class Notifications {
+public class Notifications extends Weibo {
     private static final Logger LOG = LoggerFactory.getLogger(Notifications.class);
     private static final boolean debug = LOG.isDebugEnabled();
 
@@ -56,7 +56,7 @@ public class Notifications {
                                          String objects2, int objects2Count,
                                          String objects3, int objects3Count,
                                          String actionUrl) throws WeiboException {
-        return new Notification(Weibo.client.post(
+        return new Notification(client.post(
                 WeiboConfig.getBaseUrl() + "", new PostParameter[]{
                 new PostParameter("uids", userIds),
                 new PostParameter("tpl_id", tplId),
@@ -72,7 +72,7 @@ public class Notifications {
     }
 
     public Notification sendNotification(String userIds, int tplId) throws WeiboException {
-        return new Notification(Weibo.client.post(
+        return new Notification(client.post(
                 WeiboConfig.getBaseUrl() + "", new PostParameter[]{
                 new PostParameter("uids", userIds),
                 new PostParameter("tpl_id", tplId)

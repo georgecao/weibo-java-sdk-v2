@@ -1,8 +1,8 @@
 package weibo4j;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import weibo4j.http.HttpClient;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author sinaWeibo
@@ -12,33 +12,18 @@ public class Weibo implements java.io.Serializable {
 
     private static final long serialVersionUID = 4282616848978535016L;
 
-    public static HttpClient client = new HttpClient();
-
+    private String token;
+    protected HttpClient client = new HttpClient();
+    private static final Cache<String, HttpClient> CACHE = CacheBuilder.newBuilder()
+            .maximumSize(500000).build();
     public static String clientId;
     public static String clientSecret;
     public static String redirectUrl;
-
-    /**
-     * Sets token information
-     *
-     * @param token
-     */
-    public synchronized void setToken(String token) {
-        client.setToken(token);
-    }
 
     public Weibo(String clientId, String clientSecret, String redirectUrl) {
         Weibo.clientId = clientId;
         Weibo.clientSecret = clientSecret;
         Weibo.redirectUrl = redirectUrl;
-    }
-
-    public static HttpClient getClient() {
-        return client;
-    }
-
-    public static void setClient(HttpClient client) {
-        Weibo.client = client;
     }
 
     public static String getRedirectUrl() {
@@ -66,7 +51,7 @@ public class Weibo implements java.io.Serializable {
     }
 
     public Weibo(String accessToken) {
-        setToken(accessToken);
+        client.setToken(accessToken);
     }
 
     public Weibo() {
@@ -125,5 +110,4 @@ public class Weibo implements java.io.Serializable {
         return Notifications.getInstance();
     }
 
-    private static final ConcurrentHashMap<String, Object> cache = new ConcurrentHashMap<String, Object>();
 }

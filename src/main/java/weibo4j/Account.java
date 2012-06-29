@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author sinaWeibo
  */
-public class Account {
+public class Account extends Weibo {
 
     /**
      * OAuth授权之后，获取授权用户的UID
@@ -25,7 +25,7 @@ public class Account {
      * @since JDK 1.5
      */
     public JSONObject getUid() throws WeiboException {
-        return Weibo.client.get(
+        return client.get(
                 WeiboConfig.getValue("baseURL") + "account/get_uid.json")
                 .asJSONObject();
     }
@@ -41,7 +41,7 @@ public class Account {
      * @since JDK 1.5
      */
     public JSONObject getAccountPrivacy() throws WeiboException {
-        return Weibo.client.get(
+        return client.get(
                 WeiboConfig.getValue("baseURL") + "account/get_privacy.json")
                 .asJSONObject();
     }
@@ -57,7 +57,7 @@ public class Account {
      * @since JDK 1.5
      */
     public List<School> getAccountProfileSchoolList() throws WeiboException {
-        return School.constructSchool(Weibo.client.get(WeiboConfig
+        return School.constructSchool(client.get(WeiboConfig
                 .getValue("baseURL") + "account/profile/school_list.json"));
     }
 
@@ -75,7 +75,7 @@ public class Account {
     public List<School> getAccountProfileSchoolList(Integer province,
                                                     Integer city, Integer area, Integer type, String capital,
                                                     String keyword, Integer count) throws WeiboException {
-        return School.constructSchool(Weibo.client.get(
+        return School.constructSchool(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "account/profile/school_list.json",
                 new PostParameter[]{
@@ -99,7 +99,7 @@ public class Account {
      * @since JDK 1.5
      */
     public RateLimitStatus getAccountRateLimitStatus() throws WeiboException {
-        return new RateLimitStatus(Weibo.client.get(WeiboConfig
+        return new RateLimitStatus(client.get(WeiboConfig
                 .getValue("baseURL") + "account/rate_limit_status.json"));
     }
 }

@@ -4,7 +4,7 @@ import weibo4j.model.*;
 import weibo4j.org.json.JSONArray;
 import weibo4j.util.WeiboConfig;
 
-public class Comments {
+public class Comments extends Weibo {
     /*----------------------------评论接口----------------------------------------*/
 
     /**
@@ -19,7 +19,7 @@ public class Comments {
      * @since JDK 1.5
      */
     public CommentWrapper getCommentById(String id) throws WeiboException {
-        return Comment.constructWapperComments(Weibo.client.get(
+        return Comment.constructWapperComments(client.get(
                 WeiboConfig.getValue("baseURL") + "comments/show.json",
                 new PostParameter[]{new PostParameter("id", id)}));
     }
@@ -39,7 +39,7 @@ public class Comments {
      */
     public CommentWrapper getCommentById(String id, Paging page,
                                          Integer filter_by_author) throws WeiboException {
-        return Comment.constructWapperComments(Weibo.client.get(
+        return Comment.constructWapperComments(client.get(
                 WeiboConfig.getValue("baseURL") + "comments/show.json",
                 new PostParameter[]{
                         new PostParameter("id", id),
@@ -57,7 +57,7 @@ public class Comments {
      * @since JDK 1.5
      */
     public CommentWrapper getCommentByMe() throws WeiboException {
-        return Comment.constructWapperComments(Weibo.client.get(WeiboConfig
+        return Comment.constructWapperComments(client.get(WeiboConfig
                 .getValue("baseURL") + "comments/by_me.json"));
     }
 
@@ -75,7 +75,7 @@ public class Comments {
      */
     public CommentWrapper getCommentByMe(Paging page, Integer filterBySource)
             throws WeiboException {
-        return Comment.constructWapperComments(Weibo.client.get(
+        return Comment.constructWapperComments(client.get(
                 WeiboConfig.getValue("baseURL") + "comments/by_me.json",
                 new PostParameter[]{new PostParameter("filter_by_author",
                         filterBySource.toString())}, page));
@@ -92,7 +92,7 @@ public class Comments {
      * @since JDK 1.5
      */
     public CommentWrapper getCommentToMe() throws WeiboException {
-        return Comment.constructWapperComments(Weibo.client.get(WeiboConfig
+        return Comment.constructWapperComments(client.get(WeiboConfig
                 .getValue("baseURL") + "comments/to_me.json"));
     }
 
@@ -111,7 +111,7 @@ public class Comments {
      */
     public CommentWrapper getCommentToMe(Paging page, Integer filterBySource,
                                          Integer filterByAuthor) throws WeiboException {
-        return Comment.constructWapperComments(Weibo.client.get(
+        return Comment.constructWapperComments(client.get(
                 WeiboConfig.getValue("baseURL") + "comments/to_me.json",
                 new PostParameter[]{
                         new PostParameter("filter_by_source", filterBySource
@@ -131,7 +131,7 @@ public class Comments {
      * @since JDK 1.5
      */
     public CommentWrapper getCommentTimeline() throws WeiboException {
-        return Comment.constructWapperComments(Weibo.client.get(WeiboConfig
+        return Comment.constructWapperComments(client.get(WeiboConfig
                 .getValue("baseURL") + "comments/timeline.json"));
     }
 
@@ -147,7 +147,7 @@ public class Comments {
      * @since JDK 1.5
      */
     public CommentWrapper getCommentTimeline(Paging page) throws WeiboException {
-        return Comment.constructWapperComments(Weibo.client.get(
+        return Comment.constructWapperComments(client.get(
                 WeiboConfig.getValue("baseURL") + "comments/timeline.json",
                 null, page));
     }
@@ -163,7 +163,7 @@ public class Comments {
      * @since JDK 1.5
      */
     public CommentWrapper getCommentMentions() throws WeiboException {
-        return Comment.constructWapperComments(Weibo.client.get(WeiboConfig
+        return Comment.constructWapperComments(client.get(WeiboConfig
                 .getValue("baseURL") + "comments/mentions.json"));
     }
 
@@ -183,7 +183,7 @@ public class Comments {
     public CommentWrapper getCommentMentions(Paging page,
                                              Integer filterBySource, Integer filterByAuthor)
             throws WeiboException {
-        return Comment.constructWapperComments(Weibo.client.get(
+        return Comment.constructWapperComments(client.get(
                 WeiboConfig.getValue("baseURL") + "comments/mentions.json",
                 new PostParameter[]{
                         new PostParameter("filter_by_source", filterBySource
@@ -204,7 +204,7 @@ public class Comments {
      * @since JDK 1.5
      */
     public JSONArray getCommentShowBatch(String cids) throws WeiboException {
-        return Weibo.client.get(
+        return client.get(
                 WeiboConfig.getValue("baseURL") + "comments/show_batch.json",
                 new PostParameter[]{new PostParameter("cids", cids)}).asJSONArray();
     }
@@ -223,7 +223,7 @@ public class Comments {
      */
     public Comment createComment(String comment, String id)
             throws WeiboException {
-        return new Comment(Weibo.client.post(WeiboConfig.getValue("baseURL")
+        return new Comment(client.post(WeiboConfig.getValue("baseURL")
                 + "comments/create.json", new PostParameter[]{
                 new PostParameter("comment", comment),
                 new PostParameter("id", id)}));
@@ -244,7 +244,7 @@ public class Comments {
      */
     public Comment createComment(String comment, String id, Integer comment_ori)
             throws WeiboException {
-        return new Comment(Weibo.client.post(WeiboConfig.getValue("baseURL")
+        return new Comment(client.post(WeiboConfig.getValue("baseURL")
                 + "comments/create.json", new PostParameter[]{
                 new PostParameter("comment", comment),
                 new PostParameter("id", id),
@@ -266,7 +266,7 @@ public class Comments {
      */
     public Comment replyComment(String cid, String id, String comment)
             throws WeiboException {
-        return new Comment(Weibo.client.post(WeiboConfig.getValue("baseURL")
+        return new Comment(client.post(WeiboConfig.getValue("baseURL")
                 + "comments/reply.json", new PostParameter[]{
                 new PostParameter("cid", cid),
                 new PostParameter("id", id),
@@ -291,7 +291,7 @@ public class Comments {
     public Comment replyComment(String cid, String id, String comment,
                                 Integer withoutMention, Integer commentOri) throws WeiboException {
         return new Comment(
-                Weibo.client.post(
+                client.post(
                         WeiboConfig.getValue("baseURL") + "comments/reply.json",
                         new PostParameter[]{
                                 new PostParameter("comment", comment),
@@ -313,7 +313,7 @@ public class Comments {
      * @since JDK 1.5
      */
     public Comment destroyComment(String cid) throws WeiboException {
-        return new Comment(Weibo.client.post(WeiboConfig.getValue("baseURL")
+        return new Comment(client.post(WeiboConfig.getValue("baseURL")
                 + "comments/destroy.json",
                 new PostParameter[]{new PostParameter("cid", cid)}));
     }
@@ -330,7 +330,7 @@ public class Comments {
      * @since JDK 1.5
      */
     public JSONArray destoryCommentBatch(String cids) throws WeiboException {
-        return Weibo.client.post(
+        return client.post(
                 WeiboConfig.getValue("baseURL")
                         + "comments/destroy_batch.json",
                 new PostParameter[]{new PostParameter("cids", cids)}).asJSONArray();

@@ -8,7 +8,7 @@ import weibo4j.util.WeiboConfig;
 
 import java.util.List;
 
-public class Timeline {
+public class Timeline extends Weibo {
 
     /*----------------------------读取接口----------------------------------------*/
 
@@ -24,7 +24,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getPublicTimeline() throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(WeiboConfig
+        return Status.constructWapperStatus(client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/public_timeline.json"));
     }
 
@@ -41,7 +41,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getPublicTimeline(int count, int baseApp) throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(
+        return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/public_timeline.json", new PostParameter[]{
                 new PostParameter("count", count),
                 new PostParameter("base_app", baseApp)}));
@@ -62,7 +62,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getFriendsTimeline() throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(WeiboConfig.getValue("baseURL") + "statuses/friends_timeline.json"));
+        return Status.constructWapperStatus(client.get(WeiboConfig.getValue("baseURL") + "statuses/friends_timeline.json"));
 
     }
 
@@ -70,9 +70,8 @@ public class Timeline {
      * 获取当前登录用户及其所关注用户的最新微博消息。<br/>
      * 和用户登录 http://weibo.com 后在“我的首页”中看到的内容相同。
      *
-     * @param paging 相关分页参数
-     * @param 过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
-     *
+     * @param paging  相关分页参数
+     * @param feature 过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
      * @return list of the Friends Timeline
      * @throws WeiboException when Weibo service or network is unavailable
      * @version weibo4j-V2 1.0.1
@@ -82,7 +81,7 @@ public class Timeline {
      */
     public StatusWrapper getFriendsTimeline(Integer baseAPP, Integer feature,
                                             Paging paging) throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(
+        return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/friends_timeline.json",
                 new PostParameter[]{
                         new PostParameter("base_app", baseAPP.toString()),
@@ -104,13 +103,13 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONObject getFriendsTimelineIds() throws WeiboException {
-        return Weibo.client.get(WeiboConfig.getValue("baseURL") + "statuses/friends_timeline/ids.json").asJSONObject();
+        return client.get(WeiboConfig.getValue("baseURL") + "statuses/friends_timeline/ids.json").asJSONObject();
 
     }
 
     public JSONObject getFriendsTimelineIds(Integer baseAPP, Integer feature,
                                             Paging paging) throws WeiboException {
-        return Weibo.client.get(
+        return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/friends_timeline/ids.json",
                 new PostParameter[]{
                         new PostParameter("base_app", baseAPP.toString()),
@@ -130,7 +129,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getHomeTimeline() throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(WeiboConfig
+        return Status.constructWapperStatus(client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/home_timeline.json"));
 
     }
@@ -139,8 +138,8 @@ public class Timeline {
      * 获取当前登录用户及其所关注用户的最新微博消息。<br/>
      * 和用户登录 http://weibo.com 后在“我的首页”中看到的内容相同。
      *
-     * @param paging 相关分页参数
-     * @param 过滤类型ID ，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
+     * @param paging  相关分页参数
+     * @param feature 过滤类型ID ，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
      * @return list of the Friends Timeline
      * @throws WeiboException when Weibo service or network is unavailable
      * @version weibo4j-V2 1.0.0
@@ -151,7 +150,7 @@ public class Timeline {
     public StatusWrapper getHomeTimeline(Integer baseAPP, Integer feature,
                                          Paging paging) throws WeiboException {
         return Status
-                .constructWapperStatus(Weibo.client.get(
+                .constructWapperStatus(client.get(
                         WeiboConfig.getValue("baseURL") + "statuses/home_timeline.json",
                         new PostParameter[]{
                                 new PostParameter("base_app", baseAPP.toString()),
@@ -170,19 +169,19 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getUserTimeline() throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(WeiboConfig
+        return Status.constructWapperStatus(client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/user_timeline.json"));
     }
 
     public StatusWrapper getUserTimelineByUid(String uid) throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(WeiboConfig
+        return Status.constructWapperStatus(client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/user_timeline.json", new PostParameter[]{
                 new PostParameter("uid", uid)
         }));
     }
 
     public StatusWrapper getUserTimelineByName(String screen_name) throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(WeiboConfig
+        return Status.constructWapperStatus(client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/user_timeline.json", new PostParameter[]{
                 new PostParameter("screen_name", screen_name)
         }));
@@ -191,12 +190,10 @@ public class Timeline {
     /**
      * 获取某个用户最新发表的微博列表
      *
-     * @param uid         需要查询的用户ID。
-     * @param screen_name 需要查询的用户昵称。
-     * @param count       单页返回的记录条数，默认为50。
-     * @param page        返回结果的页码，默认为1。
-     * @param base_app    是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
-     * @param feature     过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
+     * @param uid     需要查询的用户ID。
+     * @param page    返回结果的页码，默认为1。
+     * @param baseApp 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
+     * @param feature 过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
      * @return list of the user_timeline
      * @throws WeiboException when Weibo service or network is unavailable
      * @version weibo4j-V2 1.0.1
@@ -205,18 +202,18 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getUserTimelineByUid(String uid, Paging page,
-                                              Integer base_app, Integer feature) throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(
+                                              Integer baseApp, Integer feature) throws WeiboException {
+        return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/user_timeline.json",
                 new PostParameter[]{
                         new PostParameter("uid", uid),
-                        new PostParameter("base_app", base_app.toString()),
+                        new PostParameter("base_app", baseApp.toString()),
                         new PostParameter("feature", feature.toString())},
                 page));
     }
 
     public StatusWrapper getUserTimelineByName(String screen_name, Paging page, Integer base_app, Integer feature) throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(
+        return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/user_timeline.json",
                 new PostParameter[]{
                         new PostParameter("screen_name", screen_name),
@@ -236,13 +233,13 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONObject getUserTimelineIdsByUid(String uid) throws WeiboException {
-        return Weibo.client.get(WeiboConfig.getValue("baseURL") + "statuses/user_timeline/ids.json", new PostParameter[]{
+        return client.get(WeiboConfig.getValue("baseURL") + "statuses/user_timeline/ids.json", new PostParameter[]{
                 new PostParameter("uid", uid)
         }).asJSONObject();
     }
 
     public JSONObject getUserTimelineIdsByName(String screen_name) throws WeiboException {
-        return Weibo.client.get(WeiboConfig.getValue("baseURL") + "statuses/user_timeline/ids.json", new PostParameter[]{
+        return client.get(WeiboConfig.getValue("baseURL") + "statuses/user_timeline/ids.json", new PostParameter[]{
                 new PostParameter("screen_name", screen_name)
         }).asJSONObject();
     }
@@ -259,7 +256,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getRepostTimeline(String id) throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(
+        return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "statuses/repost_timeline.json",
                 new PostParameter[]{new PostParameter("id", id)}));
@@ -268,9 +265,8 @@ public class Timeline {
     /**
      * 获取指定微博的转发微博列表
      *
-     * @param id    需要查询的微博ID
-     * @param count 单页返回的记录条数，默认为50
-     * @param page  返回结果的页码，默认为1
+     * @param id   需要查询的微博ID
+     * @param page 返回结果的页码，默认为1
      * @return list of Status
      * @throws WeiboException when Weibo service or network is unavailable
      * @version weibo4j-V2 1.0.0
@@ -280,7 +276,7 @@ public class Timeline {
      */
     public StatusWrapper getRepostTimeline(String id, Paging page)
             throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(
+        return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "statuses/repost_timeline.json",
                 new PostParameter[]{new PostParameter("id", id)}, page));
@@ -298,7 +294,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONObject getRepostTimelineIds(String id) throws WeiboException {
-        return Weibo.client.get(
+        return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/repost_timeline/ids.json",
                 new PostParameter[]{new PostParameter("id", id)}).asJSONObject();
     }
@@ -314,7 +310,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getRepostByMe() throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(WeiboConfig
+        return Status.constructWapperStatus(client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/repost_by_me.json"));
     }
 
@@ -330,7 +326,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getRepostByMe(Paging page) throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(
+        return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/repost_by_me.json", null, page));
     }
 
@@ -345,14 +341,13 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getMentions() throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(WeiboConfig
+        return Status.constructWapperStatus(client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/mentions.json"));
     }
 
     /**
      * 获取最新的提到登录用户的微博列表，即@我的微博
      *
-     * @param count            单页返回的记录条数，默认为50。
      * @param page             返回结果的页码，默认为1。
      * @param filter_by_author 作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
      * @param filter_by_source 来源筛选类型，0：全部、1：来自微博、2：来自微群，默认为0。
@@ -367,7 +362,7 @@ public class Timeline {
     public StatusWrapper getMentions(Paging page, Integer filter_by_author,
                                      Integer filter_by_source, Integer filter_by_type)
             throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(
+        return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/mentions.json",
                 new PostParameter[]{
                         new PostParameter("filter_by_author", filter_by_author.toString()),
@@ -386,14 +381,14 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONObject getMentionsIds() throws WeiboException {
-        return Weibo.client.get(WeiboConfig
+        return client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/mentions/ids.json").asJSONObject();
     }
 
     public JSONObject getMentionsIds(Paging page, Integer filter_by_author,
                                      Integer filter_by_source, Integer filter_by_type)
             throws WeiboException {
-        return Weibo.client.get(
+        return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/mentions/ids.json",
                 new PostParameter[]{
                         new PostParameter("filter_by_author", filter_by_author.toString()),
@@ -412,11 +407,11 @@ public class Timeline {
      * @since JDK 1.5
      */
     public StatusWrapper getBilateralTimeline() throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(WeiboConfig.getValue("baseURL") + "statuses/bilateral_timeline.json"));
+        return Status.constructWapperStatus(client.get(WeiboConfig.getValue("baseURL") + "statuses/bilateral_timeline.json"));
     }
 
     public StatusWrapper getBilateralTimeline(Integer base_app, Integer feature) throws WeiboException {
-        return Status.constructWapperStatus(Weibo.client.get(WeiboConfig.getValue("baseURL") + "statuses/bilateral_timeline.json",
+        return Status.constructWapperStatus(client.get(WeiboConfig.getValue("baseURL") + "statuses/bilateral_timeline.json",
                 new PostParameter[]{
                         new PostParameter("base_app", base_app),
                         new PostParameter("feature", feature)
@@ -435,7 +430,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public Status showStatus(String id) throws WeiboException {
-        return new Status(Weibo.client.get(WeiboConfig.getValue("baseURL")
+        return new Status(client.get(WeiboConfig.getValue("baseURL")
                 + "statuses/show.json",
                 new PostParameter[]{new PostParameter("id", id)}));
     }
@@ -453,7 +448,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONObject QueryMid(Integer type, String id) throws WeiboException {
-        return Weibo.client.get(WeiboConfig.getValue("baseURL") + "statuses/querymid.json",
+        return client.get(WeiboConfig.getValue("baseURL") + "statuses/querymid.json",
                 new PostParameter[]{new PostParameter("id", id),
                         new PostParameter("type", type.toString())}).asJSONObject();
     }
@@ -472,7 +467,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONObject QueryMid(Integer type, String id, int is_batch) throws WeiboException {
-        return Weibo.client.get(WeiboConfig.getValue("baseURL") + "statuses/querymid.json",
+        return client.get(WeiboConfig.getValue("baseURL") + "statuses/querymid.json",
                 new PostParameter[]{new PostParameter("id", id),
                         new PostParameter("type", type.toString()),
                         new PostParameter("is_batch", is_batch)}).asJSONObject();
@@ -491,7 +486,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONObject QueryId(String mid, Integer type, int isBase62) throws WeiboException {
-        return Weibo.client.get(
+        return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/queryid.json",
                 new PostParameter[]{new PostParameter("mid", mid),
                         new PostParameter("type", type.toString()),
@@ -503,8 +498,7 @@ public class Timeline {
      *
      * @param mid      true string 需要查询的微博MID，批量模式下，用半角逗号分隔，最多不超过20个
      * @param type     获取类型，1：微博、2：评论、3：私信，默认为1。
-     * @param is_batch 是否使用批量模式，0：否、1：是，默认为0。
-     * @param inbox    仅对私信有效，当MID类型为私信时用此参数，0：发件箱、1：收件箱，默认为0 。
+     * @param isBatch  是否使用批量模式，0：否、1：是，默认为0。
      * @param isBase62 MID是否是base62编码，0：否、1：是，默认为0。
      * @return Status's id
      * @throws WeiboException when Weibo service or network is unavailable
@@ -514,7 +508,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONObject QueryId(String mid, Integer type, Integer isBatch, Integer isBase62) throws WeiboException {
-        return Weibo.client.get(
+        return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/queryid.json",
                 new PostParameter[]{new PostParameter("mid", mid),
                         new PostParameter("type", type.toString()),
@@ -534,7 +528,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONArray getRepostDaily() throws WeiboException {
-        return Weibo.client.get(WeiboConfig
+        return client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/hot/repost_daily.json").asJSONArray();
     }
 
@@ -548,8 +542,8 @@ public class Timeline {
      *      href="http://open.weibo.com/wiki/2/statuses/hot/repost_daily">statuses/hot/repost_daily</a>
      * @since JDK 1.5
      */
-    public JSONArray getRepostWeekly() throws WeiboException {
-        return Weibo.client.get(WeiboConfig
+    public JSONArray getForwardWeekly() throws WeiboException {
+        return client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/hot/repost_weekly.json").asJSONArray();
     }
 
@@ -564,7 +558,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONArray getCommentsDaily() throws WeiboException {
-        return Weibo.client.get(WeiboConfig
+        return client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/hot/comments_daily.json").asJSONArray();
     }
 
@@ -579,7 +573,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public JSONArray getCommentsWeekly() throws WeiboException {
-        return Weibo.client.get(WeiboConfig
+        return client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/hot/comments_weekly.json").asJSONArray();
     }
 
@@ -594,8 +588,8 @@ public class Timeline {
      *      href="http://open.weibo.com/wiki/2/statuses/repost">statuses/repost</a>
      * @since JDK 1.5
      */
-    public Status Repost(String id) throws WeiboException {
-        return new Status(Weibo.client.post(WeiboConfig.getValue("baseURL")
+    public Status forward(String id) throws WeiboException {
+        return new Status(client.post(WeiboConfig.getValue("baseURL")
                 + "statuses/repost.json",
                 new PostParameter[]{new PostParameter("id", id)}));
     }
@@ -605,7 +599,7 @@ public class Timeline {
      *
      * @param id         要转发的微博ID
      * @param status     添加的转发文本，必须做URLencode，内容不超过140个汉字，不填则默认为“转发微博”
-     * @param is_comment 是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0
+     * @param isComment 是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0
      * @return Status
      * @throws WeiboException when Weibo service or network is unavailable
      * @version weibo4j-V2 1.0.0
@@ -613,12 +607,12 @@ public class Timeline {
      *      href="http://open.weibo.com/wiki/2/statuses/repost">statuses/repost</a>
      * @since JDK 1.5
      */
-    public Status Repost(String id, String status, Integer is_comment)
+    public Status forward(String id, String status, Integer isComment)
             throws WeiboException {
-        return new Status(Weibo.client.post(WeiboConfig.getValue("baseURL") + "statuses/repost.json", new PostParameter[]{
+        return new Status(client.post(WeiboConfig.getValue("baseURL") + "statuses/repost.json", new PostParameter[]{
                 new PostParameter("id", id),
                 new PostParameter("status", status),
-                new PostParameter("is_comment", is_comment.toString())}));
+                new PostParameter("is_comment", isComment.toString())}));
     }
 
     /**
@@ -632,8 +626,8 @@ public class Timeline {
      *      href="http://open.weibo.com/wiki/2/statuses/destroy">statuses/destroy</a>
      * @since JDK 1.5
      */
-    public Status Destroy(String id) throws WeiboException {
-        return new Status(Weibo.client.post(WeiboConfig.getValue("baseURL")
+    public Status destroy(String id) throws WeiboException {
+        return new Status(client.post(WeiboConfig.getValue("baseURL")
                 + "statuses/destroy.json",
                 new PostParameter[]{new PostParameter("id", id)}));
     }
@@ -649,14 +643,14 @@ public class Timeline {
      *      href="http://open.weibo.com/wiki/2/statuses/update">statuses/update</a>
      * @since JDK 1.5
      */
-    public Status UpdateStatus(String status) throws WeiboException {
-        return new Status(Weibo.client.post(WeiboConfig.getValue("baseURL")
+    public Status updateStatus(String status) throws WeiboException {
+        return new Status(client.post(WeiboConfig.getValue("baseURL")
                 + "statuses/update.json",
                 new PostParameter[]{new PostParameter("status", status)}));
     }
 
     public List<Count> getStatusCount(String statusIds) throws WeiboException {
-        return Count.constructCounts(Weibo.client.get(WeiboConfig.getValue("baseURL") + "statuses/count.json",
+        return Count.constructCounts(client.get(WeiboConfig.getValue("baseURL") + "statuses/count.json",
                 new PostParameter[]{new PostParameter("ids", statusIds)}));
     }
 
@@ -665,7 +659,7 @@ public class Timeline {
      *
      * @param status      要发布的微博文本内容，必须做URLencode，内容不超过140个汉字
      * @param lat         纬度，有效范围：-90.0到+90.0，+表示北纬，默认为0.0。
-     * @param long        经度，有效范围：-180.0到+180.0，+表示东经，默认为0.0。
+     * @param longs       经度，有效范围：-180.0到+180.0，+表示东经，默认为0.0。
      * @param annotations 元数据，主要是为了方便第三方应用记录一些适合于自己使用的信息，每条微博可以包含一个或者多个元数据，
      *                    必须以json字串的形式提交，字串长度不超过512个字符，具体内容可以自定
      * @return Status
@@ -675,9 +669,9 @@ public class Timeline {
      *      href="http://open.weibo.com/wiki/2/statuses/update">statuses/update</a>
      * @since JDK 1.5
      */
-    public Status UpdateStatus(String status, Float lat, Float longs,
+    public Status updateStatus(String status, Float lat, Float longs,
                                String annotations) throws WeiboException {
-        return new Status(Weibo.client.post(WeiboConfig.getValue("baseURL")
+        return new Status(client.post(WeiboConfig.getValue("baseURL")
                 + "statuses/update.json", new PostParameter[]{
                 new PostParameter("status", status),
                 new PostParameter("lat", lat.toString()),
@@ -689,7 +683,7 @@ public class Timeline {
      * 上传图片并发布一条新微博
      *
      * @param status 要发布的微博文本内容，必须做URLencode，内容不超过140个汉字
-     * @param pic    要上传的图片，仅支持JPEG、GIF、PNG格式，图片大小小于5M。
+     * @param item   要上传的图片，仅支持JPEG、GIF、PNG格式，图片大小小于5M。
      * @return Status
      * @throws WeiboException when Weibo service or network is unavailable
      * @version weibo4j-V2 1.0.0
@@ -697,9 +691,9 @@ public class Timeline {
      *      href="http://open.weibo.com/wiki/2/statuses/upload">statuses/upload</a>
      * @since JDK 1.5
      */
-    public Status UploadStatus(String status, ImageItem item)
+    public Status uploadStatus(String status, ImageItem item)
             throws WeiboException {
-        return new Status(Weibo.client.multPartURL(
+        return new Status(client.multPartURL(
                 WeiboConfig.getValue("baseURL") + "statuses/upload.json",
                 new PostParameter[]{new PostParameter("status", status)},
                 item));
@@ -709,9 +703,9 @@ public class Timeline {
      * 上传图片并发布一条新微博
      *
      * @param status 要发布的微博文本内容，必须做URLencode，内容不超过140个汉字
-     * @param pic    要上传的图片，仅支持JPEG、GIF、PNG格式，图片大小小于5M。
+     * @param item   要上传的图片，仅支持JPEG、GIF、PNG格式，图片大小小于5M。
      * @param lat    纬度，有效范围：-90.0到+90.0，+表示北纬，默认为0.0。
-     * @param long   经度，有效范围：-180.0到+180.0，+表示东经，默认为0.0。
+     * @param longs  经度，有效范围：-180.0到+180.0，+表示东经，默认为0.0。
      * @return Status
      * @throws WeiboException when Weibo service or network is unavailable
      * @version weibo4j-V2 1.0.0
@@ -719,9 +713,9 @@ public class Timeline {
      *      href="http://open.weibo.com/wiki/2/statuses/upload">statuses/upload</a>
      * @since JDK 1.5
      */
-    public Status UploadStatus(String status, ImageItem item, Float lat,
+    public Status uploadStatus(String status, ImageItem item, Float lat,
                                Float longs) throws WeiboException {
-        return new Status(Weibo.client.multPartURL(
+        return new Status(client.multPartURL(
                 WeiboConfig.getValue("baseURL") + "statuses/upload.json",
                 new PostParameter[]{new PostParameter("status", status),
                         new PostParameter("lat", lat.toString()),
@@ -738,7 +732,7 @@ public class Timeline {
      * @since JDK 1.5
      */
     public List<Emotion> getEmotions() throws WeiboException {
-        return Emotion.constructEmotions(Weibo.client.get(WeiboConfig
+        return Emotion.constructEmotions(client.get(WeiboConfig
                 .getValue("baseURL") + "emotions.json"));
     }
 
@@ -755,7 +749,7 @@ public class Timeline {
      */
     public List<Emotion> getEmotions(String type, String language)
             throws WeiboException {
-        return Emotion.constructEmotions(Weibo.client.get(
+        return Emotion.constructEmotions(client.get(
                 WeiboConfig.getValue("baseURL") + "emotions.json",
                 new PostParameter[]{
                         new PostParameter("type", type),

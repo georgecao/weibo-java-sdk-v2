@@ -15,7 +15,7 @@ import weibo4j.util.WeiboConfig;
  * Time: 下午4:20
  * </pre>
  */
-public class DirectMessages {
+public class DirectMessages extends Weibo {
     private static final Logger LOG = LoggerFactory.getLogger(DirectMessages.class);
     private static final boolean debug = LOG.isDebugEnabled();
 
@@ -29,7 +29,7 @@ public class DirectMessages {
      * @see <a href="http://open.t.sina.com.cn/wiki/index.php/Direct_messages/new">direct messages/sent </a>
      */
     public DirectMessage sendDirectMessage(String userId, String text) throws WeiboException {
-        return new DirectMessage(Weibo.client.post(WeiboConfig.getBaseUrl() + "direct_messages/new.json",
+        return new DirectMessage(client.post(WeiboConfig.getBaseUrl() + "direct_messages/new.json",
                 new PostParameter[]{new PostParameter("uid", userId),
                         new PostParameter("text", text)}, true).asJSONObject());
     }
@@ -43,7 +43,7 @@ public class DirectMessages {
      * @throws WeiboException
      */
     public DirectMessage sendDirectMessageByScreenName(String screenName, String text) throws WeiboException {
-        return new DirectMessage(Weibo.client.post(WeiboConfig.getBaseUrl() + "direct_messages/new.json",
+        return new DirectMessage(client.post(WeiboConfig.getBaseUrl() + "direct_messages/new.json",
                 new PostParameter[]{new PostParameter("screen_name", screenName),
                         new PostParameter("text", text)}, true).asJSONObject());
     }
