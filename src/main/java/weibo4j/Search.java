@@ -8,6 +8,12 @@ import weibo4j.org.json.JSONArray;
 import weibo4j.util.WeiboConfig;
 
 public class Search extends Weibo {
+    public Search(String accessToken) {
+        super(accessToken);
+    }
+
+    public Search() {
+    }
     //---------------------------------搜索接口-----------------------------------------------
 
     public JSONArray searchSuggestionsUsers(String q) throws WeiboException {

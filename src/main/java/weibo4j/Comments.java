@@ -5,6 +5,13 @@ import weibo4j.org.json.JSONArray;
 import weibo4j.util.WeiboConfig;
 
 public class Comments extends Weibo {
+    public Comments(String accessToken) {
+        super(accessToken);
+    }
+
+    public Comments() {
+    }
+
     /*----------------------------评论接口----------------------------------------*/
 
     /**

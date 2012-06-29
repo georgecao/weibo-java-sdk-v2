@@ -14,6 +14,7 @@ public class Weibo implements java.io.Serializable {
     public static String clientId;
     public static String clientSecret;
     public static String redirectUrl;
+    private String token;
 
     public Weibo(String clientId, String clientSecret, String redirectUrl) {
         Weibo.clientId = clientId;
@@ -57,55 +58,54 @@ public class Weibo implements java.io.Serializable {
     }
 
     public Users getUserService() {
-        return new Users();
+        return new Users(token);
     }
 
     public DirectMessages getDirectMessageService() {
-        return new DirectMessages();
+        return new DirectMessages(token);
     }
 
     public Account getAccountService() {
-        return new Account();
+        return new Account(token);
     }
 
     public Comments getCommentService() {
-        return new Comments();
+        return new Comments(token);
     }
 
     public Favorite getFavoriteService() {
-        return new Favorite();
+        return new Favorite(token);
     }
 
     public Friendships getFriendshipService() {
-        return new Friendships();
+        return new Friendships(token);
     }
 
     public OAuth getOAuthService() {
-        return new OAuth();
+        return new OAuth(token);
     }
 
     public Search getSearchService() {
-        return new Search();
+        return new Search(token);
     }
 
     public Suggestion getSuggestionService() {
-        return new Suggestion();
+        return new Suggestion(token);
     }
 
     public Tags getTagService() {
-        return new Tags();
+        return new Tags(token);
     }
 
     public Timeline getTimelineService() {
-        return new Timeline();
+        return new Timeline(token);
     }
 
     public Trend getTrendService() {
-        return new Trend();
+        return new Trend(token);
     }
 
     public Notifications getNotificationService() {
-        return Notifications.getInstance();
+        return new Notifications(token);
     }
-
 }

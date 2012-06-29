@@ -16,6 +16,10 @@ import weibo4j.util.WeiboConfig;
  * </pre>
  */
 public class Notifications extends Weibo {
+    public Notifications(String accessToken) {
+        super(accessToken);
+    }
+
     private static final Logger LOG = LoggerFactory.getLogger(Notifications.class);
     private static final boolean debug = LOG.isDebugEnabled();
 

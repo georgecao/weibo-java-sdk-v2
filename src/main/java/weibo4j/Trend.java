@@ -8,7 +8,12 @@ import weibo4j.util.WeiboConfig;
 import java.util.List;
 
 public class Trend extends Weibo {
+    public Trend(String accessToken) {
+        super(accessToken);
+    }
 
+    public Trend() {
+    }
     /*----------------------------话题接口----------------------------------------*/
 
     /**

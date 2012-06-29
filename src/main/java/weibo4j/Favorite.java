@@ -8,6 +8,12 @@ import weibo4j.util.WeiboConfig;
 import java.util.List;
 
 public class Favorite extends Weibo {
+    public Favorite(String accessToken) {
+        super(accessToken);
+    }
+
+    public Favorite() {
+    }
     /*----------------------------收藏接口----------------------------------------*/
 
     /**

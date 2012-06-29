@@ -5,7 +5,13 @@ import weibo4j.org.json.JSONArray;
 import weibo4j.util.WeiboConfig;
 
 public class Suggestion extends Weibo {
-//---------------------------------推荐接口---------------------------------------------------
+    public Suggestion(String accessToken) {
+        super(accessToken);
+    }
+
+    public Suggestion() {
+    }
+    //---------------------------------推荐接口---------------------------------------------------
 
     /**
      * 返回系统推荐的热门用户列表

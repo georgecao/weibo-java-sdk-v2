@@ -16,6 +16,14 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 public class OAuth extends Weibo {
+
+    public OAuth(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public OAuth() {
+    }
+
     //针对站内应用处理SignedRequest获取access token
     public String accessToken;
     public String userId;

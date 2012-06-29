@@ -13,6 +13,12 @@ import java.util.List;
  * @author sinaWeibo
  */
 public class Account extends Weibo {
+    public Account(String accessToken) {
+        super(accessToken);
+    }
+
+    public Account() {
+    }
 
     /**
      * OAuth授权之后，获取授权用户的UID

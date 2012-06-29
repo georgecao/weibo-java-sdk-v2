@@ -9,6 +9,12 @@ import weibo4j.util.WeiboConfig;
 import java.util.List;
 
 public class Tags extends Weibo {
+    public Tags(String accessToken) {
+        super(accessToken);
+    }
+
+    public Tags() {
+    }
     /*----------------------------标签接口----------------------------------------*/
 
     /**

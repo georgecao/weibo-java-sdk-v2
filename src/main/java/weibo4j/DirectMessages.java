@@ -16,6 +16,13 @@ import weibo4j.util.WeiboConfig;
  * </pre>
  */
 public class DirectMessages extends Weibo {
+    public DirectMessages(String accessToken) {
+        super(accessToken);
+    }
+
+    public DirectMessages() {
+    }
+
     private static final Logger LOG = LoggerFactory.getLogger(DirectMessages.class);
     private static final boolean debug = LOG.isDebugEnabled();
 

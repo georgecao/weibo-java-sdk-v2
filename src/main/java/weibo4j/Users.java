@@ -7,6 +7,13 @@ import weibo4j.org.json.JSONArray;
 import weibo4j.util.WeiboConfig;
 
 public class Users extends Weibo {
+    public Users(String accessToken) {
+        super(accessToken);
+    }
+
+    public Users() {
+    }
+
 
     /*----------------------------用户接口----------------------------------------*/
 

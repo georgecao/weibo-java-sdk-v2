@@ -6,6 +6,12 @@ import weibo4j.org.json.JSONObject;
 import weibo4j.util.WeiboConfig;
 
 public class Friendships extends Weibo {
+    public Friendships(String accessToken) {
+        super(accessToken);
+    }
+
+    public Friendships() {
+    }
     /*----------------------------关系接口----------------------------------------*/
 
     /**
