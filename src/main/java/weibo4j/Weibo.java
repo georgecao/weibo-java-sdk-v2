@@ -1,7 +1,5 @@
 package weibo4j;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import weibo4j.http.HttpClient;
 
 /**
@@ -12,10 +10,7 @@ public class Weibo implements java.io.Serializable {
 
     private static final long serialVersionUID = 4282616848978535016L;
 
-    private String token;
     protected HttpClient client = new HttpClient();
-    private static final Cache<String, HttpClient> CACHE = CacheBuilder.newBuilder()
-            .maximumSize(500000).build();
     public static String clientId;
     public static String clientSecret;
     public static String redirectUrl;
@@ -54,6 +49,10 @@ public class Weibo implements java.io.Serializable {
         client.setToken(accessToken);
     }
 
+    /**
+     * Sometimes some APIs do not need any credentials.
+     * Then you should use this constructor instead.
+     */
     public Weibo() {
     }
 
@@ -61,7 +60,7 @@ public class Weibo implements java.io.Serializable {
         return new Users();
     }
 
-    public DirectMessages getDirectMessages() {
+    public DirectMessages getDirectMessageService() {
         return new DirectMessages();
     }
 
@@ -105,8 +104,7 @@ public class Weibo implements java.io.Serializable {
         return new Trend();
     }
 
-    public Notifications getNotifications() {
-
+    public Notifications getNotificationService() {
         return Notifications.getInstance();
     }
 

@@ -18,9 +18,8 @@ public class DirectMessagesTest {
 
     @Test
     public void testSendDirectMessage() throws Exception {
-        Weibo weibo = new Weibo();
-        weibo.setToken("");
-        weibo.getDirectMessages().sendDirectMessage("2323", "1111111111");
+        Weibo weibo = new Weibo("");
+        weibo.getDirectMessageService().sendDirectMessage("2323", "1111111111");
     }
 
     @Test
