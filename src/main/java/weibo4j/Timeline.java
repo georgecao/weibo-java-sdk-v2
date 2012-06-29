@@ -293,7 +293,7 @@ public class Timeline extends Weibo {
      *      href="http://open.weibo.com/wiki/2/statuses/repost_timeline/ids">statuses/repost_timeline/ids</a>
      * @since JDK 1.5
      */
-    public JSONObject getRepostTimelineIds(String id) throws WeiboException {
+    public JSONObject getForwardTimelineIds(String id) throws WeiboException {
         return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/repost_timeline/ids.json",
                 new PostParameter[]{new PostParameter("id", id)}).asJSONObject();
@@ -309,7 +309,7 @@ public class Timeline extends Weibo {
      *      href="http://open.weibo.com/wiki/2/statuses/repost_by_me">statuses/repost_by_me</a>
      * @since JDK 1.5
      */
-    public StatusWrapper getRepostByMe() throws WeiboException {
+    public StatusWrapper getForwardByMe() throws WeiboException {
         return Status.constructWapperStatus(client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/repost_by_me.json"));
     }
@@ -325,7 +325,7 @@ public class Timeline extends Weibo {
      *      href="http://open.weibo.com/wiki/2/statuses/repost_by_me">statuses/repost_by_me</a>
      * @since JDK 1.5
      */
-    public StatusWrapper getRepostByMe(Paging page) throws WeiboException {
+    public StatusWrapper getForwardByMe(Paging page) throws WeiboException {
         return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/repost_by_me.json", null, page));
     }
@@ -527,7 +527,7 @@ public class Timeline extends Weibo {
      *      href="http://open.weibo.com/wiki/2/statuses/hot/repost_daily">statuses/hot/repost_daily</a>
      * @since JDK 1.5
      */
-    public JSONArray getRepostDaily() throws WeiboException {
+    public JSONArray getForwardDaily() throws WeiboException {
         return client.get(WeiboConfig
                 .getValue("baseURL") + "statuses/hot/repost_daily.json").asJSONArray();
     }
