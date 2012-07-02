@@ -1,18 +1,20 @@
 package weibo4j;
 
-import weibo4j.model.PostParameter;
-import weibo4j.model.RateLimitStatus;
-import weibo4j.model.School;
-import weibo4j.model.WeiboException;
+import weibo4j.model.*;
 import weibo4j.org.json.JSONObject;
 import weibo4j.util.WeiboConfig;
 
 import java.util.List;
 
+import static weibo4j.util.ParamUtils.convert;
+import static weibo4j.util.ParamUtils.get;
+
 /**
  * @author sinaWeibo
  */
 public class Account extends Weibo {
+    private static final String CREATE_ACCOUNT_URL = "http://i2.api.weibo.com/2/account/profile/basic_update.json ";
+
     public Account(String accessToken) {
         super(accessToken);
     }
@@ -107,5 +109,18 @@ public class Account extends Weibo {
     public RateLimitStatus getAccountRateLimitStatus() throws WeiboException {
         return new RateLimitStatus(client.get(WeiboConfig
                 .getValue("baseURL") + "account/rate_limit_status.json"));
+    }
+
+    public Long createAccount(AccountUser accountUser) throws WeiboException {
+        Long userId = 0L;
+        PostParameter[] params = convert(get(accountUser));
+        if (null == params || params.length == 0) {
+            return userId;
+        }
+        JSONObject jsonObject = client.post(CREATE_ACCOUNT_URL, params).asJSONObject();
+        if (null != jsonObject) {
+            userId = jsonObject.optLong("id", 0);
+        }
+        return userId;
     }
 }
