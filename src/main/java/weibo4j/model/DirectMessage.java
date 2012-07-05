@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Say something?
  * <pre>
- * User: zhangzhi.cao
+ * User: George
  * Date: 12-5-7
  * Time: 下午4:08
  * </pre>
@@ -36,8 +36,8 @@ public class DirectMessage extends WeiboResponse implements Serializable {
         try {
             id = json.getLong("id");
             text = json.getString("text");
-            senderId = json.getInt("sender_id");
-            recipientId = json.getInt("recipient_id");
+            senderId = json.getLong("sender_id");
+            recipientId = json.getLong("recipient_id");
             createdAt = parseDate(json.getString("created_at"), "EEE MMM dd HH:mm:ss z yyyy");
             senderScreenName = json.getString("sender_screen_name");
             recipientScreenName = json.getString("recipient_screen_name");
