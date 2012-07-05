@@ -21,8 +21,14 @@ public class AccountTest {
     private static final Logger LOG = LoggerFactory.getLogger(AccountTest.class);
     private static final boolean debug = LOG.isDebugEnabled();
 
+    static {
+        Weibo.clientId = "";
+        Weibo.clientSecret="";
+        Weibo.redirectUrl ="";
+    }
     @Test
     public void testCreateAccount() throws Exception {
+
         AccountUser accountUser = AccountUser.AccountUserBuilder.newBuilder()
                 .city("Beijing")
                 .screenName("George")
@@ -51,5 +57,9 @@ public class AccountTest {
             LOG.info("{}={},", pp.getName(), pp.getValue());
         }
         LOG.info("{}", list.size());
+
+        Account account = new Account("2.00tBx13B0WKLFi98a3201060TbLJLB");
+        Long userId = account.createAccount(accountUser);
+        LOG.info("User id is: {}", userId);
     }
 }
