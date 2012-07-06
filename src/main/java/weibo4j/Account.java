@@ -119,6 +119,7 @@ public class Account extends Weibo {
         }
         JSONObject jsonObject = client.post(CREATE_ACCOUNT_URL, params).asJSONObject();
         if (null != jsonObject) {
+            System.out.println(jsonObject.toString());
             userId = jsonObject.optLong("id", 0);
         }
         return userId;
