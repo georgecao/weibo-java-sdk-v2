@@ -22,7 +22,7 @@ public enum Lang {
         return name;
     }
 
-    public Lang parse(String name) {
+    public static Lang parse(String name) {
         for (Lang lang : Lang.values()) {
             if (lang.getName().equals(name)) {
                 return lang;

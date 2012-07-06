@@ -17,9 +17,13 @@ public class AccountUser implements Serializable {
 
     //Required Parameters
     @SerializedName("screen_name")
+    @Required
     private String screenName;
+    @Required
     private Gender gender;
+    @Required
     private String province;
+    @Required
     private String city;
 
     //Optional Parameters
@@ -390,5 +394,32 @@ public class AccountUser implements Serializable {
             return user;
         }
 
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder();
+            sb.append("AccountUserBuilder");
+            sb.append("{screenName='").append(screenName).append('\'');
+            sb.append(", gender=").append(gender);
+            sb.append(", province='").append(province).append('\'');
+            sb.append(", city='").append(city).append('\'');
+            sb.append(", realName='").append(realName).append('\'');
+            sb.append(", realNameVisible=").append(realNameVisible);
+            sb.append(", birthday='").append(birthday).append('\'');
+            sb.append(", birthdayVisible=").append(birthdayVisible);
+            sb.append(", qq='").append(qq).append('\'');
+            sb.append(", qqVisible=").append(qqVisible);
+            sb.append(", msn='").append(msn).append('\'');
+            sb.append(", msnVisible=").append(msnVisible);
+            sb.append(", url='").append(url).append('\'');
+            sb.append(", urlVisible=").append(urlVisible);
+            sb.append(", credentialsType=").append(credentialsType);
+            sb.append(", credentialsNum='").append(credentialsNum).append('\'');
+            sb.append(", email='").append(email).append('\'');
+            sb.append(", emailVisible=").append(emailVisible);
+            sb.append(", lang=").append(lang);
+            sb.append(", description='").append(description).append('\'');
+            sb.append('}');
+            return sb.toString();
+        }
     }
 }

@@ -16,7 +16,7 @@ public enum Gender {
         return name;
     }
 
-    public Gender parse(String name) {
+    public static Gender parse(String name) {
         for (Gender gender : Gender.values()) {
             if (gender.getName().equals(name)) {
                 return gender;
