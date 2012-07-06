@@ -227,6 +227,35 @@ public class AccountUser implements Serializable {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("AccountUser");
+        sb.append("{screenName='").append(screenName).append('\'');
+        sb.append(", gender=").append(gender);
+        sb.append(", province='").append(province).append('\'');
+        sb.append(", city='").append(city).append('\'');
+        sb.append(", realName='").append(realName).append('\'');
+        sb.append(", realNameVisible=").append(realNameVisible);
+        sb.append(", birthday='").append(birthday).append('\'');
+        sb.append(", birthdayVisible=").append(birthdayVisible);
+        sb.append(", qq='").append(qq).append('\'');
+        sb.append(", qqVisible=").append(qqVisible);
+        sb.append(", msn='").append(msn).append('\'');
+        sb.append(", msnVisible=").append(msnVisible);
+        sb.append(", url='").append(url).append('\'');
+        sb.append(", urlVisible=").append(urlVisible);
+        sb.append(", credentialsType=").append(credentialsType);
+        sb.append(", credentialsNum='").append(credentialsNum).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", emailVisible=").append(emailVisible);
+        sb.append(", lang=").append(lang);
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", createdAt=").append(createdAt);
+        sb.append('}');
+        return sb.toString();
+    }
+
     public static class AccountUserBuilder {
         //Required Parameters
         private String screenName;
