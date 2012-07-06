@@ -56,6 +56,16 @@ public class AccountUser implements Serializable {
     private VisibleScope emailVisible;
     private Lang lang;
     private String description;
+    @SerializedName("created_at")
+    private Date createdAt;
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public String getScreenName() {
         return screenName;
@@ -244,6 +254,7 @@ public class AccountUser implements Serializable {
         private VisibleScope emailVisible;
         private Lang lang;
         private String description;
+        private Date createdAt;
 
 
         //Required Parameters
@@ -357,6 +368,11 @@ public class AccountUser implements Serializable {
             return this;
         }
 
+        public AccountUserBuilder createdAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
 
         public static AccountUserBuilder newBuilder() {
             return new AccountUserBuilder();
@@ -391,6 +407,7 @@ public class AccountUser implements Serializable {
             user.setCredentialsNum(credentialsNum);
             user.setUrl(url);
             user.setUrlVisible(urlVisible);
+            user.setCreatedAt(createdAt);
             return user;
         }
 
@@ -418,6 +435,7 @@ public class AccountUser implements Serializable {
             sb.append(", emailVisible=").append(emailVisible);
             sb.append(", lang=").append(lang);
             sb.append(", description='").append(description).append('\'');
+            sb.append(", createdAt='").append(createdAt).append('\'');
             sb.append('}');
             return sb.toString();
         }
