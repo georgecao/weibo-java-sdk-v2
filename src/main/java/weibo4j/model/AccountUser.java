@@ -22,9 +22,9 @@ public class AccountUser implements Serializable {
     @Required
     private Gender gender;
     @Required
-    private String province;
+    private Integer province;
     @Required
-    private String city;
+    private Integer city;
 
     //Optional Parameters
     @SerializedName("real_name")
@@ -83,19 +83,19 @@ public class AccountUser implements Serializable {
         this.gender = gender;
     }
 
-    public String getProvince() {
+    public Integer getProvince() {
         return province;
     }
 
-    public void setProvince(String province) {
+    public void setProvince(Integer province) {
         this.province = province;
     }
 
-    public String getCity() {
+    public Integer getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(Integer city) {
         this.city = city;
     }
 
@@ -260,8 +260,8 @@ public class AccountUser implements Serializable {
         //Required Parameters
         private String screenName;
         private Gender gender;
-        private String province;
-        private String city;
+        private Integer province;
+        private Integer city;
 
         //Optional Parameters
         private String realName;
@@ -297,12 +297,12 @@ public class AccountUser implements Serializable {
             return this;
         }
 
-        public AccountUserBuilder province(String province) {
+        public AccountUserBuilder province(Integer province) {
             this.province = province;
             return this;
         }
 
-        public AccountUserBuilder city(String city) {
+        public AccountUserBuilder city(Integer city) {
             this.city = city;
             return this;
         }
@@ -412,7 +412,7 @@ public class AccountUser implements Serializable {
         }
 
         public AccountUser build() {
-            if (isEmpty(screenName) || isEmpty(province) || isEmpty(city) || null == gender) {
+            if (isEmpty(screenName) || province > 0 || city > 0 || null == gender) {
                 throw new IllegalArgumentException("Required parameters are missing.");
             }
             AccountUser user = new AccountUser();

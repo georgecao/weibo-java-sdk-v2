@@ -61,7 +61,7 @@ public class Notifications extends Weibo {
                                          String objects3, int objects3Count,
                                          String actionUrl) throws WeiboException {
         return new Notification(client.post(
-                WeiboConfig.getBaseUrl() + "", new PostParameter[]{
+                WeiboConfig.getBaseUrl() + "notification/send", new PostParameter[]{
                 new PostParameter("uids", userIds),
                 new PostParameter("tpl_id", tplId),
                 new PostParameter("object1", objects1),
