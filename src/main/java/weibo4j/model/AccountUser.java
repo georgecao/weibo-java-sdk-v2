@@ -412,7 +412,7 @@ public class AccountUser implements Serializable {
         }
 
         public AccountUser build() {
-            if (isEmpty(screenName) || province > 0 || city > 0 || null == gender) {
+            if (isEmpty(screenName) || province < 1 || city < 1 || null == gender) {
                 throw new IllegalArgumentException("Required parameters are missing.");
             }
             AccountUser user = new AccountUser();
