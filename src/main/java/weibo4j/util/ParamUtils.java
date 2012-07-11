@@ -2,7 +2,6 @@ package weibo4j.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import weibo4j.model.AccountUser;
 import weibo4j.model.PostParameter;
 import weibo4j.model.Required;
 import weibo4j.model.SerializedName;
@@ -27,16 +26,21 @@ public class ParamUtils {
     private static final Logger LOG = LoggerFactory.getLogger(ParamUtils.class);
     private static final boolean debug = LOG.isDebugEnabled();
 
-    public static List<PostParameter> get(AccountUser user) {
+    public static boolean isEmpty(String value) {
+        return null == value || value.trim().length() == 0;
+    }
+
+    public static List<PostParameter> get(Object obj) {
         LinkedList<PostParameter> params = new LinkedList<PostParameter>();
-        Field[] fields = AccountUser.class.getDeclaredFields();
+        Class<?> clazz = obj.getClass();
+        Field[] fields = clazz.getDeclaredFields();
         Map<String, Field> map = new HashMap<String, Field>();
         for (Field field : fields) {
             map.put(field.getName(), field);
         }
         List<String> missed = new LinkedList<String>();
         try {
-            PropertyDescriptor[] pds = Introspector.getBeanInfo(AccountUser.class).getPropertyDescriptors();
+            PropertyDescriptor[] pds = Introspector.getBeanInfo(clazz).getPropertyDescriptors();
             for (PropertyDescriptor pd : pds) {
                 String name = pd.getName();
                 String paramName = name;
@@ -46,7 +50,7 @@ public class ParamUtils {
                         paramName = field.getAnnotation(SerializedName.class).value();
                     }
                     boolean isRequired = field.isAnnotationPresent(Required.class);
-                    Object o = pd.getReadMethod().invoke(user);
+                    Object o = pd.getReadMethod().invoke(obj);
                     String paramValue = "";
                     if (o != null) {
                         paramValue = o.toString();

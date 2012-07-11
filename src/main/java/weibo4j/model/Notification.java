@@ -7,6 +7,9 @@ import weibo4j.org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Say something?
@@ -24,6 +27,7 @@ public class Notification extends WeiboResponse implements Serializable {
     private String title;
     private String content;
     private Date createdAt;
+    private Map<String, String> senderApp;
     private Long senderUserId;
 
     public Notification(JSONObject json) throws WeiboException {
@@ -31,16 +35,22 @@ public class Notification extends WeiboResponse implements Serializable {
         init(json);
     }
 
-    private void init(JSONObject json) throws WeiboException {
-        if (null != json) {
+    private void init(JSONObject notice) throws WeiboException {
+        if (null != notice) {
             try {
-                JSONObject notice = json.getJSONObject("notification");
-                if (null != notice) {
-                    notificationId = notice.getLong("notification_id");
-                    title = notice.getString("title");
-                    content = notice.getString("content");
-                    createdAt = parseDate(notice.getString("created_at"), "yyyy-MM-dd hh:mm:ss");
-                    senderUserId = getLong("sender_uid", notice);
+                notificationId = notice.getLong("notification_id");
+                title = notice.getString("title");
+                content = notice.getString("content");
+                createdAt = parseDate(notice.getString("created_at"), "yyyy-MM-dd hh:mm:ss");
+                senderUserId = getLong("sender_uid", notice);
+                JSONObject app = notice.getJSONObject("sender_app");
+                if (null != app) {
+                    senderApp = new HashMap<String, String>();
+                    Iterator it = app.keys();
+                    while (it.hasNext()) {
+                        String key = (String) it.next();
+                        senderApp.put(key, app.optString(key, ""));
+                    }
                 }
             } catch (JSONException e) {
                 LOG.error("Error occurred:", e);
@@ -86,5 +96,13 @@ public class Notification extends WeiboResponse implements Serializable {
 
     public void setSenderUserId(Long senderUserId) {
         this.senderUserId = senderUserId;
+    }
+
+    public Map<String, String> getSenderApp() {
+        return senderApp;
+    }
+
+    public void setSenderApp(Map<String, String> senderApp) {
+        this.senderApp = senderApp;
     }
 }

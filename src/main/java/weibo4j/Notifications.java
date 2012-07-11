@@ -2,9 +2,11 @@ package weibo4j;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import weibo4j.model.Notification;
+import weibo4j.model.NotificationTemplate;
+import weibo4j.model.NotificationWrapper;
 import weibo4j.model.PostParameter;
 import weibo4j.model.WeiboException;
+import weibo4j.util.ParamUtils;
 import weibo4j.util.WeiboConfig;
 
 /**
@@ -39,11 +41,12 @@ public class Notifications extends Weibo {
         return in;
     }
 
+
     /**
      * Send notification
      *
      * @param userIds       true 	string 	接收通知的用户UID，支持1-100个用户，用逗号分隔。
-     * @param tplId         true 	int 	发送通知所对应的模版ID，必须是通过审核，且启用中的模版。
+     * @param tplId         true 	long 	发送通知所对应的模版ID，必须是通过审核，且启用中的模版。
      * @param objects1      false 	string 	通知的自定义变量1，可以是人也可以是系统实物，支持@用户昵称，最多不超过32个字节。
      * @param objects1Count false 	int 	通知的自定义变量1的数量，正整数，最多不超过2个字节，支持0-99。
      * @param objects2      false 	string 	通知的自定义变量2，可以是人也可以是系统实物，支持@用户昵称，最多不超过32个字节。
@@ -55,32 +58,42 @@ public class Notifications extends Weibo {
      * @throws WeiboException
      */
 
-    public Notification sendNotification(String userIds, int tplId,
-                                         String objects1, int objects1Count,
-                                         String objects2, int objects2Count,
-                                         String objects3, int objects3Count,
-                                         String actionUrl) throws WeiboException {
-        return new Notification(client.post(
-                WeiboConfig.getBaseUrl() + "notification/send", new PostParameter[]{
-                new PostParameter("uids", userIds),
-                new PostParameter("tpl_id", tplId),
-                new PostParameter("object1", objects1),
-                new PostParameter("objects1_count", objects1Count),
-                new PostParameter("object2", objects2),
-                new PostParameter("objects2_count", objects2Count),
-                new PostParameter("object3", objects3),
-                new PostParameter("objects3_count", objects3Count),
-                new PostParameter("action_url", actionUrl)
+    public NotificationWrapper sendNotification(String userIds, long tplId,
+                                                String objects1, int objects1Count,
+                                                String objects2, int objects2Count,
+                                                String objects3, int objects3Count,
+                                                String actionUrl) throws WeiboException {
+        NotificationTemplate tpl = NotificationTemplate.Builder.newBuilder()
+                .userIds(userIds)
+                .tplId(tplId)
+                .objects1(objects1)
+                .objects1Count(objects1Count)
+                .objects2(objects2)
+                .objects2Count(objects2Count)
+                .objects3(objects3)
+                .objects3Count(objects3Count)
+                .actionUrl(actionUrl)
+                .build();
+        return sendNotification(tpl);
+    }
+
+    public NotificationWrapper sendNotification(NotificationTemplate template) throws WeiboException {
+        if (null == template) {
+            throw new NullPointerException("notification template is null.");
         }
+        PostParameter[] params = ParamUtils.convert(ParamUtils.get(template));
+        if (params.length == 0) {
+            throw new IllegalArgumentException("You have not set any parameters yet.");
+        }
+        return new NotificationWrapper(client.post(
+                WeiboConfig.getBaseUrl() + "notification/send.json", params
         ).asJSONObject());
     }
 
-    public Notification sendNotification(String userIds, int tplId) throws WeiboException {
-        return new Notification(client.post(
-                WeiboConfig.getBaseUrl() + "", new PostParameter[]{
-                new PostParameter("uids", userIds),
-                new PostParameter("tpl_id", tplId)
-        }
-        ).asJSONObject());
+    public NotificationWrapper sendNotification(String userIds, long tplId) throws WeiboException {
+        return sendNotification(NotificationTemplate.Builder.newBuilder()
+                .userIds(userIds)
+                .tplId(tplId)
+                .build());
     }
 }
