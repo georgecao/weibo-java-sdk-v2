@@ -30,11 +30,11 @@ public class AccountTest {
     public void testCreateAccount() throws Exception {
 
         AccountUser accountUser = AccountUser.AccountUserBuilder.newBuilder()
-                .city("Beijing")
+                .city(10)
                 .screenName("George")
                 .realName("George")
                 .realNameVisible(VisibleScope.SELF)
-                .province("Beijing")
+                .province(100)
                 .birthday(new Date())
                 .birthdayVisible(BirthdayVisibleScope.CONSTELLATION)
                 .credentialsType(CredentialType.HK_MO_TW_ID)
