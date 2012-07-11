@@ -23,11 +23,11 @@ public class ParamUtilsTest {
     @Test
     public void testGet() throws Exception {
         AccountUser user = AccountUser.AccountUserBuilder.newBuilder()
-                .city("Beijing")
+                .city(10)
                 .screenName("George")
                 .realName("George")
                 .realNameVisible(VisibleScope.SELF)
-                .province("Beijing")
+                .province(10)
                 .birthday(new Date())
                 .birthdayVisible(BirthdayVisibleScope.CONSTELLATION)
                 .credentialsType(CredentialType.HK_MO_TW_ID)
