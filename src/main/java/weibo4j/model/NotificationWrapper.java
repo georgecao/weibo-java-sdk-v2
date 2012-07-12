@@ -70,4 +70,14 @@ public class NotificationWrapper extends WeiboResponse implements Serializable {
     public void setFailedUserIds(List<Long> failedUserIds) {
         this.failedUserIds = failedUserIds;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("NotificationWrapper");
+        sb.append("{notification=").append(notification);
+        sb.append(", failedUserIds=").append(failedUserIds);
+        sb.append('}');
+        return sb.toString();
+    }
 }

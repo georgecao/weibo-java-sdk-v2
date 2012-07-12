@@ -22,7 +22,7 @@ import java.util.Map;
 public class Notification extends WeiboResponse implements Serializable {
     private static final long serialVersionUID = 3273568238032643388L;
     private static final Logger LOG = LoggerFactory.getLogger(Notification.class);
-    private static final boolean debug = LOG.isDebugEnabled();
+    private static final boolean DEBUG = LOG.isDebugEnabled();
     private Long notificationId;
     private String title;
     private String content;
@@ -37,11 +37,20 @@ public class Notification extends WeiboResponse implements Serializable {
 
     private void init(JSONObject notice) throws WeiboException {
         if (null != notice) {
+            if (DEBUG) {
+                LOG.debug("{}", notice.toString());
+            }
             try {
                 notificationId = notice.getLong("notification_id");
-                title = notice.getString("title");
-                content = notice.getString("content");
-                createdAt = parseDate(notice.getString("created_at"), "yyyy-MM-dd hh:mm:ss");
+                String titleStr = notice.optString("title", EMPTY_STRING);
+                if (!NULL_STRING.equalsIgnoreCase(titleStr)) {
+                    title = titleStr;
+                }
+                String contentStr = notice.optString("content", EMPTY_STRING);
+                if (!NULL_STRING.equalsIgnoreCase(contentStr)) {
+                    content = contentStr;
+                }
+                createdAt = parseDate(notice.getString("created_at"), DATE_FORMAT);
                 senderUserId = getLong("sender_uid", notice);
                 JSONObject app = notice.getJSONObject("sender_app");
                 if (null != app) {
@@ -104,5 +113,19 @@ public class Notification extends WeiboResponse implements Serializable {
 
     public void setSenderApp(Map<String, String> senderApp) {
         this.senderApp = senderApp;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Notification");
+        sb.append("{notificationId=").append(notificationId);
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", content='").append(content).append('\'');
+        sb.append(", createdAt=").append(createdAt);
+        sb.append(", senderApp=").append(senderApp);
+        sb.append(", senderUserId=").append(senderUserId);
+        sb.append('}');
+        return sb.toString();
     }
 }

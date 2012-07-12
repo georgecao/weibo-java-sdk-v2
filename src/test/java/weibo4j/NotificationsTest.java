@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weibo4j.model.NotificationTemplate;
+import weibo4j.model.NotificationWrapper;
 
 /**
  * Say something?
@@ -25,7 +26,15 @@ public class NotificationsTest {
 
     @Test
     public void testGetInstance() throws Exception {
-
+        NotificationWrapper nw = notifications.sendNotification(NotificationTemplate.Builder.newBuilder()
+                .userIds("2727390203")
+                .tplId(124296493511857021L)
+                .objects1("@luo-bert")
+                .objects2("软件工程师")
+                .objects3("2012年7月12日 11:05")
+                .actionUrl("http://t.cn/zOX2qqI")
+                .build());
+        LOG.info("{}", nw);
     }
 
     @Test

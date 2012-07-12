@@ -59,4 +59,13 @@ public class TinyUrlWrapper extends WeiboResponse implements Serializable {
     public void setUrls(List<TinyUrl> urls) {
         this.urls = urls;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("TinyUrlWrapper");
+        sb.append("{urls=").append(urls);
+        sb.append('}');
+        return sb.toString();
+    }
 }

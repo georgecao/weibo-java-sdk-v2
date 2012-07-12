@@ -24,15 +24,15 @@ public class NotificationTemplate  implements Serializable {
     @Required
     @SerializedName("tpl_id")
     Long tplId;
-    @SerializedName("object1")
+    @SerializedName("objects1")
     String objects1;
     @SerializedName("objects1_count")
     Integer objects1Count;
-    @SerializedName("object2")
+    @SerializedName("objects2")
     String objects2;
     @SerializedName("objects2_count")
     Integer objects2Count;
-    @SerializedName("object3")
+    @SerializedName("objects3")
     String objects3;
     @SerializedName("objects3_count")
     Integer objects3Count;

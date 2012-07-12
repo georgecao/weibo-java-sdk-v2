@@ -57,6 +57,15 @@ public class WeiboResponse implements Serializable {
     private transient int rateLimitRemaining = -1;
     private transient long rateLimitReset = -1;
     private static final boolean IS_DALVIK = Configuration.isDalvik();
+    public static final String DATE_FORMAT = "EEE MMM d HH:mm:ss z yyyy";
+    public static final String NULL_STRING = "null";
+    public static final String EMPTY_STRING = "";
+    private ThreadLocal<SimpleDateFormat> sdf = new ThreadLocal<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat(DATE_FORMAT);
+        }
+    };
 
     public WeiboResponse() {
     }
@@ -168,7 +177,7 @@ public class WeiboResponse implements Serializable {
     }
 
     protected static Date getChildDate(String str, Element elem) throws WeiboException {
-        return getChildDate(str, elem, "EEE MMM d HH:mm:ss z yyyy");
+        return getChildDate(str, elem, DATE_FORMAT);
     }
 
     protected static Date getChildDate(String str, Element elem, String format) throws WeiboException {
