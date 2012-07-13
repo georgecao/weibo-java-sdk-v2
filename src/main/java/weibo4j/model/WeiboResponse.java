@@ -60,12 +60,6 @@ public class WeiboResponse implements Serializable {
     public static final String DATE_FORMAT = "EEE MMM d HH:mm:ss z yyyy";
     public static final String NULL_STRING = "null";
     public static final String EMPTY_STRING = "";
-    private ThreadLocal<SimpleDateFormat> sdf = new ThreadLocal<SimpleDateFormat>() {
-        @Override
-        protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat(DATE_FORMAT);
-        }
-    };
 
     public WeiboResponse() {
     }

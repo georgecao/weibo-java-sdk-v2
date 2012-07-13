@@ -23,15 +23,17 @@ public class NotificationsTest {
     };
 
     Notifications notifications = new Notifications("2.00H6RDyC0WKLFi769ec2d56d4GZ5VD");
+    //Notifications notifications = new Notifications("2.00ZmqZyC0WKLFie3f22505cfWzOolC");
+
 
     @Test
     public void testGetInstance() throws Exception {
         NotificationWrapper nw = notifications.sendNotification(NotificationTemplate.Builder.newBuilder()
                 .userIds("2727390203")
                 .tplId(124296493511857021L)
-                .objects1("@luo-bert")
-                .objects2("软件工程师")
-                .objects3("2012年7月12日 11:05")
+                .objects1("@luo-ber")
+                .objects2("软件工程师vvv")
+                .objects3("2012年7月12日v 11:05")
                 .actionUrl("http://t.cn/zOX2qqI")
                 .build());
         LOG.info("{}", nw);
