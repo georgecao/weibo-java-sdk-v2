@@ -6,6 +6,7 @@ import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 public class AccessToken extends WeiboResponse implements Serializable {
@@ -15,6 +16,19 @@ public class AccessToken extends WeiboResponse implements Serializable {
     private String expireIn;
     private String refreshToken;
     private String uid;
+    private Date createdAt;
+
+
+    public AccessToken(String accessToken, String expireIn, String refreshToken, String uid, Date createdAt) {
+        this.accessToken = accessToken;
+        this.expireIn = expireIn;
+        this.refreshToken = refreshToken;
+        this.uid = uid;
+        this.createdAt = createdAt;
+    }
+
+    public AccessToken() {
+    }
 
     public AccessToken(Response res) throws WeiboException {
         super(res);
@@ -56,6 +70,14 @@ public class AccessToken extends WeiboResponse implements Serializable {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
