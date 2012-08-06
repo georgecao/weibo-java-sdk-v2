@@ -9,10 +9,7 @@ import weibo4j.model.SerializedName;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Say something?
@@ -81,5 +78,27 @@ public class ParamUtils {
         return parameters.toArray(params);
     }
 
+    public static boolean isEmpty(Collection<?> collection) {
+        return null == collection || collection.size() == 0;
+    }
+
+    public static boolean isNotEmpty(Collection<?> collection) {
+        return !isEmpty(collection);
+    }
+
+    public static String join(Collection<?> collection, String sep) {
+        StringBuilder b = new StringBuilder("");
+        int length = collection.size();
+        int count = 0;
+        for (Object userId : collection) {
+            b.append(userId);
+            if (++count >= length) {
+                return b.toString();
+            }
+            b.append(sep);
+
+        }
+        return b.toString();
+    }
 }
 

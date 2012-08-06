@@ -2,9 +2,11 @@ package weibo4j.model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import weibo4j.util.ParamUtils;
 
 import java.io.Serializable;
+import java.util.Collection;
+
+import static weibo4j.util.ParamUtils.*;
 
 /**
  * Say something?
@@ -14,7 +16,7 @@ import java.io.Serializable;
  * Time: 下午7:36
  * </pre>
  */
-public class NotificationTemplate  implements Serializable {
+public class NotificationTemplate implements Serializable {
     private static final Logger LOG = LoggerFactory.getLogger(NotificationTemplate.class);
     private static final boolean debug = LOG.isDebugEnabled();
     private static final long serialVersionUID = -3514893814187849258L;
@@ -144,6 +146,8 @@ public class NotificationTemplate  implements Serializable {
     }
 
     public static class Builder {
+        private static final String SEP = "、";
+        private static final String DEL = ",";
         String userIds;
         Long tplId;
         String objects1;
@@ -163,6 +167,17 @@ public class NotificationTemplate  implements Serializable {
             return this;
         }
 
+        private String collection2String(Collection<?> collection) {
+            return join(collection, SEP);
+        }
+
+        public Builder userIdList(Collection<?> collection) {
+            if (isNotEmpty(collection)) {
+                userIds(join(collection, DEL));
+            }
+            return this;
+        }
+
         public Builder userIds(String userIds) {
             this.userIds = userIds;
             return this;
@@ -178,6 +193,14 @@ public class NotificationTemplate  implements Serializable {
             return this;
         }
 
+        public Builder objects1List(Collection<?> objects) {
+            if (isNotEmpty(objects)) {
+                objects1(collection2String(objects));
+                objects1Count(objects.size());
+            }
+            return this;
+        }
+
         public Builder objects1Count(Integer objects1Count) {
             this.objects1Count = objects1Count;
             return this;
@@ -185,6 +208,14 @@ public class NotificationTemplate  implements Serializable {
 
         public Builder objects2(String objects2) {
             this.objects2 = objects2;
+            return this;
+        }
+
+        public Builder objects2List(Collection<?> objects) {
+            if (isNotEmpty(objects)) {
+                objects2(collection2String(objects));
+                objects2Count(objects.size());
+            }
             return this;
         }
 
@@ -198,37 +229,45 @@ public class NotificationTemplate  implements Serializable {
             return this;
         }
 
+        public Builder objects3List(Collection<?> objects) {
+            if (isNotEmpty(objects)) {
+                objects3(collection2String(objects));
+                objects3Count(objects.size());
+            }
+            return this;
+        }
+
         public Builder objects3Count(Integer objects3Count) {
             this.objects3Count = objects3Count;
             return this;
         }
 
         private void reset() {
-            if (ParamUtils.isEmpty(objects1) && null != objects1Count) {
+            if (isEmpty(objects1) && null != objects1Count) {
                 objects1Count = null;
-            } else if (!ParamUtils.isEmpty(objects1) && null == objects1Count) {
+            } else if (!isEmpty(objects1) && null == objects1Count) {
                 objects1Count = 1;
             }
-            if (ParamUtils.isEmpty(objects2) && null != objects2Count) {
+            if (isEmpty(objects2) && null != objects2Count) {
                 objects2Count = null;
-            } else if (!ParamUtils.isEmpty(objects2) && null == objects2Count) {
+            } else if (!isEmpty(objects2) && null == objects2Count) {
                 objects2Count = 1;
             }
-            if (ParamUtils.isEmpty(objects3) && null != objects3Count) {
+            if (isEmpty(objects3) && null != objects3Count) {
                 objects3Count = null;
-            } else if (!ParamUtils.isEmpty(objects3) && null == objects3Count) {
+            } else if (!isEmpty(objects3) && null == objects3Count) {
                 objects3Count = 1;
             }
         }
 
         public NotificationTemplate build() {
-            if (ParamUtils.isEmpty(userIds)) {
+            if (isEmpty(userIds)) {
                 throw new IllegalArgumentException("Required parameter userIds is empty.");
             }
             if (tplId < 1) {
                 throw new IllegalArgumentException("Required parameter tplId is empty.");
             }
-            if (!ParamUtils.isEmpty(actionUrl) && actionUrl.length() > 20) {
+            if (!isEmpty(actionUrl) && actionUrl.length() > 20) {
                 throw new IllegalArgumentException("action url exceed the length limit 20 at MAX.");
             }
             reset();
