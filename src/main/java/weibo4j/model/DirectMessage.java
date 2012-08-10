@@ -25,24 +25,35 @@ public class DirectMessage extends WeiboResponse implements Serializable {
     private static final boolean debug = LOG.isDebugEnabled();
     private static final long serialVersionUID = 6655843199922366404L;
     private Long id;
+    private Long mid;
+    private Long statusId;
     private String text;
+    private Integer sendType;
     private long senderId;
     private long recipientId;
     private Date createdAt;
     private String senderScreenName;
     private String recipientScreenName;
+    private User sender;
+    private User recipient;
 
     public DirectMessage(JSONObject json) throws WeiboException {
         try {
             id = json.getLong("id");
+            mid = json.getLong("mid");
             text = json.getString("text");
+            statusId = json.getLong("status_id");
             senderId = json.getLong("sender_id");
+            sendType = json.getInt("send_type");
             recipientId = json.getLong("recipient_id");
             createdAt = parseDate(json.getString("created_at"), "EEE MMM dd HH:mm:ss z yyyy");
             senderScreenName = json.getString("sender_screen_name");
             recipientScreenName = json.getString("recipient_screen_name");
             if (!json.isNull("sender"))
                 sender = new User(json.getJSONObject("sender"));
+            if (!json.isNull("recipient")) {
+                recipient = new User(json.getJSONObject("recipient"));
+            }
         } catch (JSONException jsone) {
             throw new WeiboException(jsone.getMessage() + ":" + json.toString(), jsone);
         }
@@ -81,13 +92,10 @@ public class DirectMessage extends WeiboResponse implements Serializable {
         return recipientScreenName;
     }
 
-    private User sender;
 
     public User getSender() {
         return sender;
     }
-
-    private User recipient;
 
     public User getRecipient() {
         return recipient;
@@ -127,18 +135,35 @@ public class DirectMessage extends WeiboResponse implements Serializable {
         return obj instanceof DirectMessage && ((DirectMessage) obj).id == this.id;
     }
 
+    public Long getMid() {
+        return mid;
+    }
+
+    public Long getStatusId() {
+        return statusId;
+    }
+
+    public Integer getSendType() {
+        return sendType;
+    }
+
     @Override
     public String toString() {
-        return "DirectMessage{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", sender_id=" + senderId +
-                ", recipient_id=" + recipientId +
-                ", created_at=" + createdAt +
-                ", sender_screen_name='" + senderScreenName + '\'' +
-                ", recipient_screen_name='" + recipientScreenName + '\'' +
-                ", sender=" + sender +
-                ", recipient=" + recipient +
-                '}';
+        final StringBuilder sb = new StringBuilder();
+        sb.append("DirectMessage");
+        sb.append("{id=").append(id);
+        sb.append(", mid=").append(mid);
+        sb.append(", statusId=").append(statusId);
+        sb.append(", text='").append(text).append('\'');
+        sb.append(", sendType=").append(sendType);
+        sb.append(", senderId=").append(senderId);
+        sb.append(", recipientId=").append(recipientId);
+        sb.append(", createdAt=").append(createdAt);
+        sb.append(", senderScreenName='").append(senderScreenName).append('\'');
+        sb.append(", recipientScreenName='").append(recipientScreenName).append('\'');
+        sb.append(", sender=").append(sender);
+        sb.append(", recipient=").append(recipient);
+        sb.append('}');
+        return sb.toString();
     }
 }
