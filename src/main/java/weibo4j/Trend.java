@@ -30,7 +30,7 @@ public class Trend extends Weibo {
         return UserTrend
                 .constructTrendList(client.get(
                         WeiboConfig.getValue("baseURL") + "trends.json",
-                        new PostParameter[]{new PostParameter("uid", uid)}));
+                        new HttpParameter[]{new HttpParameter("uid", uid)}));
     }
 
     /**
@@ -49,7 +49,7 @@ public class Trend extends Weibo {
         return UserTrend
                 .constructTrendList(client.get(
                         WeiboConfig.getValue("baseURL") + "trends.json",
-                        new PostParameter[]{new PostParameter("uid", uid)}, page));
+                        new HttpParameter[]{new HttpParameter("uid", uid)}, page));
     }
 
     /**
@@ -66,8 +66,8 @@ public class Trend extends Weibo {
      */
     public JSONObject isFollow(String trend_name) throws WeiboException {
         return client.get(WeiboConfig.getValue("baseURL") + "trends/is_follow.json",
-                new PostParameter[]{
-                        new PostParameter("trend_name", trend_name)}).asJSONObject();
+                new HttpParameter[]{
+                        new HttpParameter("trend_name", trend_name)}).asJSONObject();
     }
 
     /**
@@ -89,7 +89,7 @@ public class Trend extends Weibo {
     public List<Trends> getTrendsHourly(Integer base_app) throws WeiboException {
         return Trends.constructTrendsList(client.get(
                 WeiboConfig.getValue("baseURL") + "trends/hourly.json",
-                new PostParameter[]{new PostParameter("base_app", base_app.toString())}));
+                new HttpParameter[]{new HttpParameter("base_app", base_app.toString())}));
     }
 
     /**
@@ -110,7 +110,7 @@ public class Trend extends Weibo {
     public List<Trends> getTrendsDaily(Integer base_app) throws WeiboException {
         return Trends.constructTrendsList(client.get(
                 WeiboConfig.getValue("baseURL") + "trends/daily.json",
-                new PostParameter[]{new PostParameter("base_app", base_app
+                new HttpParameter[]{new HttpParameter("base_app", base_app
                         .toString())}));
     }
 
@@ -133,7 +133,7 @@ public class Trend extends Weibo {
     public List<Trends> getTrendsWeekly(Integer base_app) throws WeiboException {
         return Trends.constructTrendsList(client.get(
                 WeiboConfig.getValue("baseURL") + "trends/weekly.json",
-                new PostParameter[]{new PostParameter("base_app", base_app.toString())}));
+                new HttpParameter[]{new HttpParameter("base_app", base_app.toString())}));
     }
 
     /**
@@ -151,7 +151,7 @@ public class Trend extends Weibo {
     public UserTrend trendsFollow(String trend_name) throws WeiboException {
         return new UserTrend(client.post(WeiboConfig.getValue("baseURL")
                 + "trends/follow.json",
-                new PostParameter[]{new PostParameter("trend_name",
+                new HttpParameter[]{new HttpParameter("trend_name",
                         trend_name)}));
     }
 
@@ -170,7 +170,7 @@ public class Trend extends Weibo {
     public JSONObject trendsDestroy(Integer trend_id) throws WeiboException {
         return client.post(WeiboConfig.getValue("baseURL")
                 + "trends/destroy.json",
-                new PostParameter[]{new PostParameter("trend_id", trend_id.toString())}).asJSONObject();
+                new HttpParameter[]{new HttpParameter("trend_id", trend_id.toString())}).asJSONObject();
     }
 
 }

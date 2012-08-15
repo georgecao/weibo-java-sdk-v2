@@ -1,6 +1,6 @@
 package weibo4j;
 
-import weibo4j.model.PostParameter;
+import weibo4j.model.HttpParameter;
 import weibo4j.model.User;
 import weibo4j.model.WeiboException;
 import weibo4j.org.json.JSONArray;
@@ -30,7 +30,7 @@ public class Users extends Weibo {
     public User showUserById(String uid) throws WeiboException {
         return new User(client.get(
                 WeiboConfig.getValue("baseURL") + "users/show.json",
-                new PostParameter[]{new PostParameter("uid", uid)})
+                new HttpParameter[]{new HttpParameter("uid", uid)})
                 .asJSONObject());
     }
 
@@ -47,7 +47,7 @@ public class Users extends Weibo {
     public User showUserByScreenName(String screen_name) throws WeiboException {
         return new User(client.get(
                 WeiboConfig.getValue("baseURL") + "users/show.json",
-                new PostParameter[]{new PostParameter("screen_name",
+                new HttpParameter[]{new HttpParameter("screen_name",
                         screen_name)}).asJSONObject());
     }
 
@@ -65,7 +65,7 @@ public class Users extends Weibo {
     public User showUserByDomain(String domain) throws WeiboException {
         return new User(client.get(
                 WeiboConfig.getValue("baseURL") + "users/domain_show.json",
-                new PostParameter[]{new PostParameter("domain", domain)})
+                new HttpParameter[]{new HttpParameter("domain", domain)})
                 .asJSONObject());
     }
 
@@ -82,6 +82,6 @@ public class Users extends Weibo {
      */
     public JSONArray getUserCount(String uids) throws WeiboException {
         return client.get(WeiboConfig.getValue("baseURL") + "users/counts.json",
-                new PostParameter[]{new PostParameter("uids", uids)}).asJSONArray();
+                new HttpParameter[]{new HttpParameter("uids", uids)}).asJSONArray();
     }
 }

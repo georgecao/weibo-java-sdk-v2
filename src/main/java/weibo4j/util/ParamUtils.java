@@ -2,7 +2,7 @@ package weibo4j.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import weibo4j.model.PostParameter;
+import weibo4j.model.HttpParameter;
 import weibo4j.model.Required;
 import weibo4j.model.SerializedName;
 
@@ -27,8 +27,8 @@ public class ParamUtils {
         return null == value || value.trim().length() == 0;
     }
 
-    public static List<PostParameter> get(Object obj) {
-        LinkedList<PostParameter> params = new LinkedList<PostParameter>();
+    public static List<HttpParameter> get(Object obj) {
+        LinkedList<HttpParameter> params = new LinkedList<HttpParameter>();
         Class<?> clazz = obj.getClass();
         Field[] fields = clazz.getDeclaredFields();
         Map<String, Field> map = new HashMap<String, Field>();
@@ -58,7 +58,7 @@ public class ParamUtils {
                         }
                         continue;
                     }
-                    params.add(new PostParameter(paramName, paramValue));
+                    params.add(new HttpParameter(paramName, paramValue));
                 }
             }
         } catch (Exception e) {
@@ -70,11 +70,11 @@ public class ParamUtils {
         return params;
     }
 
-    public static PostParameter[] convert(List<PostParameter> parameters) {
+    public static HttpParameter[] convert(List<HttpParameter> parameters) {
         if (null == parameters || 0 == parameters.size()) {
-            return new PostParameter[0];
+            return new HttpParameter[0];
         }
-        PostParameter[] params = new PostParameter[parameters.size()];
+        HttpParameter[] params = new HttpParameter[parameters.size()];
         return parameters.toArray(params);
     }
 

@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weibo4j.model.NotificationTemplate;
 import weibo4j.model.NotificationWrapper;
-import weibo4j.model.PostParameter;
+import weibo4j.model.HttpParameter;
 import weibo4j.model.WeiboException;
 import weibo4j.util.ParamUtils;
 import weibo4j.util.WeiboConfig;
@@ -81,7 +81,7 @@ public class Notifications extends Weibo {
         if (null == template) {
             throw new NullPointerException("notification template is null.");
         }
-        PostParameter[] params = ParamUtils.convert(ParamUtils.get(template));
+        HttpParameter[] params = ParamUtils.convert(ParamUtils.get(template));
         if (params.length == 0) {
             throw new IllegalArgumentException("You have not set any parameters yet.");
         }

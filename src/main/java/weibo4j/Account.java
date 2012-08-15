@@ -86,14 +86,14 @@ public class Account extends Weibo {
         return School.constructSchool(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "account/profile/school_list.json",
-                new PostParameter[]{
-                        new PostParameter("province", province.toString()),
-                        new PostParameter("city", city.toString()),
-                        new PostParameter("area", area.toString()),
-                        new PostParameter("type", type.toString()),
-                        new PostParameter("capital", capital),
-                        new PostParameter("keyword", keyword),
-                        new PostParameter("count", count.toString())}));
+                new HttpParameter[]{
+                        new HttpParameter("province", province.toString()),
+                        new HttpParameter("city", city.toString()),
+                        new HttpParameter("area", area.toString()),
+                        new HttpParameter("type", type.toString()),
+                        new HttpParameter("capital", capital),
+                        new HttpParameter("keyword", keyword),
+                        new HttpParameter("count", count.toString())}));
     }
 
     /**
@@ -113,7 +113,7 @@ public class Account extends Weibo {
 
     public Long createAccount(AccountUser accountUser) throws WeiboException {
         Long userId = 0L;
-        PostParameter[] params = convert(get(accountUser));
+        HttpParameter[] params = convert(get(accountUser));
         if (null == params || params.length == 0) {
             return userId;
         }

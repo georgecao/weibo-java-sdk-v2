@@ -3,7 +3,7 @@ package weibo4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weibo4j.model.DirectMessage;
-import weibo4j.model.PostParameter;
+import weibo4j.model.HttpParameter;
 import weibo4j.model.WeiboException;
 import weibo4j.util.WeiboConfig;
 
@@ -38,8 +38,8 @@ public class DirectMessages extends Weibo {
      */
     public DirectMessage sendDirectMessage(String userId, String text) throws WeiboException {
         return new DirectMessage(client.post(WeiboConfig.getBaseUrl() + "direct_messages/new.json",
-                new PostParameter[]{new PostParameter("uid", userId),
-                        new PostParameter("text", text)}, true).asJSONObject());
+                new HttpParameter[]{new HttpParameter("uid", userId),
+                        new HttpParameter("text", text)}, true).asJSONObject());
     }
 
     /**
@@ -53,9 +53,9 @@ public class DirectMessages extends Weibo {
      */
     public DirectMessage sendDirectMessage(String userId, String text, Long statusId) throws WeiboException {
         return new DirectMessage(client.post(WeiboConfig.getBaseUrl() + "direct_messages/new.json",
-                new PostParameter[]{new PostParameter("uid", userId),
-                        new PostParameter("text", text),
-                        new PostParameter("id", statusId)}, true).asJSONObject());
+                new HttpParameter[]{new HttpParameter("uid", userId),
+                        new HttpParameter("text", text),
+                        new HttpParameter("id", statusId)}, true).asJSONObject());
     }
 
     /**
@@ -69,8 +69,8 @@ public class DirectMessages extends Weibo {
      */
     public DirectMessage sendDirectMessageByScreenName(String screenName, String text) throws WeiboException {
         return new DirectMessage(client.post(WeiboConfig.getBaseUrl() + "direct_messages/new.json",
-                new PostParameter[]{new PostParameter("screen_name", screenName),
-                        new PostParameter("text", text)}, true).asJSONObject());
+                new HttpParameter[]{new HttpParameter("screen_name", screenName),
+                        new HttpParameter("text", text)}, true).asJSONObject());
     }
 
 
@@ -85,8 +85,8 @@ public class DirectMessages extends Weibo {
      */
     public DirectMessage sendDirectMessageByScreenName(String screenName, String text, Long statusId) throws WeiboException {
         return new DirectMessage(client.post(WeiboConfig.getBaseUrl() + "direct_messages/new.json",
-                new PostParameter[]{new PostParameter("screen_name", screenName),
-                        new PostParameter("text", text),
-                        new PostParameter("id", statusId)}, true).asJSONObject());
+                new HttpParameter[]{new HttpParameter("screen_name", screenName),
+                        new HttpParameter("text", text),
+                        new HttpParameter("id", statusId)}, true).asJSONObject());
     }
 }

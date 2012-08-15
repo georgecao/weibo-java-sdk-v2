@@ -88,7 +88,7 @@ public class Favorite extends Weibo {
     public Favorites showFavorites(String id) throws WeiboException {
         return new Favorites(client.get(WeiboConfig.getValue("baseURL")
                 + "favorites/show.json",
-                new PostParameter[]{new PostParameter("id", id)}));
+                new HttpParameter[]{new HttpParameter("id", id)}));
     }
 
     /**
@@ -105,7 +105,7 @@ public class Favorite extends Weibo {
     public List<Favorites> getFavoritesByTags(String tid) throws WeiboException {
         return Favorites.constructFavorites(client.get(
                 WeiboConfig.getValue("baseURL") + "favorites/by_tags.json",
-                new PostParameter[]{new PostParameter("tid", tid)}));
+                new HttpParameter[]{new HttpParameter("tid", tid)}));
     }
 
     /**
@@ -124,7 +124,7 @@ public class Favorite extends Weibo {
             throws WeiboException {
         return Favorites.constructFavorites(client.get(
                 WeiboConfig.getValue("baseURL") + "favorites/by_tags.json",
-                new PostParameter[]{new PostParameter("tid", tid)}, page));
+                new HttpParameter[]{new HttpParameter("tid", tid)}, page));
     }
 
     /**
@@ -157,7 +157,7 @@ public class Favorite extends Weibo {
     public Favorites createFavorites(String id) throws WeiboException {
         return new Favorites(client.post(WeiboConfig.getValue("baseURL")
                 + "favorites/create.json",
-                new PostParameter[]{new PostParameter("id", id)}));
+                new HttpParameter[]{new HttpParameter("id", id)}));
     }
 
     /**
@@ -174,7 +174,7 @@ public class Favorite extends Weibo {
     public Favorites destroyFavorites(String id) throws WeiboException {
         return new Favorites(client.post(WeiboConfig.getValue("baseURL")
                 + "favorites/destroy.json",
-                new PostParameter[]{new PostParameter("id", id)}));
+                new HttpParameter[]{new HttpParameter("id", id)}));
     }
 
     /**
@@ -193,7 +193,7 @@ public class Favorite extends Weibo {
             return client
                     .post(WeiboConfig.getValue("baseURL")
                             + "favorites/destroy_batch.json",
-                            new PostParameter[]{new PostParameter("ids", ids)})
+                            new HttpParameter[]{new HttpParameter("ids", ids)})
                     .asJSONObject().getBoolean("result");
         } catch (JSONException e) {
             throw new WeiboException(e);
@@ -214,7 +214,7 @@ public class Favorite extends Weibo {
     public Favorites updateFavoritesTags(String id) throws WeiboException {
         return new Favorites(client.post(WeiboConfig.getValue("baseURL")
                 + "favorites/tags/update.json",
-                new PostParameter[]{new PostParameter("id", id)}));
+                new HttpParameter[]{new HttpParameter("id", id)}));
     }
 
     /**
@@ -232,8 +232,8 @@ public class Favorite extends Weibo {
     public Favorites updateFavoritesTags(String id, String tags)
             throws WeiboException {
         return new Favorites(client.post(WeiboConfig.getValue("baseURL")
-                + "favorites/tags/update.json", new PostParameter[]{
-                new PostParameter("id", id), new PostParameter("tags", tags)}));
+                + "favorites/tags/update.json", new HttpParameter[]{
+                new HttpParameter("id", id), new HttpParameter("tags", tags)}));
     }
 
     /**
@@ -252,8 +252,8 @@ public class Favorite extends Weibo {
         return client.post(
                 WeiboConfig.getValue("baseURL")
                         + "favorites/tags/update_batch.json",
-                new PostParameter[]{new PostParameter("tid", tid),
-                        new PostParameter("tag", tag)}).asJSONObject();
+                new HttpParameter[]{new HttpParameter("tid", tid),
+                        new HttpParameter("tag", tag)}).asJSONObject();
     }
 
     /**
@@ -272,7 +272,7 @@ public class Favorite extends Weibo {
             return client
                     .post(WeiboConfig.getValue("baseURL")
                             + "favorites/destroy_batch.json",
-                            new PostParameter[]{new PostParameter("ids", ids)})
+                            new HttpParameter[]{new HttpParameter("ids", ids)})
                     .asJSONObject().getBoolean("result");
         } catch (JSONException e) {
             throw new WeiboException(e);

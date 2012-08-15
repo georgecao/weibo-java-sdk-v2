@@ -27,13 +27,13 @@ public class Friendships extends Weibo {
     public UserWrapper getFriendsByID(String id) throws WeiboException {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/friends.json",
-                new PostParameter[]{new PostParameter("uid", id)}));
+                new HttpParameter[]{new HttpParameter("uid", id)}));
     }
 
     public JSONObject showFriendship(String sourceId, String targetId) throws WeiboException {
         return client.get(WeiboConfig.getValue("baseURL") + "friendships/show.json",
-                new PostParameter[]{new PostParameter("source_id", sourceId),
-                        new PostParameter("target_id", targetId)}).asJSONObject();
+                new HttpParameter[]{new HttpParameter("source_id", sourceId),
+                        new HttpParameter("target_id", targetId)}).asJSONObject();
     }
 
     /**
@@ -50,7 +50,7 @@ public class Friendships extends Weibo {
             throws WeiboException {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/friends.json",
-                new PostParameter[]{new PostParameter("screen_name",
+                new HttpParameter[]{new HttpParameter("screen_name",
                         screen_name)}));
     }
 
@@ -69,7 +69,7 @@ public class Friendships extends Weibo {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/in_common.json",
-                new PostParameter[]{new PostParameter("uid", uid)}));
+                new HttpParameter[]{new HttpParameter("uid", uid)}));
     }
 
     /**
@@ -89,9 +89,9 @@ public class Friendships extends Weibo {
             throws WeiboException {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/friends/in_common.json",
-                new PostParameter[]{
-                        new PostParameter("uid", uid),
-                        new PostParameter("suid", suid)}, page));
+                new HttpParameter[]{
+                        new HttpParameter("uid", uid),
+                        new HttpParameter("suid", suid)}, page));
     }
 
     /**
@@ -109,7 +109,7 @@ public class Friendships extends Weibo {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/bilateral.json",
-                new PostParameter[]{new PostParameter("uid", uid)}));
+                new HttpParameter[]{new HttpParameter("uid", uid)}));
     }
 
     /**
@@ -131,8 +131,8 @@ public class Friendships extends Weibo {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/bilateral.json",
-                new PostParameter[]{new PostParameter("uid", uid),
-                        new PostParameter("sort", sort.toString())}, page));
+                new HttpParameter[]{new HttpParameter("uid", uid),
+                        new HttpParameter("sort", sort.toString())}, page));
     }
 
     /**
@@ -150,7 +150,7 @@ public class Friendships extends Weibo {
         return User.constructIds(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/bilateral/ids.json",
-                new PostParameter[]{new PostParameter("uid", uid)}));
+                new HttpParameter[]{new HttpParameter("uid", uid)}));
     }
 
     /**
@@ -172,8 +172,8 @@ public class Friendships extends Weibo {
         return User.constructIds(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/bilateral/ids.json",
-                new PostParameter[]{new PostParameter("uid", uid),
-                        new PostParameter("sort", sort.toString())}, page));
+                new HttpParameter[]{new HttpParameter("uid", uid),
+                        new HttpParameter("sort", sort.toString())}, page));
     }
 
     /**
@@ -191,7 +191,7 @@ public class Friendships extends Weibo {
         return User.constructIds(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/ids.json",
-                new PostParameter[]{new PostParameter("uid", uid)}));
+                new HttpParameter[]{new HttpParameter("uid", uid)}));
     }
 
     /**
@@ -210,7 +210,7 @@ public class Friendships extends Weibo {
         return User.constructIds(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/ids.json",
-                new PostParameter[]{new PostParameter("screen_name",
+                new HttpParameter[]{new HttpParameter("screen_name",
                         screen_name)}));
     }
 
@@ -231,10 +231,10 @@ public class Friendships extends Weibo {
             throws WeiboException {
         return User.constructIds(client.get(
                 WeiboConfig.getValue("baseURL")
-                        + "friendships/friends/ids.json", new PostParameter[]{
-                new PostParameter("uid", uid),
-                new PostParameter("count", count.toString()),
-                new PostParameter("cursor", cursor.toString())}));
+                        + "friendships/friends/ids.json", new HttpParameter[]{
+                new HttpParameter("uid", uid),
+                new HttpParameter("count", count.toString()),
+                new HttpParameter("cursor", cursor.toString())}));
     }
 
     /**
@@ -254,10 +254,10 @@ public class Friendships extends Weibo {
                                         Integer cursor) throws WeiboException {
         return User.constructIds(client.get(
                 WeiboConfig.getValue("baseURL")
-                        + "friendships/friends/ids.json", new PostParameter[]{
-                new PostParameter("screen_name", screen_name),
-                new PostParameter("count", count.toString()),
-                new PostParameter("cursor", cursor.toString())}));
+                        + "friendships/friends/ids.json", new HttpParameter[]{
+                new HttpParameter("screen_name", screen_name),
+                new HttpParameter("count", count.toString()),
+                new HttpParameter("cursor", cursor.toString())}));
     }
 
     /**
@@ -275,7 +275,7 @@ public class Friendships extends Weibo {
         return client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/remark_batch.json",
-                new PostParameter[]{new PostParameter("uids", uids)}).asJSONArray();
+                new HttpParameter[]{new HttpParameter("uids", uids)}).asJSONArray();
     }
 
     /**
@@ -293,7 +293,7 @@ public class Friendships extends Weibo {
             throws WeiboException {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/followers.json",
-                new PostParameter[]{new PostParameter("screen_name",
+                new HttpParameter[]{new HttpParameter("screen_name",
                         screen_name)}));
     }
 
@@ -314,10 +314,10 @@ public class Friendships extends Weibo {
                                           Integer cursor) throws WeiboException {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/followers.json",
-                new PostParameter[]{
-                        new PostParameter("screen_name", screen_name),
-                        new PostParameter("count", count.toString()),
-                        new PostParameter("cursor", cursor.toString())}));
+                new HttpParameter[]{
+                        new HttpParameter("screen_name", screen_name),
+                        new HttpParameter("count", count.toString()),
+                        new HttpParameter("cursor", cursor.toString())}));
     }
 
     /**
@@ -334,7 +334,7 @@ public class Friendships extends Weibo {
     public UserWrapper getFollowersById(String uid) throws WeiboException {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/followers.json",
-                new PostParameter[]{new PostParameter("uid", uid)}));
+                new HttpParameter[]{new HttpParameter("uid", uid)}));
     }
 
     /**
@@ -354,9 +354,9 @@ public class Friendships extends Weibo {
             throws WeiboException {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/followers.json",
-                new PostParameter[]{new PostParameter("uid", uid),
-                        new PostParameter("count", count.toString()),
-                        new PostParameter("cursor", cursor.toString())}));
+                new HttpParameter[]{new HttpParameter("uid", uid),
+                        new HttpParameter("count", count.toString()),
+                        new HttpParameter("cursor", cursor.toString())}));
     }
 
     /**
@@ -374,7 +374,7 @@ public class Friendships extends Weibo {
         return User.constructIds(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/followers/ids.json",
-                new PostParameter[]{new PostParameter("uid", uid)}));
+                new HttpParameter[]{new HttpParameter("uid", uid)}));
     }
 
     /**
@@ -395,9 +395,9 @@ public class Friendships extends Weibo {
         return User.constructIds(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/followers/ids.json",
-                new PostParameter[]{new PostParameter("uid", uid),
-                        new PostParameter("count", count.toString()),
-                        new PostParameter("cursor", cursor.toString())}));
+                new HttpParameter[]{new HttpParameter("uid", uid),
+                        new HttpParameter("count", count.toString()),
+                        new HttpParameter("cursor", cursor.toString())}));
     }
 
     /**
@@ -416,7 +416,7 @@ public class Friendships extends Weibo {
         return User.constructIds(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/followers/ids.json",
-                new PostParameter[]{new PostParameter("screen_name",
+                new HttpParameter[]{new HttpParameter("screen_name",
                         screen_name)}));
     }
 
@@ -438,10 +438,10 @@ public class Friendships extends Weibo {
         return User.constructIds(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/followers/ids.json",
-                new PostParameter[]{
-                        new PostParameter("screen_name", screen_name),
-                        new PostParameter("count", count.toString()),
-                        new PostParameter("cursor", cursor.toString())}));
+                new HttpParameter[]{
+                        new HttpParameter("screen_name", screen_name),
+                        new HttpParameter("count", count.toString()),
+                        new HttpParameter("cursor", cursor.toString())}));
     }
 
     /**
@@ -459,7 +459,7 @@ public class Friendships extends Weibo {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/followers/active.json",
-                new PostParameter[]{new PostParameter("uid", uid)}));
+                new HttpParameter[]{new HttpParameter("uid", uid)}));
     }
 
     /**
@@ -479,8 +479,8 @@ public class Friendships extends Weibo {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/followers/active.json",
-                new PostParameter[]{new PostParameter("uid", uid),
-                        new PostParameter("count", count.toString())}));
+                new HttpParameter[]{new HttpParameter("uid", uid),
+                        new HttpParameter("count", count.toString())}));
     }
 
     /**
@@ -499,7 +499,7 @@ public class Friendships extends Weibo {
         return User.constructWapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends_chain/followers.json",
-                new PostParameter[]{new PostParameter("uid", uid)}));
+                new HttpParameter[]{new HttpParameter("uid", uid)}));
     }
 
     /**
@@ -516,7 +516,7 @@ public class Friendships extends Weibo {
     public User createFriendshipsById(String uid) throws WeiboException {
         return new User(client.post(
                 WeiboConfig.getValue("baseURL") + "friendships/create.json",
-                new PostParameter[]{new PostParameter("uid", uid)})
+                new HttpParameter[]{new HttpParameter("uid", uid)})
                 .asJSONObject());
     }
 
@@ -535,7 +535,7 @@ public class Friendships extends Weibo {
             throws WeiboException {
         return new User(client.post(
                 WeiboConfig.getValue("baseURL") + "friendships/create.json",
-                new PostParameter[]{new PostParameter("screen_name",
+                new HttpParameter[]{new HttpParameter("screen_name",
                         screen_name)}).asJSONObject());
     }
 
@@ -553,7 +553,7 @@ public class Friendships extends Weibo {
     public User destroyFriendshipsDestroyById(String uid) throws WeiboException {
         return new User(client.post(
                 WeiboConfig.getValue("baseURL") + "friendships/destroy.json",
-                new PostParameter[]{new PostParameter("uid", uid)})
+                new HttpParameter[]{new HttpParameter("uid", uid)})
                 .asJSONObject());
     }
 
@@ -572,7 +572,7 @@ public class Friendships extends Weibo {
             throws WeiboException {
         return new User(client.post(
                 WeiboConfig.getValue("baseURL") + "friendships/destroy.json",
-                new PostParameter[]{new PostParameter("screen_name",
+                new HttpParameter[]{new HttpParameter("screen_name",
                         screen_name)}).asJSONObject());
     }
 }

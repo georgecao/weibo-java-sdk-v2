@@ -2,7 +2,7 @@ package weibo4j;
 
 import weibo4j.http.AccessToken;
 import weibo4j.http.BASE64Encoder;
-import weibo4j.model.PostParameter;
+import weibo4j.model.HttpParameter;
 import weibo4j.model.WeiboException;
 import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
@@ -82,27 +82,27 @@ public class OAuth extends Weibo {
     public AccessToken getAccessTokenByCode(String code, String redirectUrl) throws WeiboException {
         return new AccessToken(client.post(
                 WeiboConfig.getValue("accessTokenURL"),
-                new PostParameter[]{
-                        new PostParameter("client_id", WeiboConfig
+                new HttpParameter[]{
+                        new HttpParameter("client_id", WeiboConfig
                                 .getClientId()),
-                        new PostParameter("client_secret", WeiboConfig
+                        new HttpParameter("client_secret", WeiboConfig
                                 .getClientSecret()),
-                        new PostParameter("grant_type", "authorization_code"),
-                        new PostParameter("code", code),
-                        new PostParameter("redirect_uri", redirectUrl)}, false));
+                        new HttpParameter("grant_type", "authorization_code"),
+                        new HttpParameter("code", code),
+                        new HttpParameter("redirect_uri", redirectUrl)}, false));
     }
 
     public AccessToken getAccessTokenByUserCredential(String username, String password) throws WeiboException {
         return new AccessToken(client.post(
                 WeiboConfig.getAccessTokenURL(),
-                new PostParameter[]{
-                        new PostParameter("client_id", WeiboConfig
+                new HttpParameter[]{
+                        new HttpParameter("client_id", WeiboConfig
                                 .getClientId()),
-                        new PostParameter("client_secret", WeiboConfig
+                        new HttpParameter("client_secret", WeiboConfig
                                 .getClientSecret()),
-                        new PostParameter("grant_type", "password"),
-                        new PostParameter("username", username),
-                        new PostParameter("password", password)}, false));
+                        new HttpParameter("grant_type", "password"),
+                        new HttpParameter("username", username),
+                        new HttpParameter("password", password)}, false));
     }
 
     public String authorize(String responseType) throws WeiboException {

@@ -1,12 +1,11 @@
 package weibo4j;
 
+import java.util.List;
 import weibo4j.http.ImageItem;
 import weibo4j.model.*;
 import weibo4j.org.json.JSONArray;
 import weibo4j.org.json.JSONObject;
 import weibo4j.util.WeiboConfig;
-
-import java.util.List;
 
 public class Timeline extends Weibo {
     public Timeline(String accessToken) {
@@ -48,9 +47,9 @@ public class Timeline extends Weibo {
      */
     public StatusWrapper getPublicTimeline(int count, int baseApp) throws WeiboException {
         return Status.constructWapperStatus(client.get(
-                WeiboConfig.getValue("baseURL") + "statuses/public_timeline.json", new PostParameter[]{
-                new PostParameter("count", count),
-                new PostParameter("base_app", baseApp)}));
+                WeiboConfig.getValue("baseURL") + "statuses/public_timeline.json", new HttpParameter[]{
+                new HttpParameter("count", count),
+                new HttpParameter("base_app", baseApp)}));
 
     }
 
@@ -89,9 +88,9 @@ public class Timeline extends Weibo {
                                             Paging paging) throws WeiboException {
         return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/friends_timeline.json",
-                new PostParameter[]{
-                        new PostParameter("base_app", baseAPP.toString()),
-                        new PostParameter("feature", feature.toString())},
+                new HttpParameter[]{
+                        new HttpParameter("base_app", baseAPP.toString()),
+                        new HttpParameter("feature", feature.toString())},
                 paging));
     }
 
@@ -117,9 +116,9 @@ public class Timeline extends Weibo {
                                             Paging paging) throws WeiboException {
         return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/friends_timeline/ids.json",
-                new PostParameter[]{
-                        new PostParameter("base_app", baseAPP.toString()),
-                        new PostParameter("feature", feature.toString())},
+                new HttpParameter[]{
+                        new HttpParameter("base_app", baseAPP.toString()),
+                        new HttpParameter("feature", feature.toString())},
                 paging).asJSONObject();
     }
 
@@ -158,9 +157,9 @@ public class Timeline extends Weibo {
         return Status
                 .constructWapperStatus(client.get(
                         WeiboConfig.getValue("baseURL") + "statuses/home_timeline.json",
-                        new PostParameter[]{
-                                new PostParameter("base_app", baseAPP.toString()),
-                                new PostParameter("feature", feature.toString())},
+                        new HttpParameter[]{
+                                new HttpParameter("base_app", baseAPP.toString()),
+                                new HttpParameter("feature", feature.toString())},
                         paging));
     }
 
@@ -181,15 +180,15 @@ public class Timeline extends Weibo {
 
     public StatusWrapper getUserTimelineByUid(String uid) throws WeiboException {
         return Status.constructWapperStatus(client.get(WeiboConfig
-                .getValue("baseURL") + "statuses/user_timeline.json", new PostParameter[]{
-                new PostParameter("uid", uid)
+                .getValue("baseURL") + "statuses/user_timeline.json", new HttpParameter[]{
+                new HttpParameter("uid", uid)
         }));
     }
 
     public StatusWrapper getUserTimelineByName(String screen_name) throws WeiboException {
         return Status.constructWapperStatus(client.get(WeiboConfig
-                .getValue("baseURL") + "statuses/user_timeline.json", new PostParameter[]{
-                new PostParameter("screen_name", screen_name)
+                .getValue("baseURL") + "statuses/user_timeline.json", new HttpParameter[]{
+                new HttpParameter("screen_name", screen_name)
         }));
     }
 
@@ -211,20 +210,20 @@ public class Timeline extends Weibo {
                                               Integer baseApp, Integer feature) throws WeiboException {
         return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/user_timeline.json",
-                new PostParameter[]{
-                        new PostParameter("uid", uid),
-                        new PostParameter("base_app", baseApp.toString()),
-                        new PostParameter("feature", feature.toString())},
+                new HttpParameter[]{
+                        new HttpParameter("uid", uid),
+                        new HttpParameter("base_app", baseApp.toString()),
+                        new HttpParameter("feature", feature.toString())},
                 page));
     }
 
     public StatusWrapper getUserTimelineByName(String screen_name, Paging page, Integer base_app, Integer feature) throws WeiboException {
         return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/user_timeline.json",
-                new PostParameter[]{
-                        new PostParameter("screen_name", screen_name),
-                        new PostParameter("base_app", base_app.toString()),
-                        new PostParameter("feature", feature.toString())},
+                new HttpParameter[]{
+                        new HttpParameter("screen_name", screen_name),
+                        new HttpParameter("base_app", base_app.toString()),
+                        new HttpParameter("feature", feature.toString())},
                 page));
     }
 
@@ -239,14 +238,14 @@ public class Timeline extends Weibo {
      * @since JDK 1.5
      */
     public JSONObject getUserTimelineIdsByUid(String uid) throws WeiboException {
-        return client.get(WeiboConfig.getValue("baseURL") + "statuses/user_timeline/ids.json", new PostParameter[]{
-                new PostParameter("uid", uid)
+        return client.get(WeiboConfig.getValue("baseURL") + "statuses/user_timeline/ids.json", new HttpParameter[]{
+                new HttpParameter("uid", uid)
         }).asJSONObject();
     }
 
     public JSONObject getUserTimelineIdsByName(String screen_name) throws WeiboException {
-        return client.get(WeiboConfig.getValue("baseURL") + "statuses/user_timeline/ids.json", new PostParameter[]{
-                new PostParameter("screen_name", screen_name)
+        return client.get(WeiboConfig.getValue("baseURL") + "statuses/user_timeline/ids.json", new HttpParameter[]{
+                new HttpParameter("screen_name", screen_name)
         }).asJSONObject();
     }
 
@@ -265,7 +264,7 @@ public class Timeline extends Weibo {
         return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "statuses/repost_timeline.json",
-                new PostParameter[]{new PostParameter("id", id)}));
+                new HttpParameter[]{new HttpParameter("id", id)}));
     }
 
     /**
@@ -285,7 +284,7 @@ public class Timeline extends Weibo {
         return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "statuses/repost_timeline.json",
-                new PostParameter[]{new PostParameter("id", id)}, page));
+                new HttpParameter[]{new HttpParameter("id", id)}, page));
     }
 
     /**
@@ -302,7 +301,7 @@ public class Timeline extends Weibo {
     public JSONObject getForwardTimelineIds(String id) throws WeiboException {
         return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/repost_timeline/ids.json",
-                new PostParameter[]{new PostParameter("id", id)}).asJSONObject();
+                new HttpParameter[]{new HttpParameter("id", id)}).asJSONObject();
     }
 
     /**
@@ -370,10 +369,10 @@ public class Timeline extends Weibo {
             throws WeiboException {
         return Status.constructWapperStatus(client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/mentions.json",
-                new PostParameter[]{
-                        new PostParameter("filter_by_author", filter_by_author.toString()),
-                        new PostParameter("filter_by_source", filter_by_source.toString()),
-                        new PostParameter("filter_by_type", filter_by_type.toString())}, page));
+                new HttpParameter[]{
+                        new HttpParameter("filter_by_author", filter_by_author.toString()),
+                        new HttpParameter("filter_by_source", filter_by_source.toString()),
+                        new HttpParameter("filter_by_type", filter_by_type.toString())}, page));
     }
 
     /**
@@ -396,10 +395,10 @@ public class Timeline extends Weibo {
             throws WeiboException {
         return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/mentions/ids.json",
-                new PostParameter[]{
-                        new PostParameter("filter_by_author", filter_by_author.toString()),
-                        new PostParameter("filter_by_source", filter_by_source.toString()),
-                        new PostParameter("filter_by_type", filter_by_type.toString())}, page).asJSONObject();
+                new HttpParameter[]{
+                        new HttpParameter("filter_by_author", filter_by_author.toString()),
+                        new HttpParameter("filter_by_source", filter_by_source.toString()),
+                        new HttpParameter("filter_by_type", filter_by_type.toString())}, page).asJSONObject();
     }
 
     /**
@@ -418,9 +417,9 @@ public class Timeline extends Weibo {
 
     public StatusWrapper getBilateralTimeline(Integer base_app, Integer feature) throws WeiboException {
         return Status.constructWapperStatus(client.get(WeiboConfig.getValue("baseURL") + "statuses/bilateral_timeline.json",
-                new PostParameter[]{
-                        new PostParameter("base_app", base_app),
-                        new PostParameter("feature", feature)
+                new HttpParameter[]{
+                        new HttpParameter("base_app", base_app),
+                        new HttpParameter("feature", feature)
                 }));
     }
 
@@ -438,7 +437,7 @@ public class Timeline extends Weibo {
     public Status showStatus(String id) throws WeiboException {
         return new Status(client.get(WeiboConfig.getValue("baseURL")
                 + "statuses/show.json",
-                new PostParameter[]{new PostParameter("id", id)}));
+                new HttpParameter[]{new HttpParameter("id", id)}));
     }
 
     /**
@@ -455,8 +454,8 @@ public class Timeline extends Weibo {
      */
     public JSONObject QueryMid(Integer type, String id) throws WeiboException {
         return client.get(WeiboConfig.getValue("baseURL") + "statuses/querymid.json",
-                new PostParameter[]{new PostParameter("id", id),
-                        new PostParameter("type", type.toString())}).asJSONObject();
+                new HttpParameter[]{new HttpParameter("id", id),
+                        new HttpParameter("type", type.toString())}).asJSONObject();
     }
 
     /**
@@ -474,9 +473,9 @@ public class Timeline extends Weibo {
      */
     public JSONObject QueryMid(Integer type, String id, int is_batch) throws WeiboException {
         return client.get(WeiboConfig.getValue("baseURL") + "statuses/querymid.json",
-                new PostParameter[]{new PostParameter("id", id),
-                        new PostParameter("type", type.toString()),
-                        new PostParameter("is_batch", is_batch)}).asJSONObject();
+                new HttpParameter[]{new HttpParameter("id", id),
+                        new HttpParameter("type", type.toString()),
+                        new HttpParameter("is_batch", is_batch)}).asJSONObject();
     }
 
     /**
@@ -494,9 +493,9 @@ public class Timeline extends Weibo {
     public JSONObject QueryId(String mid, Integer type, int isBase62) throws WeiboException {
         return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/queryid.json",
-                new PostParameter[]{new PostParameter("mid", mid),
-                        new PostParameter("type", type.toString()),
-                        new PostParameter("isBase62", isBase62)}).asJSONObject();
+                new HttpParameter[]{new HttpParameter("mid", mid),
+                        new HttpParameter("type", type.toString()),
+                        new HttpParameter("isBase62", isBase62)}).asJSONObject();
     }
 
     /**
@@ -516,10 +515,10 @@ public class Timeline extends Weibo {
     public JSONObject QueryId(String mid, Integer type, Integer isBatch, Integer isBase62) throws WeiboException {
         return client.get(
                 WeiboConfig.getValue("baseURL") + "statuses/queryid.json",
-                new PostParameter[]{new PostParameter("mid", mid),
-                        new PostParameter("type", type.toString()),
-                        new PostParameter("is_batch", isBatch.toString()),
-                        new PostParameter("isBase62", isBase62.toString())}).asJSONObject();
+                new HttpParameter[]{new HttpParameter("mid", mid),
+                        new HttpParameter("type", type.toString()),
+                        new HttpParameter("is_batch", isBatch.toString()),
+                        new HttpParameter("isBase62", isBase62.toString())}).asJSONObject();
     }
 
 
@@ -597,7 +596,7 @@ public class Timeline extends Weibo {
     public Status forward(String id) throws WeiboException {
         return new Status(client.post(WeiboConfig.getValue("baseURL")
                 + "statuses/repost.json",
-                new PostParameter[]{new PostParameter("id", id)}));
+                new HttpParameter[]{new HttpParameter("id", id)}));
     }
 
     /**
@@ -615,10 +614,10 @@ public class Timeline extends Weibo {
      */
     public Status forward(String id, String status, Integer isComment)
             throws WeiboException {
-        return new Status(client.post(WeiboConfig.getValue("baseURL") + "statuses/repost.json", new PostParameter[]{
-                new PostParameter("id", id),
-                new PostParameter("status", status),
-                new PostParameter("is_comment", isComment.toString())}));
+        return new Status(client.post(WeiboConfig.getValue("baseURL") + "statuses/repost.json", new HttpParameter[]{
+                new HttpParameter("id", id),
+                new HttpParameter("status", status),
+                new HttpParameter("is_comment", isComment.toString())}));
     }
 
     /**
@@ -635,7 +634,7 @@ public class Timeline extends Weibo {
     public Status destroy(String id) throws WeiboException {
         return new Status(client.post(WeiboConfig.getValue("baseURL")
                 + "statuses/destroy.json",
-                new PostParameter[]{new PostParameter("id", id)}));
+                new HttpParameter[]{new HttpParameter("id", id)}));
     }
 
     /**
@@ -652,12 +651,12 @@ public class Timeline extends Weibo {
     public Status updateStatus(String status) throws WeiboException {
         return new Status(client.post(WeiboConfig.getValue("baseURL")
                 + "statuses/update.json",
-                new PostParameter[]{new PostParameter("status", status)}));
+                new HttpParameter[]{new HttpParameter("status", status)}));
     }
 
     public List<Count> getStatusCount(String statusIds) throws WeiboException {
         return Count.constructCounts(client.get(WeiboConfig.getValue("baseURL") + "statuses/count.json",
-                new PostParameter[]{new PostParameter("ids", statusIds)}));
+                new HttpParameter[]{new HttpParameter("ids", statusIds)}));
     }
 
     /**
@@ -678,11 +677,11 @@ public class Timeline extends Weibo {
     public Status updateStatus(String status, Float lat, Float longs,
                                String annotations) throws WeiboException {
         return new Status(client.post(WeiboConfig.getValue("baseURL")
-                + "statuses/update.json", new PostParameter[]{
-                new PostParameter("status", status),
-                new PostParameter("lat", lat.toString()),
-                new PostParameter("long", longs.toString()),
-                new PostParameter("annotations", annotations)}));
+                + "statuses/update.json", new HttpParameter[]{
+                new HttpParameter("status", status),
+                new HttpParameter("lat", lat.toString()),
+                new HttpParameter("long", longs.toString()),
+                new HttpParameter("annotations", annotations)}));
     }
 
     /**
@@ -699,9 +698,9 @@ public class Timeline extends Weibo {
      */
     public Status uploadStatus(String status, ImageItem item)
             throws WeiboException {
-        return new Status(client.multPartURL(
+        return new Status(client.multiPartURL(
                 WeiboConfig.getValue("baseURL") + "statuses/upload.json",
-                new PostParameter[]{new PostParameter("status", status)},
+                new HttpParameter[]{new HttpParameter("status", status)},
                 item));
     }
 
@@ -721,11 +720,11 @@ public class Timeline extends Weibo {
      */
     public Status uploadStatus(String status, ImageItem item, Float lat,
                                Float longs) throws WeiboException {
-        return new Status(client.multPartURL(
+        return new Status(client.multiPartURL(
                 WeiboConfig.getValue("baseURL") + "statuses/upload.json",
-                new PostParameter[]{new PostParameter("status", status),
-                        new PostParameter("lat", lat.toString()),
-                        new PostParameter("long", longs.toString())}, item));
+                new HttpParameter[]{new HttpParameter("status", status),
+                        new HttpParameter("lat", lat.toString()),
+                        new HttpParameter("long", longs.toString())}, item));
     }
 
     /**
@@ -757,9 +756,9 @@ public class Timeline extends Weibo {
             throws WeiboException {
         return Emotion.constructEmotions(client.get(
                 WeiboConfig.getValue("baseURL") + "emotions.json",
-                new PostParameter[]{
-                        new PostParameter("type", type),
-                        new PostParameter("language", language)}));
+                new HttpParameter[]{
+                        new HttpParameter("type", type),
+                        new HttpParameter("language", language)}));
     }
 
 }

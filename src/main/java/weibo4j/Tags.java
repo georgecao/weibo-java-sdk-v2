@@ -29,7 +29,7 @@ public class Tags extends Weibo {
      */
     public List<Tag> getTags(String uid) throws WeiboException {
         return Tag.constructTags(client.get(WeiboConfig.getValue("baseURL")
-                + "tags.json", new PostParameter[]{new PostParameter(
+                + "tags.json", new HttpParameter[]{new HttpParameter(
                 "uid", uid)}));
     }
 
@@ -46,8 +46,8 @@ public class Tags extends Weibo {
      */
     public List<Tag> getTags(String uid, Paging page) throws WeiboException {
         return Tag.constructTags(client.get(WeiboConfig.getValue("baseURL")
-                + "tags.json", new PostParameter[]{
-                new PostParameter("uid", uid)}, page));
+                + "tags.json", new HttpParameter[]{
+                new HttpParameter("uid", uid)}, page));
     }
 
     /**
@@ -64,7 +64,7 @@ public class Tags extends Weibo {
     public TagWrapper getTagsBatch(String uids) throws WeiboException {
         return Tag.constructTagWapper(client.get(
                 WeiboConfig.getValue("baseURL") + "tags/tags_batch.json",
-                new PostParameter[]{new PostParameter("uids", uids)}));
+                new HttpParameter[]{new HttpParameter("uids", uids)}));
     }
 
     /**
@@ -95,7 +95,7 @@ public class Tags extends Weibo {
      */
     public JSONArray createTags(String tags) throws WeiboException {
         return client.post(WeiboConfig.getValue("baseURL") + "tags/create.json",
-                new PostParameter[]{new PostParameter("tags", tags)}).asJSONArray();
+                new HttpParameter[]{new HttpParameter("tags", tags)}).asJSONArray();
     }
 
     /**
@@ -111,7 +111,7 @@ public class Tags extends Weibo {
      */
     public JSONObject destroyTag(Integer tag_id) throws WeiboException {
         return client.post(WeiboConfig.getValue("baseURL") + "tags/destroy.json",
-                new PostParameter[]{new PostParameter("tag_id",
+                new HttpParameter[]{new HttpParameter("tag_id",
                         tag_id.toString())}).asJSONObject();
     }
 
@@ -129,6 +129,6 @@ public class Tags extends Weibo {
     public List<Tag> destroyTagsBatch(String ids) throws WeiboException {
         return Tag.constructTags(client.post(
                 WeiboConfig.getValue("baseURL") + "tags/destroy_batch.json",
-                new PostParameter[]{new PostParameter("ids", ids)}));
+                new HttpParameter[]{new HttpParameter("ids", ids)}));
     }
 }
