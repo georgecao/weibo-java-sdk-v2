@@ -6,6 +6,10 @@ import org.slf4j.LoggerFactory;
 import weibo4j.model.NotificationTemplate;
 import weibo4j.model.NotificationWrapper;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Say something?
  * <pre>
@@ -22,7 +26,8 @@ public class NotificationsTest {
             124295943823098658L
     };
 
-    Notifications notifications = new Notifications("2.00H6RDyC0WKLFi769ec2d56d4GZ5VD");
+    Weibo weibo = new Weibo("2.00H6RDyC0WKLFi04e559452a0bcBxW");
+    Notifications notifications = new Notifications("2.00H6RDyC0WKLFi04e559452a0bcBxW");
     //Notifications notifications = new Notifications("2.00ZmqZyC0WKLFie3f22505cfWzOolC");
 
 
@@ -53,6 +58,18 @@ public class NotificationsTest {
 
     @Test
     public void testSendNotification() throws Exception {
-
+        String url = weibo.getTinyUrlService().shortUrl("http://www.dajie.com/home").getFirst().getShortUrl();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA);
+        String date = df.format(new Date());
+        NotificationTemplate template = NotificationTemplate.Builder.newBuilder()
+              //  .userIds("1429932283,")
+                .userIds("1246205697")
+                .tplId(124295943823098658L)
+                .objects1(date)
+                .objects2("29")
+                .actionUrl(url)
+                .build();
+        NotificationWrapper wrapper = weibo.getNotificationService().sendNotification(template);
+        LOG.info("{}", wrapper);
     }
 }
