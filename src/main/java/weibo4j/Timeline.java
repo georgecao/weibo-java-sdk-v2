@@ -1,10 +1,10 @@
 package weibo4j;
 
 import java.util.List;
-import weibo4j.http.ImageItem;
+import weibo4j.model.ImageItem;
 import weibo4j.model.*;
-import weibo4j.org.json.JSONArray;
-import weibo4j.org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import weibo4j.util.WeiboConfig;
 
 public class Timeline extends Weibo {

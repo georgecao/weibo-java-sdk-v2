@@ -4,7 +4,7 @@ import weibo4j.model.HttpParameter;
 import weibo4j.model.Status;
 import weibo4j.model.StatusWrapper;
 import weibo4j.model.WeiboException;
-import weibo4j.org.json.JSONArray;
+import org.json.JSONArray;
 import weibo4j.util.WeiboConfig;
 
 public class Search extends Weibo {

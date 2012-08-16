@@ -1,8 +1,8 @@
 package weibo4j;
 
 import weibo4j.model.*;
-import weibo4j.org.json.JSONArray;
-import weibo4j.org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import weibo4j.util.WeiboConfig;
 
 public class Friendships extends Weibo {

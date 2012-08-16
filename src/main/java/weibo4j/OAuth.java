@@ -4,8 +4,8 @@ import weibo4j.http.AccessToken;
 import weibo4j.http.BASE64Encoder;
 import weibo4j.model.HttpParameter;
 import weibo4j.model.WeiboException;
-import weibo4j.org.json.JSONException;
-import weibo4j.org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import weibo4j.util.WeiboConfig;
 
 import javax.crypto.Mac;

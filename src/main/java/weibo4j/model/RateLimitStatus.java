@@ -27,9 +27,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package weibo4j.model;
 
 import weibo4j.http.Response;
-import weibo4j.org.json.JSONArray;
-import weibo4j.org.json.JSONException;
-import weibo4j.org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;

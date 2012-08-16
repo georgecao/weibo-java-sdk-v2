@@ -1,11 +1,10 @@
-package weibo4j.http;
+package weibo4j.model;
 
 import com.sun.imageio.plugins.bmp.BMPImageReader;
 import com.sun.imageio.plugins.gif.GIFImageReader;
 import com.sun.imageio.plugins.jpeg.JPEGImageReader;
 import com.sun.imageio.plugins.png.PNGImageReader;
-import weibo4j.model.Constants;
-import weibo4j.model.WeiboException;
+import weibo4j.util.CloseUtils;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;

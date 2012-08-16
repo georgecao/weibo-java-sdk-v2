@@ -1,7 +1,7 @@
 package weibo4j;
 
 import weibo4j.model.*;
-import weibo4j.org.json.JSONArray;
+import org.json.JSONArray;
 import weibo4j.util.WeiboConfig;
 
 public class Comments extends Weibo {

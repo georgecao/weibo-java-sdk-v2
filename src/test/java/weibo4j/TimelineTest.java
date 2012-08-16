@@ -3,7 +3,7 @@ package weibo4j;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import weibo4j.http.ImageItem;
+import weibo4j.model.ImageItem;
 import weibo4j.model.Status;
 import weibo4j.model.StatusWrapper;
 import weibo4j.model.User;

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import weibo4j.http.Response;
-import weibo4j.org.json.JSONArray;
-import weibo4j.org.json.JSONException;
-import weibo4j.org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @author sinaWeibo

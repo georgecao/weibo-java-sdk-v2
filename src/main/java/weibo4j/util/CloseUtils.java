@@ -1,4 +1,4 @@
-package weibo4j.http;
+package weibo4j.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

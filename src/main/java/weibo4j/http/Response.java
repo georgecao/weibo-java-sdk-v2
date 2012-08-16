@@ -26,15 +26,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package weibo4j.http;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import weibo4j.model.Configuration;
 import weibo4j.model.WeiboException;
-import weibo4j.org.json.JSONArray;
-import weibo4j.org.json.JSONException;
-import weibo4j.org.json.JSONObject;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -93,7 +93,7 @@ public class Response {
     }
 
     // for test purpose
-    /*package*/ Response(String content) {
+    Response(String content) {
         this.responseAsString = content;
     }
 

@@ -34,11 +34,8 @@ import org.apache.http.params.SyncBasicHttpParams;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import weibo4j.model.Configuration;
-import weibo4j.model.HttpParameter;
-import weibo4j.model.Paging;
-import weibo4j.model.WeiboException;
-import weibo4j.org.json.JSONException;
+import weibo4j.model.*;
+import org.json.JSONException;
 import weibo4j.util.ParamUtils;
 
 import javax.activation.MimetypesFileTypeMap;
