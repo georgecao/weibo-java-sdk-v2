@@ -66,7 +66,7 @@ public class NotificationsTest {
                 .userIds("1246205697")
                 .tplId(124295943823098658L)
                 .objects1(date)
-                .objects2("29")
+                .objects2("2323")
                 .actionUrl(url)
                 .build();
         NotificationWrapper wrapper = weibo.getNotificationService().sendNotification(template);

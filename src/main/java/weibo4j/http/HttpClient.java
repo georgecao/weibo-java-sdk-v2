@@ -1,16 +1,5 @@
 package weibo4j.http;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import javax.activation.MimetypesFileTypeMap;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -24,7 +13,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
@@ -38,7 +27,6 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.impl.conn.SchemeRegistryFactory;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
@@ -47,10 +35,23 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weibo4j.model.Configuration;
-import weibo4j.model.Paging;
 import weibo4j.model.HttpParameter;
+import weibo4j.model.Paging;
 import weibo4j.model.WeiboException;
 import weibo4j.org.json.JSONException;
+import weibo4j.util.ParamUtils;
+
+import javax.activation.MimetypesFileTypeMap;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.URLEncoder;
+import java.net.UnknownHostException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author sinaWeibo
@@ -70,6 +71,11 @@ public class HttpClient implements java.io.Serializable {
     private static final int SERVICE_UNAVAILABLE = 503;// Service Unavailable: The Weibo servers are up, but overloaded with requests. Try again later. The search and trend methods use this to indicate when you are being rate limited.
     private static final String ENCODING = "UTF-8";
     private static final Charset CHARSET = Charset.forName(ENCODING);
+
+    private static final String PARAMETER_SEPARATOR = "&";
+    private static final String NAME_VALUE_SEPARATOR = "=";
+    private static final String QUERY_STRING_SEPARATOR = "?";
+
     private String proxyHost = Configuration.getProxyHost();
     private int proxyPort = Configuration.getProxyPort();
     private String proxyAuthUser = Configuration.getProxyUser();
@@ -137,10 +143,11 @@ public class HttpClient implements java.io.Serializable {
         this.token = token;
         return this.token;
     }
+
     private final static boolean DEBUG = Configuration.getDebug();
     private static final Logger LOG = LoggerFactory.getLogger(HttpClient.class);
     org.apache.http.client.HttpClient client = null;
-    private PoolingClientConnectionManager connectionManager;
+    private PoolingClientConnectionManager manager;
     private int maxSize;
 
     public HttpClient() {
@@ -149,38 +156,38 @@ public class HttpClient implements java.io.Serializable {
     }
 
     public HttpClient(int maxConPerHost, int conTimeOutMs, int soTimeOutMs,
-            int maxSize) {
-        connectionManager = new PoolingClientConnectionManager(
+                      int maxSize) {
+        manager = new PoolingClientConnectionManager(
                 SchemeRegistryFactory.createDefault(),
                 3,
                 TimeUnit.MINUTES);
-        //HttpConnectionManagerParams params = connectionManager.getParams();
-        //params.setDefaultMaxConnectionsPerHost(maxConPerHost);
-
+        manager.setDefaultMaxPerRoute(maxConPerHost);
 
         HttpParams clientParams = new SyncBasicHttpParams();
+        // Connection Timeout
+        HttpClientParams.setConnectionManagerTimeout(clientParams, conTimeOutMs);
         HttpConnectionParams.setConnectionTimeout(clientParams, conTimeOutMs);
+        // Socket Timeout
         HttpConnectionParams.setSoTimeout(clientParams, soTimeOutMs);
-
+        HttpConnectionParams.setSoKeepalive(clientParams, true);
         HttpProtocolParams.setContentCharset(clientParams, ENCODING);
 
         // 忽略cookie 避免 Cookie rejected 警告
         clientParams.setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.IGNORE_COOKIES);
         DefaultHttpClient.setDefaultHttpParams(clientParams);
-        DefaultHttpClient backend = new DefaultHttpClient(connectionManager, clientParams);
+        DefaultHttpClient backend = new DefaultHttpClient(manager, clientParams);
         backend.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler());
+        // Support GZIP and ZLIB here.
         client = new DecompressingHttpClient(backend);
         this.maxSize = maxSize;
         // 支持proxy
         if (proxyHost != null && !proxyHost.equals("")) {
             HttpHost proxy = new HttpHost(proxyHost, proxyPort);
-
             backend.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-            //client.getParams().setAuthenticationPreemptive(true);
             if (proxyAuthUser != null && !proxyAuthUser.equals("")) {
                 backend.getCredentialsProvider()
                         .setCredentials(new AuthScope(proxy),
-                        new UsernamePasswordCredentials(proxyAuthUser, proxyAuthPassword));
+                                new UsernamePasswordCredentials(proxyAuthUser, proxyAuthPassword));
                 if (DEBUG) {
                     LOG.debug("Proxy AuthUser: {}", proxyAuthUser);
                     LOG.debug("Proxy AuthPassword: {}", proxyAuthPassword);
@@ -191,9 +198,17 @@ public class HttpClient implements java.io.Serializable {
 
     /**
      * Handles HTTP GET request.
+     *
+     * @param url the url to visit
+     * @return {@link Response}
+     * @throws WeiboException API related exception.
      */
     public Response get(String url) throws WeiboException {
         return get(url, new HttpParameter[0]);
+    }
+
+    public Response get(String url, List<HttpParameter> params) throws WeiboException {
+        return get(url, ParamUtils.convert(params));
     }
 
     public Response get(String url, HttpParameter[] params) throws WeiboException {
@@ -201,98 +216,71 @@ public class HttpClient implements java.io.Serializable {
             LOG.debug("Request:");
             LOG.debug("GET: {}", url);
         }
-        if (null != params && params.length > 0) {
-            String encodedParams = HttpClient.encodeParameters(params);
-            if (-1 == url.indexOf("?")) {
-                url += "?" + encodedParams;
-            } else {
-                url += "&" + encodedParams;
-            }
+        if (!ParamUtils.isEmpty(params)) {
+            url = appendQueryString(url, params);
         }
         HttpGet get = new HttpGet(url);
         return httpRequest(get);
     }
 
-    public Response get(String url, HttpParameter[] params, Paging paging)
-            throws WeiboException {
+    public Response get(String url, HttpParameter[] params, Paging paging) throws WeiboException {
+        List<HttpParameter> parameters = ParamUtils.convert(params);
         if (null != paging) {
-            List<HttpParameter> pagingParams = new ArrayList<HttpParameter>(4);
             if (-1 != paging.getMaxId()) {
-                pagingParams.add(new HttpParameter("max_id", String
-                        .valueOf(paging.getMaxId())));
+                parameters.add(new HttpParameter("max_id", paging.getMaxId()));
             }
             if (-1 != paging.getSinceId()) {
-                pagingParams.add(new HttpParameter("since_id", String
-                        .valueOf(paging.getSinceId())));
+                parameters.add(new HttpParameter("since_id", paging.getSinceId()));
             }
             if (-1 != paging.getPage()) {
-                pagingParams.add(new HttpParameter("page", String
-                        .valueOf(paging.getPage())));
+                parameters.add(new HttpParameter("page", paging.getPage()));
             }
             if (-1 != paging.getCount()) {
                 if (-1 != url.indexOf("search")) {
                     // search api takes "rpp"
-                    pagingParams.add(new HttpParameter("rpp", String
-                            .valueOf(paging.getCount())));
+                    parameters.add(new HttpParameter("rpp", paging.getCount()));
                 } else {
-                    pagingParams.add(new HttpParameter("count", String
-                            .valueOf(paging.getCount())));
+                    parameters.add(new HttpParameter("count", paging.getCount()));
                 }
             }
-            HttpParameter[] newparams = null;
-            HttpParameter[] arrayPagingParams = pagingParams
-                    .toArray(new HttpParameter[pagingParams.size()]);
-            if (null != params) {
-                newparams = new HttpParameter[params.length
-                        + pagingParams.size()];
-                System.arraycopy(params, 0, newparams, 0, params.length);
-                System.arraycopy(arrayPagingParams, 0, newparams,
-                        params.length, pagingParams.size());
-            } else {
-                if (0 != arrayPagingParams.length) {
-                    String encodedParams = HttpClient
-                            .encodeParameters(arrayPagingParams);
-                    if (-1 != url.indexOf("?")) {
-                        url += "&" + encodedParams;
-                    } else {
-                        url += "?" + encodedParams;
-                    }
-                }
-            }
-            return get(url, newparams);
-        } else {
-            return get(url, params);
         }
+        return get(url, parameters);
     }
 
     /**
      * Handles HTTP DELETE request.
      *
-     * @param url URL to visit
+     * @param url    URL to visit
      * @param params parameters, will be encoded.
      * @return HTTP response
      * @throws WeiboException API related exception.
      */
     public Response delete(String url, HttpParameter[] params) throws WeiboException {
-        url = addQueryString(url, params);
+        if (ParamUtils.isNotEmpty(params)) {
+            url = appendQueryString(url, params);
+        }
         HttpDelete deleteMethod = new HttpDelete(url);
         return httpRequest(deleteMethod);
     }
 
-    private static String addQueryString(String url, HttpParameter[] params) {
-        if (0 != params.length) {
-            String encodedParams = HttpClient.encodeParameters(params);
-            if (-1 == url.indexOf("?")) {
-                url += "?" + encodedParams;
-            } else {
-                url += "&" + encodedParams;
-            }
+    public static String appendQueryString(String url, HttpParameter[] params) {
+        String encodedParams = HttpClient.encodeParameters(params);
+        if (-1 == url.indexOf(QUERY_STRING_SEPARATOR)) {
+            url += QUERY_STRING_SEPARATOR + encodedParams;
+        } else {
+            url += PARAMETER_SEPARATOR + encodedParams;
         }
         return url;
     }
 
     /**
      * Handles HTTP POST request.
+     *
+     * @param url    the url to visit.
+     * @param params HTTP parameters.
+     * @return {@link Response}
+     * @throws WeiboException API related exception.
+     * @see #post(String, weibo4j.model.HttpParameter[], Boolean)
      */
     public Response post(String url, HttpParameter[] params) throws WeiboException {
         return post(url, params, true);
@@ -343,74 +331,87 @@ public class HttpClient implements java.io.Serializable {
         HttpPost postMethod = new HttpPost(url);
         MultipartEntity entity = newMultipartEntity();
         try {
-            if (params != null) {
+            if (ParamUtils.isNotEmpty(params)) {
                 for (HttpParameter entry : params) {
                     entity.addPart(entry.getName(), new StringBody(entry.getValue(), CHARSET));
                 }
-                //Check out ContentType
-                entity.addPart(item.getName(), new ByteArrayBody(item.getContent(), item.getContentType()));
-                //parts[parts.length - 1] = new ByteArrayPart(item.getContent(),
-                //      item.getName(), item.getContentType());
             }
+            //Check out ContentType
+            entity.addPart(item.getName(), new ByteArrayBody(item.getContent(), item.getContentType(), item.getName()));
             postMethod.setEntity(entity);
             return httpRequest(postMethod);
         } catch (Exception ex) {
             throw new WeiboException(ex.getMessage(), ex, -1);
         }
+    }
+
+    private static MultipartEntity addStringParts(MultipartEntity entity, HttpParameter[] params) throws WeiboException {
+        if (ParamUtils.isNotEmpty(params)) {
+            for (HttpParameter entry : params) {
+                try {
+                    entity.addPart(entry.getName(), new StringBody(entry.getValue(), CHARSET));
+                } catch (UnsupportedEncodingException e) {
+                    throw new WeiboException(e.getMessage(), e, -1);
+                }
+            }
+        }
+        return entity;
     }
 
     private static MultipartEntity newMultipartEntity() {
         return new MultipartEntity(HttpMultipartMode.STRICT, null, CHARSET);
-
     }
 
     public Response multiPartURL(String fileParamName, String url,
-            HttpParameter[] params, File file) throws WeiboException {
+                                 HttpParameter[] params, File file) throws WeiboException {
         HttpPost postMethod = new HttpPost(url);
         MultipartEntity entity = newMultipartEntity();
-        try {
-            if (params != null) {
-                for (HttpParameter entry : params) {
-                    entity.addPart(entry.getName(), new StringBody(entry.getValue(), CHARSET));
-                }
-            }
-            FileBody filePart = new FileBody(file, file.getName(),
-                    new MimetypesFileTypeMap().getContentType(file), ENCODING);
-            entity.addPart(fileParamName, filePart);
-            postMethod.setEntity(entity);
-            return httpRequest(postMethod);
-        } catch (Exception ex) {
-            throw new WeiboException(ex.getMessage(), ex, -1);
-        }
+        addStringParts(entity, params);
+        FileBody filePart = new FileBody(file, file.getName(), new MimetypesFileTypeMap().getContentType(file), ENCODING);
+        entity.addPart(fileParamName, filePart);
+        postMethod.setEntity(entity);
+        return httpRequest(postMethod);
     }
 
     public Response httpRequest(HttpUriRequest method) throws WeiboException {
         return httpRequest(method, true);
     }
 
-    public Response httpRequest(HttpUriRequest method, boolean withTokenHeader) throws WeiboException {
-        InetAddress ipAddress;
-        int responseCode = -1;
+    public static String getHostAddress() {
+        InetAddress ipAddress = null;
         try {
             ipAddress = InetAddress.getLocalHost();
-            List<Header> headers = new ArrayList<Header>();
-            if (withTokenHeader) {
-                if (token == null) {
-                    throw new IllegalStateException("Oauth2 token is not set!");
-                }
-                headers.add(new BasicHeader("Authorization", "OAuth2 " + token));
-                headers.add(new BasicHeader("API-RemoteIP", ipAddress.getHostAddress()));
-                client.getParams().setParameter("http.default-headers", headers);
-                if (DEBUG) {
-                    for (Header hd : headers) {
-                        LOG.debug("{}: {}", hd.getName(), hd.getValue());
-                    }
-                }
+        } catch (UnknownHostException e) {
+            LOG.warn("Cannot get local host:", e);
+        }
+        return null == ipAddress ? "127.0.0.1" : ipAddress.getHostAddress();
+    }
+
+    private void setOAuthHeader() {
+        if (token == null) {
+            throw new IllegalStateException("Oauth2 token is not set!");
+        }
+        List<Header> headers = new ArrayList<Header>();
+        headers.add(new BasicHeader("Authorization", "OAuth2 " + token));
+        headers.add(new BasicHeader("API-RemoteIP", getHostAddress()));
+        client.getParams().setParameter("http.default-headers", headers);
+        if (DEBUG) {
+            for (Header hd : headers) {
+                LOG.debug("{}: {}", hd.getName(), hd.getValue());
             }
+        }
+    }
+
+    public Response httpRequest(HttpUriRequest method, boolean withTokenHeader) throws WeiboException {
+        int responseCode = -1;
+        if (withTokenHeader) {
+            setOAuthHeader();
+        }
+        try {
             HttpResponse httpResponse = client.execute(method);
-            Header[] resHeader = httpResponse.getAllHeaders();
             responseCode = httpResponse.getStatusLine().getStatusCode();
             if (DEBUG) {
+                Header[] resHeader = httpResponse.getAllHeaders();
                 LOG.debug("Response:");
                 LOG.debug("https StatusCode:{}", responseCode);
                 for (Header header : resHeader) {
@@ -424,14 +425,12 @@ public class HttpClient implements java.io.Serializable {
             }
             if (responseCode != OK) {
                 try {
-                    throw new WeiboException(getCause(responseCode),
-                            response.asJSONObject(), responseCode);
+                    throw new WeiboException(getCause(responseCode), response.asJSONObject(), responseCode);
                 } catch (JSONException e) {
                     LOG.warn("Parsing json wrong", e);
                 }
             }
             return response;
-
         } catch (IOException ioe) {
             throw new WeiboException(ioe.getMessage(), ioe, responseCode);
         }
@@ -453,10 +452,10 @@ public class HttpClient implements java.io.Serializable {
         StringBuilder buf = new StringBuilder();
         for (int j = 0; j < postParams.length; j++) {
             if (j != 0) {
-                buf.append("&");
+                buf.append(PARAMETER_SEPARATOR);
             }
             buf.append(urlEncode(postParams[j].getName()))
-                    .append("=")
+                    .append(NAME_VALUE_SEPARATOR)
                     .append(urlEncode(postParams[j].getValue()));
         }
         return buf.toString();

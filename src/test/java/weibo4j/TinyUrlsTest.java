@@ -5,6 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weibo4j.model.TinyUrl;
 import weibo4j.model.TinyUrlWrapper;
+import weibo4j.util.ParamUtils;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Say something?
@@ -17,19 +21,25 @@ import weibo4j.model.TinyUrlWrapper;
 public class TinyUrlsTest {
     private static final Logger LOG = LoggerFactory.getLogger(TinyUrlsTest.class);
     private static final boolean debug = LOG.isDebugEnabled();
-    TinyUrls tinyUrls = new TinyUrls("2.00m8ATIB0X69K40e3374481asw5TbB");
+    TinyUrls tinyUrls = WeiboService.getOne().getTinyUrlService();
 
     @Test
     public void testShortUrl() throws Exception {
         TinyUrlWrapper tuw = tinyUrls.shortUrl("http://www.dajie.com/account/login");
+        assertNotNull(tuw);
         TinyUrl tu = tuw.getFirst();
+        assertNotNull(tu);
         LOG.info("{}", tu.getShortUrl());
+        assertTrue(!ParamUtils.isEmpty(tu.getShortUrl()));
     }
 
     @Test
     public void testExpandUrl() throws Exception {
         TinyUrlWrapper tuw = tinyUrls.expandUrl("http://t.cn/S2CaKm");
+        assertNotNull(tuw);
         TinyUrl tu = tuw.getFirst();
+        assertNotNull(tu);
         LOG.info("{}", tu.getLongUrl());
+        assertTrue(!ParamUtils.isEmpty(tu.getLongUrl()));
     }
 }

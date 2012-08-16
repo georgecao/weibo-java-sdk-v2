@@ -23,6 +23,14 @@ public class ParamUtils {
     private static final Logger LOG = LoggerFactory.getLogger(ParamUtils.class);
     private static final boolean debug = LOG.isDebugEnabled();
 
+    public static boolean isNotEmpty(HttpParameter[] arrays) {
+        return !isEmpty(arrays);
+    }
+
+    public static boolean isEmpty(HttpParameter[] arrays) {
+        return null == arrays || arrays.length == 0;
+    }
+
     public static boolean isEmpty(String value) {
         return null == value || value.trim().length() == 0;
     }
@@ -70,8 +78,18 @@ public class ParamUtils {
         return params;
     }
 
+    public static List<HttpParameter> convert(HttpParameter[] params) {
+        List<HttpParameter> parameters;
+        if (isEmpty(params)) {
+            parameters = new ArrayList<HttpParameter>(0);
+        } else {
+            parameters = Arrays.asList(params);
+        }
+        return parameters;
+    }
+
     public static HttpParameter[] convert(List<HttpParameter> parameters) {
-        if (null == parameters || 0 == parameters.size()) {
+        if (isEmpty(parameters)) {
             return new HttpParameter[0];
         }
         HttpParameter[] params = new HttpParameter[parameters.size()];

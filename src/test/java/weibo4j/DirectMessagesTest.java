@@ -3,6 +3,12 @@ package weibo4j;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import weibo4j.model.DirectMessage;
+
+import java.util.Date;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Say something?
@@ -15,15 +21,22 @@ import org.slf4j.LoggerFactory;
 public class DirectMessagesTest {
     private static final Logger LOG = LoggerFactory.getLogger(DirectMessagesTest.class);
     private static final boolean debug = LOG.isDebugEnabled();
+    Weibo weibo = WeiboService.getOne();
 
     @Test
     public void testSendDirectMessage() throws Exception {
-        Weibo weibo = new Weibo("2.00ZmqZyC0WKLFie3f22505cfWzOolC");
-        weibo.getDirectMessageService().sendDirectMessage("2727390203", "1111111111");
+        DirectMessage dm = weibo.getDirectMessageService().sendDirectMessage("1246205697", "时不我待啊，" + new Date());
+        assertNotNull(dm);
+        LOG.info("{}", dm);
+        assertTrue(dm.getId() > 0);
     }
 
     @Test
     public void testSendDirectMessageByScreenName() throws Exception {
-
+        DirectMessage dm = weibo.getDirectMessageService().sendDirectMessageByScreenName(
+                "勤快内鬼", "时不我待啊，" + new Date());
+        assertNotNull(dm);
+        LOG.info("{}", dm);
+        assertTrue(dm.getId() > 0);
     }
 }
