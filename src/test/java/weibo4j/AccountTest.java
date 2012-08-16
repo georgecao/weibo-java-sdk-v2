@@ -52,8 +52,8 @@ public class AccountTest {
                 .description("desc")
                 .build();
 
-        List<PostParameter> list = ParamUtils.get(accountUser);
-        for (PostParameter pp : list) {
+        List<HttpParameter> list = ParamUtils.get(accountUser);
+        for (HttpParameter pp : list) {
             LOG.info("{}={},", pp.getName(), pp.getValue());
         }
         LOG.info("{}", list.size());

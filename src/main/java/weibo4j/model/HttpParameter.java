@@ -37,29 +37,29 @@ import java.util.List;
  *
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public class PostParameter implements Serializable {
+public class HttpParameter implements Serializable {
     String name;
     String value;
     private File file = null;
 
     private static final long serialVersionUID = -8708108746980739212L;
 
-    public PostParameter(String name, String value) {
+    public HttpParameter(String name, String value) {
         this.name = name;
         this.value = value;
     }
 
-    public PostParameter(String name, double value) {
+    public HttpParameter(String name, double value) {
         this.name = name;
         this.value = String.valueOf(value);
     }
 
-    public PostParameter(String name, int value) {
+    public HttpParameter(String name, int value) {
         this.name = name;
         this.value = String.valueOf(value);
     }
 
-    public PostParameter(String name, File file) {
+    public HttpParameter(String name, File file) {
         this.name = name;
         this.file = file;
     }
@@ -124,12 +124,12 @@ public class PostParameter implements Serializable {
     }
 
 
-    public static boolean containsFile(PostParameter[] params) {
+    public static boolean containsFile(HttpParameter[] params) {
         boolean containsFile = false;
         if (null == params) {
             return false;
         }
-        for (PostParameter param : params) {
+        for (HttpParameter param : params) {
             if (param.isFile()) {
                 containsFile = true;
                 break;
@@ -139,9 +139,9 @@ public class PostParameter implements Serializable {
     }
 
     /*package*/
-    static boolean containsFile(List<PostParameter> params) {
+    static boolean containsFile(List<HttpParameter> params) {
         boolean containsFile = false;
-        for (PostParameter param : params) {
+        for (HttpParameter param : params) {
             if (param.isFile()) {
                 containsFile = true;
                 break;
@@ -150,21 +150,21 @@ public class PostParameter implements Serializable {
         return containsFile;
     }
 
-    public static PostParameter[] getParameterArray(String name, String value) {
-        return new PostParameter[]{new PostParameter(name, value)};
+    public static HttpParameter[] getParameterArray(String name, String value) {
+        return new HttpParameter[]{new HttpParameter(name, value)};
     }
 
-    public static PostParameter[] getParameterArray(String name, int value) {
+    public static HttpParameter[] getParameterArray(String name, int value) {
         return getParameterArray(name, String.valueOf(value));
     }
 
-    public static PostParameter[] getParameterArray(String name1, String value1
+    public static HttpParameter[] getParameterArray(String name1, String value1
             , String name2, String value2) {
-        return new PostParameter[]{new PostParameter(name1, value1)
-                , new PostParameter(name2, value2)};
+        return new HttpParameter[]{new HttpParameter(name1, value1)
+                , new HttpParameter(name2, value2)};
     }
 
-    public static PostParameter[] getParameterArray(String name1, int value1
+    public static HttpParameter[] getParameterArray(String name1, int value1
             , String name2, int value2) {
         return getParameterArray(name1, String.valueOf(value1), name2, String.valueOf(value2));
     }
@@ -185,8 +185,8 @@ public class PostParameter implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (obj instanceof PostParameter) {
-            PostParameter that = (PostParameter) obj;
+        if (obj instanceof HttpParameter) {
+            HttpParameter that = (HttpParameter) obj;
 
             if (file != null ? !file.equals(that.file) : that.file != null)
                 return false;
@@ -208,7 +208,7 @@ public class PostParameter implements Serializable {
 
     public int compareTo(Object o) {
         int compared;
-        PostParameter that = (PostParameter) o;
+        HttpParameter that = (HttpParameter) o;
         compared = name.compareTo(that.name);
         if (0 == compared) {
             compared = value.compareTo(that.value);
@@ -216,7 +216,7 @@ public class PostParameter implements Serializable {
         return compared;
     }
 
-    public static String encodeParameters(PostParameter[] httpParams) {
+    public static String encodeParameters(HttpParameter[] httpParams) {
         if (null == httpParams) {
             return "";
         }

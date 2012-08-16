@@ -17,7 +17,7 @@ import weibo4j.model.TinyUrlWrapper;
 public class TinyUrlsTest {
     private static final Logger LOG = LoggerFactory.getLogger(TinyUrlsTest.class);
     private static final boolean debug = LOG.isDebugEnabled();
-    TinyUrls tinyUrls = new TinyUrls("2.00H6RDyC0WKLFi44586cc233lyW9rB");
+    TinyUrls tinyUrls = new TinyUrls("2.00m8ATIB0X69K40e3374481asw5TbB");
 
     @Test
     public void testShortUrl() throws Exception {

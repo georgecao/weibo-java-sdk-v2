@@ -45,7 +45,7 @@ public class ParamUtilsTest {
                 .description("desc")
                 .build();
 
-        List<PostParameter> params = ParamUtils.get(user);
+        List<HttpParameter> params = ParamUtils.get(user);
         LOG.info("{}", params);
     }
 }

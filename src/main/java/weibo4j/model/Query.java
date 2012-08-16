@@ -221,8 +221,8 @@ public class Query implements Serializable {
 	public void setGeocode(String geocode) {
 		this.geocode = geocode;
 	}
-	public PostParameter[] getParameters() throws WeiboException{
-		List<PostParameter> list= new ArrayList<PostParameter>();
+	public HttpParameter[] getParameters() throws WeiboException{
+		List<HttpParameter> list= new ArrayList<HttpParameter>();
 		Class<Query> clz=Query.class;
 		Field[] fields=clz.getDeclaredFields();
 		for (Field field : fields) {
@@ -241,20 +241,20 @@ public class Query implements Serializable {
 				throw new WeiboException(e);
 			}
 		}
-		return list.toArray(new PostParameter[list.size()]);
+		return list.toArray(new HttpParameter[list.size()]);
 		
 	}
-	private PostParameter getParameterValue(String name,Object value){
+	private HttpParameter getParameterValue(String name,Object value){
 		if(value instanceof Boolean){
-			return new PostParameter(name, (Boolean)value?"0":"1");
+			return new HttpParameter(name, (Boolean)value?"0":"1");
 		}else if(value instanceof String){
-			return new PostParameter(name, value.toString());
+			return new HttpParameter(name, value.toString());
 		}else if(value instanceof Integer){
-			return new PostParameter(name,Integer.toString((Integer)value));
+			return new HttpParameter(name,Integer.toString((Integer)value));
 		}else if(value instanceof Long){
-			return new PostParameter(name,Long.toString((Long)value));
+			return new HttpParameter(name,Long.toString((Long)value));
 		}else if(value instanceof Gender) {
-			return new PostParameter(name,Gender.valueOf((Gender)value));
+			return new HttpParameter(name,Gender.valueOf((Gender)value));
 		}
 		return null;
 	}

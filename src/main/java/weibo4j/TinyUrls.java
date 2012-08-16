@@ -2,7 +2,7 @@ package weibo4j;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import weibo4j.model.PostParameter;
+import weibo4j.model.HttpParameter;
 import weibo4j.model.TinyUrlWrapper;
 import weibo4j.model.WeiboException;
 import weibo4j.util.WeiboConfig;
@@ -33,10 +33,10 @@ public class TinyUrls extends Weibo {
     }
 
     public TinyUrlWrapper shortUrl(Collection<String> longUrls) throws WeiboException {
-        PostParameter[] longUrlArray = new PostParameter[longUrls.size()];
+        HttpParameter[] longUrlArray = new HttpParameter[longUrls.size()];
         int index = 0;
         for (String longUrl : longUrls) {
-            longUrlArray[index++] = new PostParameter(URL_LONG_KEY, longUrl);
+            longUrlArray[index++] = new HttpParameter(URL_LONG_KEY, longUrl);
         }
         return new TinyUrlWrapper(client.get(WeiboConfig.getBaseUrl() + "short_url/shorten.json", longUrlArray)
                 .asJSONObject());
@@ -51,10 +51,10 @@ public class TinyUrls extends Weibo {
     }
 
     public TinyUrlWrapper expandUrl(Collection<String> shortUrls) throws WeiboException {
-        PostParameter[] shortUrlArray = new PostParameter[shortUrls.size()];
+        HttpParameter[] shortUrlArray = new HttpParameter[shortUrls.size()];
         int index = 0;
         for (String shortUrl : shortUrls) {
-            shortUrlArray[index++] = new PostParameter(URL_SHORT_KEY, shortUrl);
+            shortUrlArray[index++] = new HttpParameter(URL_SHORT_KEY, shortUrl);
         }
         return new TinyUrlWrapper(client.get(WeiboConfig.getBaseUrl() + "short_url/expand.json", shortUrlArray)
                 .asJSONObject());
