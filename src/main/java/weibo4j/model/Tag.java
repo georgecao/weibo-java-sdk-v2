@@ -57,8 +57,8 @@ public class Tag extends WeiboResponse implements Serializable {
 				tags.add(new Tag(list.getJSONObject(i)));
 			}
 			return tags;
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone);
+		} catch (JSONException e) {
+			throw new WeiboException(e);
 		} catch (WeiboException te) {
 			throw te;
 		}
@@ -88,8 +88,8 @@ public class Tag extends WeiboResponse implements Serializable {
 				tags.add(new FavoritesTag(list.getJSONObject(i)));
 			}
 			return tags;
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone);
+		} catch (JSONException e) {
+			throw new WeiboException(e);
 		} catch (WeiboException te) {
 			throw te;
 		}

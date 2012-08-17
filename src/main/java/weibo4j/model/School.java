@@ -45,8 +45,8 @@ public class School extends WeiboResponse {
 				schools.add(new School(list.getJSONObject(i)));
 			}
 			return schools;
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone);
+		} catch (JSONException e) {
+			throw new WeiboException(e);
 		} catch (WeiboException te) {
 			throw te;
 		}

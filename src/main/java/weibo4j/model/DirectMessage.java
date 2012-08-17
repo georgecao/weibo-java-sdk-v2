@@ -54,8 +54,8 @@ public class DirectMessage extends WeiboResponse implements Serializable {
             if (!json.isNull("recipient")) {
                 recipient = new User(json.getJSONObject("recipient"));
             }
-        } catch (JSONException jsone) {
-            throw new WeiboException(jsone.getMessage() + ":" + json.toString(), jsone);
+        } catch (JSONException e) {
+            throw new WeiboException(e.getMessage() + ":" + json.toString(), e);
         }
 
     }
@@ -114,8 +114,8 @@ public class DirectMessage extends WeiboResponse implements Serializable {
                 messages.add(new DirectMessage(list.getJSONObject(i)));
             }
             return messages;
-        } catch (JSONException jsone) {
-            throw new WeiboException(jsone);
+        } catch (JSONException e) {
+            throw new WeiboException(e);
         }
     }
 

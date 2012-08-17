@@ -329,8 +329,8 @@ public class Status extends WeiboResponse implements Serializable {
             long totalNumber = jsonStatus.optLong("total_number");
             String hasVisible = jsonStatus.optString("hasvisible");
             return new StatusWrapper(status, previousCursor, nextCursor, totalNumber, hasVisible);
-        } catch (JSONException jsone) {
-            throw new WeiboException(jsone);
+        } catch (JSONException e) {
+            throw new WeiboException(e);
         }
     }
 

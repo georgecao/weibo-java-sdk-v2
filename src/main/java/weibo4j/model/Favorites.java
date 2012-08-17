@@ -62,8 +62,8 @@ public class Favorites extends WeiboResponse implements java.io.Serializable{
 			}
 			totalNumber =res.asJSONObject().getInt("total_number");
 			return favorites;
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone);
+		} catch (JSONException e) {
+			throw new WeiboException(e);
 		} 
 	}
 	

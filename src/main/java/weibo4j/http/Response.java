@@ -197,8 +197,8 @@ public class Response {
     public JSONObject asJSONObject() throws WeiboException {
         try {
             return new JSONObject(asString());
-        } catch (JSONException jsone) {
-            throw new WeiboException(jsone.getMessage() + ":" + this.responseAsString, jsone);
+        } catch (JSONException e) {
+            throw new WeiboException(e.getMessage() + ":" + this.responseAsString, e);
         }
     }
 
@@ -212,8 +212,8 @@ public class Response {
     public JSONArray asJSONArray() throws WeiboException {
         try {
             return new JSONArray(asString());
-        } catch (Exception jsone) {
-            throw new WeiboException(jsone.getMessage() + ":" + this.responseAsString, jsone);
+        } catch (Exception e) {
+            throw new WeiboException(e.getMessage() + ":" + this.responseAsString, e);
         }
     }
 

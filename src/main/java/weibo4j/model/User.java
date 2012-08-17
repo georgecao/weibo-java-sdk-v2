@@ -320,10 +320,13 @@ public class User extends WeiboResponse implements java.io.Serializable {
                 lang = json.getString("lang");
                 weihao = json.getString("weihao");
                 if (!json.isNull("status")) {
-                    status = new Status(json.getJSONObject("status"));
+                    JSONObject s = json.getJSONObject("status");
+                    if (1 != s.optInt("deleted", 0)) {
+                        status = new Status(s);
+                    }
                 }
-            } catch (JSONException jsone) {
-                throw new WeiboException(jsone.getMessage() + ":" + json.toString(), jsone);
+            } catch (JSONException e) {
+                throw new WeiboException(e.getMessage() + ":" + json.toString(), e);
             }
         }
     }
@@ -334,8 +337,8 @@ public class User extends WeiboResponse implements java.io.Serializable {
             String temp = list.toString().substring(1, list.toString().length() - 1);
             String[] ids = temp.split(",");
             return ids;
-        } catch (JSONException jsone) {
-            throw new WeiboException(jsone.getMessage() + ":" + jsone.toString(), jsone);
+        } catch (JSONException e) {
+            throw new WeiboException(e.getMessage() + ":" + e.toString(), e);
         }
     }
 

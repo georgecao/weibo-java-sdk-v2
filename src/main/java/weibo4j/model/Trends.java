@@ -92,9 +92,9 @@ public class Trends extends WeiboResponse implements Comparable<Trends> {
 			}
 			Collections.sort(trends);
 			return trends;
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone.getMessage() + ":" + res.asString(),
-					jsone);
+		} catch (JSONException e) {
+			throw new WeiboException(e.getMessage() + ":" + res.asString(),
+					e);
 		}
 	}
 
@@ -106,9 +106,9 @@ public class Trends extends WeiboResponse implements Comparable<Trends> {
 			JSONArray array = json.getJSONArray("trends");
 			Trend[] trendsArray = jsonArrayToTrendArray(array);
 			return new Trends(res, asOf, asOf, trendsArray);
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone.getMessage() + ":" + res.asString(),
-					jsone);
+		} catch (JSONException e) {
+			throw new WeiboException(e.getMessage() + ":" + res.asString(),
+					e);
 		}
 	}
 

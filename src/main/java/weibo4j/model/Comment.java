@@ -90,8 +90,8 @@ public class Comment extends WeiboResponse implements java.io.Serializable {
             long totalNumber = json.getLong("total_number");
             String hasvisible = json.getString("hasvisible");
             return new CommentWrapper(comment, previousCursor, nextCursor, totalNumber, hasvisible);
-        } catch (JSONException jsone) {
-            throw new WeiboException(jsone);
+        } catch (JSONException e) {
+            throw new WeiboException(e);
         }
     }
 

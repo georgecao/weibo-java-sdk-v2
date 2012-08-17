@@ -63,9 +63,9 @@ public class RateLimitStatus extends WeiboResponse implements Serializable {
             resetTime = json.getString("reset_time");
             resetTimeInSeconds = json.getInt("reset_time_in_seconds");
             userLimit = json.getLong("user_limit");
-        } catch (JSONException jsone) {
+        } catch (JSONException e) {
             throw new WeiboException(
-                    jsone.getMessage() + ":" + json.toString(), jsone);
+                    e.getMessage() + ":" + json.toString(), e);
         }
     }
 

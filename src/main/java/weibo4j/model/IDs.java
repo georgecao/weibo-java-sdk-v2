@@ -67,8 +67,8 @@ public class IDs extends WeiboResponse {
 				}
         	}
         	
-         } catch (JSONException jsone) {
-             throw new WeiboException(jsone);
+         } catch (JSONException e) {
+             throw new WeiboException(e);
          } 
         
     }

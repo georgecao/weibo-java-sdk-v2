@@ -17,8 +17,8 @@ public class ApiRateLimits implements java.io.Serializable{
 			limit = json.getInt("limit");
 			limitTimeUnit = json.getString("limit_time_unit");
 			remainingHits = json.getLong("remaining_hits");
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone.getMessage() + ":" + json.toString(), jsone);
+		} catch (JSONException e) {
+			throw new WeiboException(e.getMessage() + ":" + json.toString(), e);
 		}
 	}
 

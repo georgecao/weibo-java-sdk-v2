@@ -71,8 +71,8 @@ public class Count implements Serializable {
                 counts.add(new Count(list.getJSONObject(i)));
             }
             return counts;
-        } catch (JSONException jsone) {
-            throw new WeiboException(jsone);
+        } catch (JSONException e) {
+            throw new WeiboException(e);
         } catch (WeiboException te) {
             throw te;
         }

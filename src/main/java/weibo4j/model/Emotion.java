@@ -70,8 +70,8 @@ public class Emotion extends WeiboResponse {
 				emotions.add(new Emotion(list.getJSONObject(i)));
 			}
 			return emotions;
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone);
+		} catch (JSONException e) {
+			throw new WeiboException(e);
 		} catch (WeiboException te) {
 			throw te;
 		}

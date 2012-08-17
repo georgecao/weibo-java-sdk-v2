@@ -42,8 +42,8 @@ public class FavoritesTag extends WeiboResponse implements java.io.Serializable 
 				tags.add(new FavoritesTag(list.getJSONObject(i)));
 			}
 			return tags;
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone);
+		} catch (JSONException e) {
+			throw new WeiboException(e);
 		} catch (WeiboException te) {
 			throw te;
 		}
@@ -57,8 +57,8 @@ public class FavoritesTag extends WeiboResponse implements java.io.Serializable 
 				tags.add(new FavoritesTag(list.getJSONObject(i)));
 			}
 			return tags;
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone);
+		} catch (JSONException e) {
+			throw new WeiboException(e);
 		} catch (WeiboException te) {
 			throw te;
 		}

@@ -1,12 +1,12 @@
 package weibo4j.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import weibo4j.http.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.http.Response;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 话题
@@ -57,8 +57,8 @@ public class UserTrend extends WeiboResponse{
 	            	trends.add(new UserTrend(list.getJSONObject(i)));
 	            }
 	            return trends;
-	        } catch (JSONException jsone) {
-	            throw new WeiboException(jsone);
+	        } catch (JSONException e) {
+	            throw new WeiboException(e);
 	        } catch (WeiboException te) {
 	            throw te;
 	        }
