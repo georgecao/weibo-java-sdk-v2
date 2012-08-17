@@ -26,10 +26,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package weibo4j.model;
 
-import weibo4j.http.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.http.Response;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -273,9 +273,29 @@ public class User extends WeiboResponse implements java.io.Serializable {
         init(json);
     }
 
+    public User(String json) throws WeiboException {
+        super();
+        init(json);
+    }
+
+    private void init(String json) throws WeiboException {
+        this.rawJson = json;
+        try {
+            init(new JSONObject(json), false);
+        } catch (JSONException e) {
+            throw new WeiboException(e.getMessage() + ":" + json, e);
+        }
+    }
+
     private void init(JSONObject json) throws WeiboException {
+        init(json, true);
+    }
+
+    private void init(JSONObject json, boolean withRawJson) throws WeiboException {
         if (json != null) {
-            setRawJson(json.toString());
+            if (withRawJson) {
+                setRawJson(json.toString());
+            }
             try {
                 id = json.getString("id");
                 screenName = json.getString("screen_name");
