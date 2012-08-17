@@ -73,7 +73,6 @@ public class User extends WeiboResponse implements java.io.Serializable {
     private String lang;                  //用户语言版本
     private String verifiedReason;          //认证原因
     private String weihao;                  //微號
-    private String statusId;
     private String rawJson;
 
     public String getRawJson() {
@@ -223,14 +222,6 @@ public class User extends WeiboResponse implements java.io.Serializable {
         this.verifiedReason = verifiedReason;
     }
 
-    public String getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(String statusId) {
-        this.statusId = statusId;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -322,9 +313,8 @@ public class User extends WeiboResponse implements java.io.Serializable {
                 followMe = json.getBoolean("follow_me");
                 avatarLarge = json.getString("avatar_large");
                 onlineStatus = json.getInt("online_status");
-                statusId = json.getString("status_id");
                 biFollowersCount = json.getInt("bi_followers_count");
-                if (!json.getString("remark").isEmpty()) {
+                if (!json.isNull("remark")) {
                     remark = json.getString("remark");
                 }
                 lang = json.getString("lang");
@@ -354,7 +344,7 @@ public class User extends WeiboResponse implements java.io.Serializable {
      * @return
      * @throws WeiboException
      */
-    public static UserWrapper constructWapperUsers(Response res) throws WeiboException {
+    public static UserWrapper constructWrapperUsers(Response res) throws WeiboException {
         JSONObject jsonUsers = res.asJSONObject(); //asJSONArray();
         try {
             JSONArray user = jsonUsers.getJSONArray("users");
@@ -363,13 +353,13 @@ public class User extends WeiboResponse implements java.io.Serializable {
             for (int i = 0; i < size; i++) {
                 users.add(new User(user.getJSONObject(i)));
             }
-            long previousCursor = jsonUsers.getLong("previous_curosr");
-            long nextCursor = jsonUsers.getLong("next_cursor");
-            long totalNumber = jsonUsers.getLong("total_number");
-            String hasvisible = jsonUsers.getString("hasvisible");
-            return new UserWrapper(users, previousCursor, nextCursor, totalNumber, hasvisible);
-        } catch (JSONException jsone) {
-            throw new WeiboException(jsone);
+            long previousCursor = jsonUsers.optLong("previous_curosr");
+            long nextCursor = jsonUsers.optLong("next_cursor");
+            long totalNumber = jsonUsers.optLong("total_number");
+            String hasVisible = jsonUsers.optString("hasvisible");
+            return new UserWrapper(users, previousCursor, nextCursor, totalNumber, hasVisible);
+        } catch (JSONException e) {
+            throw new WeiboException(e);
         }
     }
 
@@ -570,7 +560,6 @@ public class User extends WeiboResponse implements java.io.Serializable {
                 ", lang=" + lang +
                 ", verifiedReason=" + verifiedReason +
                 ", weihao=" + weihao +
-                ", statusId=" + statusId +
                 "]";
     }
 }

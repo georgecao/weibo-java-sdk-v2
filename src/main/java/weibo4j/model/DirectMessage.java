@@ -1,11 +1,11 @@
 package weibo4j.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import weibo4j.http.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import weibo4j.http.Response;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class DirectMessage extends WeiboResponse implements Serializable {
             text = json.getString("text");
             statusId = json.getLong("status_id");
             senderId = json.getLong("sender_id");
-            sendType = json.getInt("send_type");
+            sendType = json.optInt("send_type");
             recipientId = json.getLong("recipient_id");
             createdAt = parseDate(json.getString("created_at"), "EEE MMM dd HH:mm:ss z yyyy");
             senderScreenName = json.getString("sender_screen_name");

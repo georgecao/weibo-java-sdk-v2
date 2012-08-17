@@ -66,13 +66,13 @@ public class Suggestion extends Weibo {
      * @since JDK 1.5
      */
     public UserWrapper suggestionsUsersByStatus(String content) throws WeiboException {
-        return User.constructWapperUsers(client.get(WeiboConfig.getValue("baseURL") + "suggestions/users/by_status.json", new HttpParameter[]{
+        return User.constructWrapperUsers(client.get(WeiboConfig.getValue("baseURL") + "suggestions/users/by_status.json", new HttpParameter[]{
                 new HttpParameter("content", content)
         }));
     }
 
     public UserWrapper suggestionsUsersByStatus(String content, int num) throws WeiboException {
-        return User.constructWapperUsers(client.get(WeiboConfig.getValue("baseURL") + "suggestions/users/by_status.json", new HttpParameter[]{
+        return User.constructWrapperUsers(client.get(WeiboConfig.getValue("baseURL") + "suggestions/users/by_status.json", new HttpParameter[]{
                 new HttpParameter("content", content),
                 new HttpParameter("num", num)
         }));
@@ -89,14 +89,14 @@ public class Suggestion extends Weibo {
      * @since JDK 1.5
      */
     public StatusWrapper suggestionsStatusesHot(int type, int isPic) throws WeiboException {
-        return Status.constructWapperStatus(client.get(WeiboConfig.getValue("baseURL") + "suggestions/statuses/hot.json", new HttpParameter[]{
+        return Status.constructWrapperStatus(client.get(WeiboConfig.getValue("baseURL") + "suggestions/statuses/hot.json", new HttpParameter[]{
                 new HttpParameter("type", type),
                 new HttpParameter("is_pic", isPic)
         }));
     }
 
     public StatusWrapper suggestionsStatusesHot(int type, int isPic, Paging page) throws WeiboException {
-        return Status.constructWapperStatus(client.get(WeiboConfig.getValue("baseURL") + "suggestions/statuses/hot.json", new HttpParameter[]{
+        return Status.constructWrapperStatus(client.get(WeiboConfig.getValue("baseURL") + "suggestions/statuses/hot.json", new HttpParameter[]{
                 new HttpParameter("type", type),
                 new HttpParameter("is_pic", isPic)
         }, page));

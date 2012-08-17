@@ -25,7 +25,7 @@ public class Friendships extends Weibo {
      * @since JDK 1.5
      */
     public UserWrapper getFriendsByID(String id) throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/friends.json",
                 new HttpParameter[]{new HttpParameter("uid", id)}));
     }
@@ -48,7 +48,7 @@ public class Friendships extends Weibo {
      */
     public UserWrapper getFriendsByScreenName(String screen_name)
             throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/friends.json",
                 new HttpParameter[]{new HttpParameter("screen_name",
                         screen_name)}));
@@ -66,7 +66,7 @@ public class Friendships extends Weibo {
      * @since JDK 1.5
      */
     public UserWrapper getFriendsInCommon(String uid) throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/in_common.json",
                 new HttpParameter[]{new HttpParameter("uid", uid)}));
@@ -87,7 +87,7 @@ public class Friendships extends Weibo {
      */
     public UserWrapper getFriendsInCommon(String uid, String suid, Paging page)
             throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/friends/in_common.json",
                 new HttpParameter[]{
                         new HttpParameter("uid", uid),
@@ -106,7 +106,7 @@ public class Friendships extends Weibo {
      * @since JDK 1.5
      */
     public UserWrapper getFriendsBilateral(String uid) throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/bilateral.json",
                 new HttpParameter[]{new HttpParameter("uid", uid)}));
@@ -128,7 +128,7 @@ public class Friendships extends Weibo {
      */
     public UserWrapper getFriendsBilateral(String uid, Integer sort, Paging page)
             throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends/bilateral.json",
                 new HttpParameter[]{new HttpParameter("uid", uid),
@@ -291,7 +291,7 @@ public class Friendships extends Weibo {
      */
     public UserWrapper getFollowersByName(String screen_name)
             throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/followers.json",
                 new HttpParameter[]{new HttpParameter("screen_name",
                         screen_name)}));
@@ -312,7 +312,7 @@ public class Friendships extends Weibo {
      */
     public UserWrapper getFollowersByName(String screen_name, Integer count,
                                           Integer cursor) throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/followers.json",
                 new HttpParameter[]{
                         new HttpParameter("screen_name", screen_name),
@@ -332,7 +332,7 @@ public class Friendships extends Weibo {
      * @since JDK 1.5
      */
     public UserWrapper getFollowersById(String uid) throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/followers.json",
                 new HttpParameter[]{new HttpParameter("uid", uid)}));
     }
@@ -352,7 +352,7 @@ public class Friendships extends Weibo {
      */
     public UserWrapper getFollowersById(String uid, Integer count, Integer cursor)
             throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL") + "friendships/followers.json",
                 new HttpParameter[]{new HttpParameter("uid", uid),
                         new HttpParameter("count", count.toString()),
@@ -456,7 +456,7 @@ public class Friendships extends Weibo {
      * @since JDK 1.5
      */
     public UserWrapper getFollowersActive(String uid) throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/followers/active.json",
                 new HttpParameter[]{new HttpParameter("uid", uid)}));
@@ -476,7 +476,7 @@ public class Friendships extends Weibo {
      */
     public UserWrapper getFollowersActive(String uid, Integer count)
             throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/followers/active.json",
                 new HttpParameter[]{new HttpParameter("uid", uid),
@@ -496,7 +496,7 @@ public class Friendships extends Weibo {
      */
     public UserWrapper getFriendsChainFollowers(String uid)
             throws WeiboException {
-        return User.constructWapperUsers(client.get(
+        return User.constructWrapperUsers(client.get(
                 WeiboConfig.getValue("baseURL")
                         + "friendships/friends_chain/followers.json",
                 new HttpParameter[]{new HttpParameter("uid", uid)}));

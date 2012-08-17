@@ -108,7 +108,7 @@ public class Search extends Weibo {
      * @throws WeiboException api exception
      */
     public StatusWrapper searchTopic(String q, int page, int count) throws WeiboException {
-        return Status.constructWapperStatus(client.get(WeiboConfig.getBaseUrl() + "/search/topics",
+        return Status.constructWrapperStatus(client.get(WeiboConfig.getBaseUrl() + "/search/topics",
                 new HttpParameter[]{
                         new HttpParameter("q", q),
                         new HttpParameter("count", count),
