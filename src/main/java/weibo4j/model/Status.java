@@ -50,41 +50,43 @@ public class Status extends WeiboResponse implements Serializable {
     }
 
     private void constructJson(JSONObject json) throws WeiboException {
-        try {
-            createdAt = parseDate(json.getString("created_at"), "EEE MMM dd HH:mm:ss z yyyy");
-            id = json.getString("id");
-            mid = json.getString("mid");
-            idstr = json.getLong("idstr");
-            text = json.getString("text");
-            if (!json.isNull("source")) {
-                source = new Source(json.getString("source"));
+        if (!isDeleted(json)) {
+            try {
+                createdAt = parseDate(json.getString("created_at"), "EEE MMM dd HH:mm:ss z yyyy");
+                id = json.getString("id");
+                mid = json.getString("mid");
+                idstr = json.getLong("idstr");
+                text = json.getString("text");
+                if (!json.isNull("source")) {
+                    source = new Source(json.getString("source"));
+                }
+                inReplyToStatusId = getLong("in_reply_to_status_id", json);
+                inReplyToUserId = getLong("in_reply_to_user_id", json);
+                inReplyToScreenName = json.getString("in_reply_to_screen_name");
+                favorited = getBoolean("favorited", json);
+                truncated = getBoolean("truncated", json);
+                thumbnailPic = json.optString("thumbnail_pic");
+                bmiddlePic = json.optString("bmiddle_pic");
+                originalPic = json.optString("original_pic");
+                repostsCount = json.getInt("reposts_count");
+                commentsCount = json.getInt("comments_count");
+                annotations = json.optString("annotations", "");
+                if (!json.isNull("user"))
+                    user = new User(json.getJSONObject("user"));
+                if (!json.isNull("retweeted_status")) {
+                    retweetedStatus = new Status(json.getJSONObject("retweeted_status"));
+                }
+                mlevel = json.getInt("mlevel");
+                geo = json.optString("geo");
+                if (geo != null && !"".equals(geo) && !"null".equals(geo)) {
+                    getGeoInfo(geo);
+                }
+                if (!json.isNull("visible")) {
+                    visible = new Visible(json.getJSONObject("visible"));
+                }
+            } catch (JSONException je) {
+                throw new WeiboException(je.getMessage() + ":" + json.toString(), je);
             }
-            inReplyToStatusId = getLong("in_reply_to_status_id", json);
-            inReplyToUserId = getLong("in_reply_to_user_id", json);
-            inReplyToScreenName = json.getString("in_reply_to_screen_name");
-            favorited = getBoolean("favorited", json);
-            truncated = getBoolean("truncated", json);
-            thumbnailPic = json.optString("thumbnail_pic");
-            bmiddlePic = json.optString("bmiddle_pic");
-            originalPic = json.optString("original_pic");
-            repostsCount = json.getInt("reposts_count");
-            commentsCount = json.getInt("comments_count");
-            annotations = json.optString("annotations", "");
-            if (!json.isNull("user"))
-                user = new User(json.getJSONObject("user"));
-            if (!json.isNull("retweeted_status")) {
-                retweetedStatus = new Status(json.getJSONObject("retweeted_status"));
-            }
-            mlevel = json.getInt("mlevel");
-            geo = json.optString("geo");
-            if (geo != null && !"".equals(geo) && !"null".equals(geo)) {
-                getGeoInfo(geo);
-            }
-            if (!json.isNull("visible")) {
-                visible = new Visible(json.getJSONObject("visible"));
-            }
-        } catch (JSONException je) {
-            throw new WeiboException(je.getMessage() + ":" + json.toString(), je);
         }
     }
 
@@ -310,7 +312,7 @@ public class Status extends WeiboResponse implements Serializable {
     }
 
     public static boolean isDeleted(JSONObject status) {
-        return 1 == status.optInt("deleted", 0);
+        return status == null || 1 == status.optInt("deleted", 0);
     }
 
     public static StatusWrapper constructWrapperStatus(Response res) throws WeiboException {
