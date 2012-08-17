@@ -83,7 +83,7 @@ public class ParamUtils {
         if (isEmpty(params)) {
             parameters = new ArrayList<HttpParameter>(0);
         } else {
-            parameters = Arrays.asList(params);
+            parameters = new ArrayList<HttpParameter>(Arrays.asList(params));
         }
         return parameters;
     }

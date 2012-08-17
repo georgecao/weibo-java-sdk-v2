@@ -17,7 +17,7 @@ public class Friendships extends Weibo {
     /**
      * 获取用户的关注列表
      *
-     * @return list of the user's follow
+     * @return list of the user's FOLLOW
      * @throws WeiboException when Weibo service or network is unavailable
      * @version weibo4j-V2 1.0.0
      * @see <a
