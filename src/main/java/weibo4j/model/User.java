@@ -321,7 +321,7 @@ public class User extends WeiboResponse implements java.io.Serializable {
                 weihao = json.getString("weihao");
                 if (!json.isNull("status")) {
                     JSONObject s = json.getJSONObject("status");
-                    if (1 != s.optInt("deleted", 0)) {
+                    if (!Status.isDeleted(s)) {
                         status = new Status(s);
                     }
                 }
@@ -356,7 +356,7 @@ public class User extends WeiboResponse implements java.io.Serializable {
             for (int i = 0; i < size; i++) {
                 users.add(new User(user.getJSONObject(i)));
             }
-            long previousCursor = jsonUsers.optLong("previous_curosr");
+            long previousCursor = jsonUsers.optLong("previous_cursor");
             long nextCursor = jsonUsers.optLong("next_cursor");
             long totalNumber = jsonUsers.optLong("total_number");
             String hasVisible = jsonUsers.optString("hasvisible");

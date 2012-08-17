@@ -309,6 +309,10 @@ public class Status extends WeiboResponse implements Serializable {
         this.truncated = truncated;
     }
 
+    public static boolean isDeleted(JSONObject status) {
+        return 1 == status.optInt("deleted", 0);
+    }
+
     public static StatusWrapper constructWrapperStatus(Response res) throws WeiboException {
         JSONObject jsonStatus = res.asJSONObject(); //asJSONArray();
         JSONArray statuses = null;
@@ -322,7 +326,10 @@ public class Status extends WeiboResponse implements Serializable {
             int size = statuses.length();
             List<Status> status = new ArrayList<Status>(size);
             for (int i = 0; i < size; i++) {
-                status.add(new Status(statuses.getJSONObject(i)));
+                JSONObject json = statuses.getJSONObject(i);
+                if (!isDeleted(json)) {
+                    status.add(new Status());
+                }
             }
             long previousCursor = jsonStatus.optLong("previous_cursor");
             long nextCursor = jsonStatus.optLong("next_cursor");
