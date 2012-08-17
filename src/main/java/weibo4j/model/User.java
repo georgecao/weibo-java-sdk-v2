@@ -573,6 +573,4 @@ public class User extends WeiboResponse implements java.io.Serializable {
                 ", statusId=" + statusId +
                 "]";
     }
-
-
 }
