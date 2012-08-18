@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weibo4j.model.User;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Say something?
  * <pre>
@@ -21,7 +23,10 @@ public class UsersTest {
 
     @Test
     public void testShowUserById() throws Exception {
-        User u = weibo.getUserService().showUserById("1472483604");
-        LOG.info("{}", u.getBiFollowersCount());
+        for (int i = 0; i < 200; i++) {
+            User u = weibo.getUserService().showUserById("1092478650");
+            LOG.info("{}", u.getBiFollowersCount());
+            assertTrue(u.getBiFollowersCount() > 0);
+        }
     }
 }
