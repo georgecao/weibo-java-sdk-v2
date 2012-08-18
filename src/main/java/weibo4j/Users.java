@@ -1,9 +1,9 @@
 package weibo4j;
 
+import org.json.JSONArray;
 import weibo4j.model.HttpParameter;
 import weibo4j.model.User;
 import weibo4j.model.WeiboException;
-import org.json.JSONArray;
 import weibo4j.util.WeiboConfig;
 
 public class Users extends Weibo {
@@ -31,7 +31,7 @@ public class Users extends Weibo {
         return new User(client.get(
                 WeiboConfig.getValue("baseURL") + "users/show.json",
                 new HttpParameter[]{new HttpParameter("uid", uid)})
-                .asJSONObject());
+                .asString());
     }
 
     /**
