@@ -26,13 +26,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package weibo4j.model;
 
-import java.util.Arrays;
-
-import weibo4j.Weibo;
-import weibo4j.http.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.Weibo;
+import weibo4j.http.Response;
+
+import java.util.Arrays;
 
 /**
  * A data class representing array of numeric IDs.
@@ -55,8 +55,8 @@ public class IDs extends WeiboResponse {
         }
         JSONObject json=  res.asJSONObject();
         try {
-        	previousCursor = json.getLong("previous_cursor");
-            nextCursor = json.getLong("next_cursor");
+        	previousCursor = json.optLong("previous_cursor");
+            nextCursor = json.optLong("next_cursor");
         	
             if(!json.isNull("ids")){
         		JSONArray jsona= json.getJSONArray("ids");
