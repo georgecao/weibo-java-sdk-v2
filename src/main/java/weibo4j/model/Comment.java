@@ -1,9 +1,9 @@
 package weibo4j.model;
 
-import weibo4j.http.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.http.Response;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,10 +85,10 @@ public class Comment extends WeiboResponse implements java.io.Serializable {
             for (int i = 0; i < size; i++) {
                 comment.add(new Comment(comments.getJSONObject(i)));
             }
-            long previousCursor = json.getLong("previous_curosr");
-            long nextCursor = json.getLong("next_cursor");
-            long totalNumber = json.getLong("total_number");
-            String hasvisible = json.getString("hasvisible");
+            long previousCursor = json.optLong("previous_cursor");
+            long nextCursor = json.optLong("next_cursor");
+            long totalNumber = json.optLong("total_number");
+            String hasvisible = json.optString("hasvisible");
             return new CommentWrapper(comment, previousCursor, nextCursor, totalNumber, hasvisible);
         } catch (JSONException e) {
             throw new WeiboException(e);
