@@ -188,23 +188,17 @@ public class WeiboResponse implements Serializable {
         if (isEmpty(str)) {
             return null;
         }
-        SimpleDateFormat sdf = formatMap.get(format);
-        if (null == sdf) {
-            sdf = new SimpleDateFormat(format, Locale.ENGLISH);
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-            formatMap.put(format, sdf);
-        }
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.ENGLISH);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        // SimpleDateFormat is not thread safe
         try {
-            synchronized (sdf) {
-                // SimpleDateFormat is not thread safe
-                return sdf.parse(str);
-            }
-        } catch (ParseException pe) {
+            return sdf.parse(str);
+        } catch (ParseException e) {
             throw new WeiboException("Unexpected format(" + str + ") returned from sina.com.cn");
         }
     }
 
-    protected static int getInt(String key, JSONObject json) throws JSONException {
+    protected static int getInt(String key, JSONObject json) {
         String str = json.optString(key);
         if (isEmpty(str) || NULL_STRING.equals(str)) {
             return -1;
@@ -212,16 +206,16 @@ public class WeiboResponse implements Serializable {
         return Integer.valueOf(str);
     }
 
-    protected static long getLong(String key, JSONObject json) throws JSONException {
-        String str = json.getString(key);
+    protected static long getLong(String key, JSONObject json) {
+        String str = json.optString(key);
         if (isEmpty(str) || NULL_STRING.equals(str)) {
             return -1;
         }
-        return Long.parseLong(str);
+        return Long.valueOf(str);
     }
 
-    protected static boolean getBoolean(String key, JSONObject json) throws JSONException {
-        String str = json.getString(key);
+    protected static boolean getBoolean(String key, JSONObject json) {
+        String str = json.optString(key);
         if (isEmpty(str) || NULL_STRING.equals(str)) {
             return false;
         }
