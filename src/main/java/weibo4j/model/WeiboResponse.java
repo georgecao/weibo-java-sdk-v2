@@ -42,6 +42,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static weibo4j.util.ParamUtils.isEmpty;
+
 /**
  * Super class of Weibo Response objects.
  *
@@ -149,6 +151,10 @@ public class WeiboResponse implements Serializable {
         }
     }
 
+    protected static String getString(String name, JSONObject json) {
+        return getString(name, json, false);
+    }
+
     protected static String getString(String name, JSONObject json, boolean decode) {
         String returnValue = null;
         try {
@@ -179,7 +185,7 @@ public class WeiboResponse implements Serializable {
     }
 
     protected static Date parseDate(String str, String format) throws WeiboException {
-        if (str == null || "".equals(str)) {
+        if (isEmpty(str)) {
             return null;
         }
         SimpleDateFormat sdf = formatMap.get(format);
@@ -199,16 +205,16 @@ public class WeiboResponse implements Serializable {
     }
 
     protected static int getInt(String key, JSONObject json) throws JSONException {
-        String str = json.getString(key);
-        if (null == str || "".equals(str) || "null".equals(str)) {
+        String str = json.optString(key);
+        if (isEmpty(str) || NULL_STRING.equals(str)) {
             return -1;
         }
-        return Integer.parseInt(str);
+        return Integer.valueOf(str);
     }
 
     protected static long getLong(String key, JSONObject json) throws JSONException {
         String str = json.getString(key);
-        if (null == str || "".equals(str) || "null".equals(str)) {
+        if (isEmpty(str) || NULL_STRING.equals(str)) {
             return -1;
         }
         return Long.parseLong(str);
@@ -216,7 +222,7 @@ public class WeiboResponse implements Serializable {
 
     protected static boolean getBoolean(String key, JSONObject json) throws JSONException {
         String str = json.getString(key);
-        if (null == str || "".equals(str) || "null".equals(str)) {
+        if (isEmpty(str) || NULL_STRING.equals(str)) {
             return false;
         }
         return Boolean.valueOf(str);
