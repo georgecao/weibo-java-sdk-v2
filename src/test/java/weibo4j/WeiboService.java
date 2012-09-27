@@ -17,8 +17,14 @@ public class WeiboService {
     private static final Logger LOG = LoggerFactory.getLogger(WeiboService.class);
     private static final boolean debug = LOG.isDebugEnabled();
     private static String[] validAccessToken = new String[]{
-             "2.00tBx13B4MawaBf083f56b6cy28oHD"};
+            "2.00tBx13B4MawaBf083f56b6cy28oHD"};
     private static Random random = new Random();
+
+    static {
+        Weibo.clientId = "651393360";
+        Weibo.clientSecret = "a800c969df31c9ab1f77d7ca0940fe0a";
+        Weibo.redirectUrl = "http://www.dajie.com/oauth/sina/enterprise";
+    }
 
     public static Weibo getOne() {
         return new Weibo(validAccessToken[random.nextInt(validAccessToken.length)]);

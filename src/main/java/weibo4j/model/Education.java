@@ -75,21 +75,17 @@ public class Education extends WeiboResponse {
     }
 
     private void init(JSONObject edu) {
-        try {
-            area = getInt("area", edu);
-            city = getInt("city", edu);
-            department = getString("department", edu, false);
-            departmentId = getInt("department_id", edu);
-            id = getLong("id", edu);
-            isVerified = getString("is_verified", edu, false);
-            province = getInt("province", edu);
-            school = new School(getInt("school_id", edu), getString("school", edu, false));
-            type = SchoolType.valueOf(getInt("type", edu));
-            visible = VisibleScope.valueOf(getInt("visible", edu));
-            year = getInt("year", edu);
-        } catch (JSONException e) {
-            LOG.error("Error occurred:", e);
-        }
+        area = getInt("area", edu);
+        city = getInt("city", edu);
+        department = getString("department", edu, false);
+        departmentId = getInt("department_id", edu);
+        id = getLong("id", edu);
+        isVerified = getString("is_verified", edu, false);
+        province = getInt("province", edu);
+        school = new School(getInt("school_id", edu), getString("school", edu, false));
+        type = SchoolType.valueOf(getInt("type", edu));
+        visible = VisibleScope.valueOf(getInt("visible", edu));
+        year = getInt("year", edu);
     }
 
     public VisibleScope getVisible() {

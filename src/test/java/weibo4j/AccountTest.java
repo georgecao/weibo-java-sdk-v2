@@ -9,6 +9,8 @@ import weibo4j.util.ParamUtils;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.Assert.assertNotNull;
+
 /**
  * Say something?
  * <pre>
@@ -20,12 +22,6 @@ import java.util.List;
 public class AccountTest {
     private static final Logger LOG = LoggerFactory.getLogger(AccountTest.class);
     private static final boolean debug = LOG.isDebugEnabled();
-
-    static {
-        Weibo.clientId = "651393360";
-        Weibo.clientSecret = "a800c969df31c9ab1f77d7ca0940fe0a";
-        Weibo.redirectUrl = "http://www.dajie.com/oauth/sina/enterprise";
-    }
 
     Weibo weibo = WeiboService.getOne();
 
@@ -69,12 +65,14 @@ public class AccountTest {
     @Test
     public void testGetAccountEducation() throws Exception {
         List<Education> value = weibo.getAccountService().getAccountEducation("2099907877");
+        assertNotNull(value);
         LOG.info("{}", value);
     }
 
     @Test
     public void testGetAccountCareer() throws Exception {
         List<Career> value = weibo.getAccountService().getAccountCareer("1246205697");
+        assertNotNull(value);
         LOG.info("{}", value);
     }
 }

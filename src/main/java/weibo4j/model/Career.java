@@ -72,18 +72,14 @@ public class Career extends WeiboResponse {
     }
 
     private void init(JSONObject career) {
-        try {
-            city = getInt("city", career);
-            company = getString("company", career, false);
-            department = getString("department", career, false);
-            end = getInt("end", career);
-            id = getLong("id", career);
-            province = getInt("province", career);
-            start = getInt("start", career);
-            visible = VisibleScope.valueOf(getInt("visible", career));
-        } catch (JSONException e) {
-            LOG.error("Error occurred:", e);
-        }
+        city = getInt("city", career);
+        company = getString("company", career, false);
+        department = getString("department", career, false);
+        end = getInt("end", career);
+        id = getLong("id", career);
+        province = getInt("province", career);
+        start = getInt("start", career);
+        visible = VisibleScope.valueOf(getInt("visible", career));
     }
 
     public int getCity() {

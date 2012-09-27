@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
+import static org.junit.Assert.assertNotNull;
+
 /**
  * Say something?
  * <pre>
@@ -23,18 +25,29 @@ public class CommonsTest {
     public void testGetCity() throws Exception {
         String province = "001011";
         Map<String, String> map = weibo.getCommonService().getCities(province);
+        assertNotNull(map);
         LOG.info("{}", map);
+    }
+
+    @Test
+    public void testGetCityNameOfChina() throws Exception {
+        String province = "11";
+        String city = "14";
+        String name = weibo.getCommonService().getCityNameOfChina(province, city);
+        assertNotNull(name);
     }
 
     @Test
     public void testGetProvinceNameOfChina() throws Exception {
         String value = weibo.getCommonService().getProvinceNameOfChina("11");
+        assertNotNull(value);
         LOG.info("{}", value);
     }
 
     @Test
     public void testCodeToLoc() throws Exception {
-        String value = weibo.getCommonService().codesToLocation("001");
+        Map<String, String> value = weibo.getCommonService().codesToLocation("001");
+        assertNotNull(value);
         LOG.info("{}", value);
     }
 }
