@@ -7,6 +7,8 @@ import weibo4j.model.WeiboException;
 import weibo4j.util.WeiboConfig;
 
 public class Users extends Weibo {
+    private static final long serialVersionUID = 5709109704164689888L;
+
     public Users(String accessToken) {
         super(accessToken);
     }

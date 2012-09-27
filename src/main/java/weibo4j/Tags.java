@@ -1,14 +1,16 @@
 package weibo4j;
 
-import weibo4j.model.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.model.*;
 import weibo4j.util.WeiboConfig;
 
 import java.util.List;
 
 public class Tags extends Weibo {
+    private static final long serialVersionUID = 1216284305051556795L;
+
     public Tags(String accessToken) {
         super(accessToken);
     }

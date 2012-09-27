@@ -1,12 +1,12 @@
 package weibo4j.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import weibo4j.http.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.http.Response;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author sinaWeibo

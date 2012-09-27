@@ -2,9 +2,9 @@ package weibo4j;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import weibo4j.model.HttpParameter;
 import weibo4j.model.NotificationTemplate;
 import weibo4j.model.NotificationWrapper;
-import weibo4j.model.HttpParameter;
 import weibo4j.model.WeiboException;
 import weibo4j.util.ParamUtils;
 import weibo4j.util.WeiboConfig;
@@ -18,6 +18,8 @@ import weibo4j.util.WeiboConfig;
  * </pre>
  */
 public class Notifications extends Weibo {
+    private static final long serialVersionUID = -190875028810478908L;
+
     public Notifications(String accessToken) {
         super(accessToken);
     }

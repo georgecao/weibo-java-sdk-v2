@@ -22,10 +22,13 @@ public class AccountTest {
     private static final boolean debug = LOG.isDebugEnabled();
 
     static {
-        Weibo.clientId = "";
-        Weibo.clientSecret="";
-        Weibo.redirectUrl ="";
+        Weibo.clientId = "651393360";
+        Weibo.clientSecret = "a800c969df31c9ab1f77d7ca0940fe0a";
+        Weibo.redirectUrl = "http://www.dajie.com/oauth/sina/enterprise";
     }
+
+    Weibo weibo = WeiboService.getOne();
+
     @Test
     public void testCreateAccount() throws Exception {
 
@@ -61,5 +64,17 @@ public class AccountTest {
         Account account = new Account("2.00tBx13B0WKLFi98a3201060TbLJLB");
         Long userId = account.createAccount(accountUser);
         LOG.info("User id is: {}", userId);
+    }
+
+    @Test
+    public void testGetAccountEducation() throws Exception {
+        List<Education> value = weibo.getAccountService().getAccountEducation("2099907877");
+        LOG.info("{}", value);
+    }
+
+    @Test
+    public void testGetAccountCareer() throws Exception {
+        List<Career> value = weibo.getAccountService().getAccountCareer("1246205697");
+        LOG.info("{}", value);
     }
 }

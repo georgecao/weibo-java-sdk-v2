@@ -1,13 +1,15 @@
 package weibo4j;
 
-import java.util.List;
-import weibo4j.model.ImageItem;
-import weibo4j.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import weibo4j.model.*;
 import weibo4j.util.WeiboConfig;
 
+import java.util.List;
+
 public class Timeline extends Weibo {
+    private static final long serialVersionUID = -2211659387124870836L;
+
     public Timeline(String accessToken) {
         super(accessToken);
     }

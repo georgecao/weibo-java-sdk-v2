@@ -32,10 +32,10 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.params.SyncBasicHttpParams;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weibo4j.model.*;
-import org.json.JSONException;
 import weibo4j.util.ParamUtils;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -233,7 +233,7 @@ public class HttpClient implements java.io.Serializable {
                 parameters.add(new HttpParameter("page", paging.getPage()));
             }
             if (-1 != paging.getCount()) {
-                if (-1 != url.indexOf("search")) {
+                if (url.contains("search")) {
                     // search api takes "rpp"
                     parameters.add(new HttpParameter("rpp", paging.getCount()));
                 } else {
@@ -262,7 +262,7 @@ public class HttpClient implements java.io.Serializable {
 
     public static String appendQueryString(String url, HttpParameter[] params) {
         String encodedParams = HttpClient.encodeParameters(params);
-        if (-1 == url.indexOf(QUERY_STRING_SEPARATOR)) {
+        if (!url.contains(QUERY_STRING_SEPARATOR)) {
             url += QUERY_STRING_SEPARATOR + encodedParams;
         } else {
             url += PARAMETER_SEPARATOR + encodedParams;

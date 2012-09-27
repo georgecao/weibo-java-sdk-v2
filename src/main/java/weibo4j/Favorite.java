@@ -1,13 +1,15 @@
 package weibo4j;
 
-import weibo4j.model.*;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.model.*;
 import weibo4j.util.WeiboConfig;
 
 import java.util.List;
 
 public class Favorite extends Weibo {
+    private static final long serialVersionUID = -9092443173430694724L;
+
     public Favorite(String accessToken) {
         super(accessToken);
     }

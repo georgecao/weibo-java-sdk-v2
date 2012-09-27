@@ -16,6 +16,8 @@ import weibo4j.util.WeiboConfig;
  * </pre>
  */
 public class DirectMessages extends Weibo {
+    private static final long serialVersionUID = 1580653582414590785L;
+
     public DirectMessages(String accessToken) {
         super(accessToken);
     }

@@ -11,7 +11,8 @@ package weibo4j.model;
 public enum Lang {
     ZH_CN("zh-cn"),
     ZH_TW("zh-tw"),
-    EN("en");
+    EN("en"),
+    ENGLISH("english");
     String name;
 
     private Lang(String name) {

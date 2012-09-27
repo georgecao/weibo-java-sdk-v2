@@ -142,7 +142,7 @@ public class Response {
                     return null;
                 }
                 br = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 String line;
                 while (null != (line = br.readLine())) {
                     buf.append(line).append("\n");

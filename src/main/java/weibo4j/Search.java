@@ -1,13 +1,15 @@
 package weibo4j;
 
+import org.json.JSONArray;
 import weibo4j.model.HttpParameter;
 import weibo4j.model.Status;
 import weibo4j.model.StatusWrapper;
 import weibo4j.model.WeiboException;
-import org.json.JSONArray;
 import weibo4j.util.WeiboConfig;
 
 public class Search extends Weibo {
+    private static final long serialVersionUID = -5152574430355165658L;
+
     public Search(String accessToken) {
         super(accessToken);
     }

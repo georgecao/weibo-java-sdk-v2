@@ -1,11 +1,13 @@
 package weibo4j;
 
-import weibo4j.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import weibo4j.model.*;
 import weibo4j.util.WeiboConfig;
 
 public class Friendships extends Weibo {
+    private static final long serialVersionUID = 6016347847735482784L;
+
     public Friendships(String accessToken) {
         super(accessToken);
     }

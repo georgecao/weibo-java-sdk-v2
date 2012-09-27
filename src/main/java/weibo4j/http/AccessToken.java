@@ -1,9 +1,9 @@
 package weibo4j.http;
 
-import weibo4j.model.WeiboException;
-import weibo4j.model.WeiboResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.model.WeiboException;
+import weibo4j.model.WeiboResponse;
 
 import java.io.Serializable;
 import java.util.Date;

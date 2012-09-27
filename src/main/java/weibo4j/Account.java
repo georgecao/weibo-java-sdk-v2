@@ -1,7 +1,8 @@
 package weibo4j;
 
-import weibo4j.model.*;
 import org.json.JSONObject;
+import weibo4j.http.Response;
+import weibo4j.model.*;
 import weibo4j.util.WeiboConfig;
 
 import java.util.List;
@@ -13,7 +14,10 @@ import static weibo4j.util.ParamUtils.get;
  * @author sinaWeibo
  */
 public class Account extends Weibo {
-    private static final String CREATE_ACCOUNT_URL = "http://i2.api.weibo.com/2/account/profile/basic_update.json ";
+    private static final String ACCOUNT_CAREER_API = "account/profile/career.json";
+    private static final String ACCOUNT_EDUCATION_API = "account/profile/education.json";
+    private static final String CREATE_ACCOUNT_API = "account/profile/basic_update.json";
+    private static final long serialVersionUID = -5704133331919248941L;
 
     public Account(String accessToken) {
         super(accessToken);
@@ -117,11 +121,66 @@ public class Account extends Weibo {
         if (null == params || params.length == 0) {
             return userId;
         }
-        JSONObject jsonObject = client.post(CREATE_ACCOUNT_URL, params).asJSONObject();
+        JSONObject jsonObject = client.post(CREATE_ACCOUNT_API, params).asJSONObject();
         if (null != jsonObject) {
             System.out.println(jsonObject.toString());
             userId = jsonObject.optLong("id", 0);
         }
         return userId;
+    }
+
+    /**
+     * Gets education info of specified user.
+     *
+     * @param userId weibo user id
+     * @return education info
+     *         {
+     *         "area" : 0,
+     *         "city" : 0,
+     *         "department" : "商学院",
+     *         "department_id" : 0,
+     *         "id" : 11590757,
+     *         "is_verified" : "",
+     *         "province" : 11,
+     *         "school" : "北京工商大学",
+     *         "school_id" : 244001,
+     *         "type" : 1,
+     *         "visible" : 2,
+     *         "year" : 2006
+     *         }
+     * @throws WeiboException api exception
+     */
+    public List<Education> getAccountEducation(String userId) throws WeiboException {
+        Response response = client.get(WeiboConfig.getBaseUrl() + ACCOUNT_EDUCATION_API,
+                new HttpParameter[]{
+                        new HttpParameter("uid", userId)
+                });
+        return Education.constructEducations(response);
+    }
+
+    /**
+     * Get career info of specified user
+     *
+     * @param userId weibo user id
+     * @return json string
+     *         {
+     *         "city" : 14,
+     *         "company" : "国务院办公厅",
+     *         "department" : "主任",
+     *         "end" : 9999,
+     *         "id" : 19447590,
+     *         "province" : 11,
+     *         "start" : 2008,
+     *         "visible" : 2
+     *         }
+     * @throws WeiboException
+     */
+
+    public List<Career> getAccountCareer(String userId) throws WeiboException {
+        Response response = client.get(WeiboConfig.getBaseUrl() + ACCOUNT_CAREER_API,
+                new HttpParameter[]{
+                        new HttpParameter("uid", userId),
+                });
+        return Career.constructCareers(response);
     }
 }

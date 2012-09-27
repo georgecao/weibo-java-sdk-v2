@@ -132,7 +132,7 @@ public class DirectMessage extends WeiboResponse implements Serializable {
         if (this == obj) {
             return true;
         }
-        return obj instanceof DirectMessage && ((DirectMessage) obj).id == this.id;
+        return obj instanceof DirectMessage && ((DirectMessage) obj).id.equals(this.id);
     }
 
     public Long getMid() {

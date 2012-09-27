@@ -51,9 +51,7 @@ public class Visible implements Serializable {
         Visible other = (Visible) obj;
         if (listId != other.listId)
             return false;
-        if (type != other.type)
-            return false;
-        return true;
+        return type == other.type;
     }
 
     @Override

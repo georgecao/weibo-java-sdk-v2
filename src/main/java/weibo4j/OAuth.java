@@ -1,11 +1,11 @@
 package weibo4j;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import weibo4j.http.AccessToken;
 import weibo4j.http.BASE64Encoder;
 import weibo4j.model.HttpParameter;
 import weibo4j.model.WeiboException;
-import org.json.JSONException;
-import org.json.JSONObject;
 import weibo4j.util.WeiboConfig;
 
 import javax.crypto.Mac;
@@ -16,6 +16,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 public class OAuth extends Weibo {
+
+    private static final long serialVersionUID = -6826226585351456652L;
 
     public OAuth(String accessToken) {
         this.accessToken = accessToken;

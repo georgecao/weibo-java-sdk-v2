@@ -15,10 +15,10 @@ package weibo4j.util;
  * @author Dem Pilafian
  * @author John Kristian
  */
+import javax.swing.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import javax.swing.JOptionPane;
 
 public class BareBonesBrowserLaunch {
 
@@ -37,7 +37,7 @@ public class BareBonesBrowserLaunch {
         if (osName.startsWith("Mac OS")) {
             Class fileMgr = Class.forName("com.apple.eio.FileManager");
             Method openURL = fileMgr.getDeclaredMethod("openURL", new Class[] { String.class });
-            openURL.invoke(null, new Object[] { url });
+            openURL.invoke(null, url);
         } else if (osName.startsWith("Windows")) {
             Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
         } else { // assume Unix or Linux

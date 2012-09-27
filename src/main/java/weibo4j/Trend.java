@@ -1,13 +1,15 @@
 package weibo4j;
 
-import weibo4j.model.*;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.model.*;
 import weibo4j.util.WeiboConfig;
 
 import java.util.List;
 
 public class Trend extends Weibo {
+    private static final long serialVersionUID = 1064212091099237502L;
+
     public Trend(String accessToken) {
         super(accessToken);
     }

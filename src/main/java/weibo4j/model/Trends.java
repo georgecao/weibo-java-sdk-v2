@@ -26,17 +26,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package weibo4j.model;
 
-import weibo4j.http.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.http.Response;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Collections;
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * A data class representing Treands.
@@ -159,11 +154,9 @@ public class Trends extends WeiboResponse implements Comparable<Trends> {
 		if (trendAt != null ? !trendAt.equals(trends1.trendAt)
 				: trends1.trendAt != null)
 			return false;
-		if (!Arrays.equals(trends, trends1.trends))
-			return false;
+        return Arrays.equals(trends, trends1.trends);
 
-		return true;
-	}
+    }
 
 	@Override
 	public int hashCode() {

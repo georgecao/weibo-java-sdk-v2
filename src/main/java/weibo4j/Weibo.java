@@ -110,6 +110,10 @@ public class Weibo implements java.io.Serializable {
         return new TinyUrls(token);
     }
 
+    public Commons getCommonService() {
+        return new Commons(token);
+    }
+
     public Notifications getNotificationService() {
         return new Notifications(token);
     }

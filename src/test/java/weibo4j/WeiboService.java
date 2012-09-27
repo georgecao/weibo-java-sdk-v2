@@ -17,7 +17,7 @@ public class WeiboService {
     private static final Logger LOG = LoggerFactory.getLogger(WeiboService.class);
     private static final boolean debug = LOG.isDebugEnabled();
     private static String[] validAccessToken = new String[]{
-            "2.00tBx13B0WKLFi456926a42fy2QUgE"};
+             "2.00tBx13B4MawaBf083f56b6cy28oHD"};
     private static Random random = new Random();
 
     public static Weibo getOne() {

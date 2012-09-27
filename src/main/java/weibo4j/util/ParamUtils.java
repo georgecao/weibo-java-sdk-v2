@@ -22,6 +22,27 @@ import java.util.*;
 public class ParamUtils {
     private static final Logger LOG = LoggerFactory.getLogger(ParamUtils.class);
     private static final boolean debug = LOG.isDebugEnabled();
+    private static final String COMMA = ",";
+
+    public static String nullToEmpty(String value) {
+        return null == value ? "" : value;
+    }
+
+    public static String padStartWithZero(String string, int minLength) {
+        return padStart(string, minLength, '0');
+    }
+
+    public static String padStart(String string, int minLength, char padChar) {
+        if (string.length() >= minLength) {
+            return string;
+        }
+        StringBuilder sb = new StringBuilder(minLength);
+        for (int i = string.length(); i < minLength; i++) {
+            sb.append(padChar);
+        }
+        sb.append(string);
+        return sb.toString();
+    }
 
     public static boolean isNotEmpty(HttpParameter[] arrays) {
         return !isEmpty(arrays);
@@ -102,6 +123,10 @@ public class ParamUtils {
 
     public static boolean isNotEmpty(Collection<?> collection) {
         return !isEmpty(collection);
+    }
+
+    public static String joinWithComma(Collection<?> collection) {
+        return join(collection, COMMA);
     }
 
     public static String join(Collection<?> collection, String sep) {

@@ -6,8 +6,8 @@ import org.json.JSONObject;
 import weibo4j.http.Response;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Status extends WeiboResponse implements Serializable {
@@ -91,7 +91,7 @@ public class Status extends WeiboResponse implements Serializable {
     }
 
     private void getGeoInfo(String geo) {
-        StringBuffer value = new StringBuffer();
+        StringBuilder value = new StringBuilder();
         for (char c : geo.toCharArray()) {
             if (c > 45 && c < 58) {
                 value.append(c);
@@ -325,12 +325,14 @@ public class Status extends WeiboResponse implements Serializable {
             if (!jsonStatus.isNull("reposts")) {
                 statuses = jsonStatus.getJSONArray("reposts");
             }
-            int size = statuses.length();
-            List<Status> status = new ArrayList<Status>(size);
-            for (int i = 0; i < size; i++) {
-                JSONObject json = statuses.getJSONObject(i);
-                if (!isDeleted(json)) {
-                    status.add(new Status());
+            List<Status> status = new LinkedList<Status>();
+            if (null != statuses) {
+                int size = statuses.length();
+                for (int i = 0; i < size; i++) {
+                    JSONObject json = statuses.getJSONObject(i);
+                    if (!isDeleted(json)) {
+                        status.add(new Status());
+                    }
                 }
             }
             long previousCursor = jsonStatus.optLong("previous_cursor");

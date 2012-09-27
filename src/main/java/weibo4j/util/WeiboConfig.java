@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weibo4j.Weibo;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -35,8 +34,6 @@ public class WeiboConfig {
             } else {
                 props.load(in);
             }
-        } catch (FileNotFoundException e) {
-            LOG.error("Load config file error", e);
         } catch (IOException e) {
             LOG.error("Load config file error", e);
         }

@@ -1,10 +1,10 @@
 package weibo4j.model;
 
-import weibo4j.Weibo;
-import weibo4j.http.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weibo4j.Weibo;
+import weibo4j.http.Response;
 
 import java.io.Serializable;
 import java.util.ArrayList;

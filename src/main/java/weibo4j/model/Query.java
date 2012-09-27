@@ -233,7 +233,7 @@ public class Query implements Serializable {
 			Method getMethod;
 			try {
 				getMethod = clz.getMethod(getMethodName, new Class[] {});
-				Object value = getMethod.invoke(this, new Object[] {}); 
+				Object value = getMethod.invoke(this);
 				if(value!=null){
 					list.add(getParameterValue(fieldName, value));
 				}

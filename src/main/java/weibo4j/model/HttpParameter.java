@@ -220,7 +220,7 @@ public class HttpParameter implements Serializable {
         if (null == httpParams) {
             return "";
         }
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int j = 0; j < httpParams.length; j++) {
             if (httpParams[j].isFile()) {
                 throw new IllegalArgumentException("parameter [" + httpParams[j].name + "]should be text");

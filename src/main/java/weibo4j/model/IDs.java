@@ -116,9 +116,8 @@ public class IDs extends WeiboResponse {
 
         IDs iDs = (IDs) o;
 
-        if (!Arrays.equals(ids, iDs.ids)) return false;
+        return Arrays.equals(ids, iDs.ids);
 
-        return true;
     }
 
     @Override
@@ -129,7 +128,7 @@ public class IDs extends WeiboResponse {
     @Override
     public String toString() {
         return "IDs{" +
-                "ids=" + ids +
+                "ids=" + Arrays.toString(ids) +
                 ", previousCursor=" + previousCursor +
                 ", nextCursor=" + nextCursor +
                 '}';
