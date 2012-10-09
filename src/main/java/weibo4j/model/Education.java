@@ -41,7 +41,7 @@ public class Education extends WeiboResponse {
     int year;
     int province;
     String provinceName;
-    String isVerified;
+    boolean isVerified;
     long id;
     String department;
     int departmentId;
@@ -80,7 +80,8 @@ public class Education extends WeiboResponse {
         department = getString("department", edu, false);
         departmentId = getInt("department_id", edu);
         id = getLong("id", edu);
-        isVerified = getString("is_verified", edu, false);
+        int code = getInt("is_verified", edu);
+        isVerified = code == 0;
         province = getInt("province", edu);
         school = new School(getInt("school_id", edu), getString("school", edu, false));
         type = SchoolType.valueOf(getInt("type", edu));
@@ -136,11 +137,11 @@ public class Education extends WeiboResponse {
         this.provinceName = provinceName;
     }
 
-    public String getVerified() {
+    public boolean isVerified() {
         return isVerified;
     }
 
-    public void setVerified(String verified) {
+    public void setVerified(boolean verified) {
         isVerified = verified;
     }
 
@@ -200,7 +201,6 @@ public class Education extends WeiboResponse {
         this.areaName = areaName;
     }
 
-
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
@@ -211,7 +211,7 @@ public class Education extends WeiboResponse {
         sb.append(", year=").append(year);
         sb.append(", province=").append(province);
         sb.append(", provinceName='").append(provinceName).append('\'');
-        sb.append(", isVerified='").append(isVerified).append('\'');
+        sb.append(", isVerified=").append(isVerified);
         sb.append(", id=").append(id);
         sb.append(", department='").append(department).append('\'');
         sb.append(", departmentId=").append(departmentId);
