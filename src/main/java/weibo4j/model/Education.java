@@ -59,6 +59,9 @@ public class Education extends WeiboResponse {
         init(edu);
     }
 
+    public Education() {
+    }
+
     public static List<Education> constructEducations(Response response) throws WeiboException {
         JSONArray array = response.asJSONArray();
         int length = array.length();

@@ -56,6 +56,9 @@ public class Career extends WeiboResponse {
         }
     }
 
+    public Career() {
+    }
+
     public static List<Career> constructCareers(Response response) throws WeiboException {
         JSONArray array = response.asJSONArray();
         int length = array.length();
