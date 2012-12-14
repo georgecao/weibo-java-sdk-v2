@@ -15,6 +15,8 @@ import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ByteArrayBody;
@@ -39,6 +41,9 @@ import weibo4j.model.*;
 import weibo4j.util.ParamUtils;
 
 import javax.activation.MimetypesFileTypeMap;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -46,6 +51,10 @@ import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -152,6 +161,39 @@ public class HttpClient implements java.io.Serializable {
         this(150, 2000, 2000, 1024 * 1024);
     }
 
+    /**
+     * Bypass self signed certificate once for all.
+     */
+    private void bypassSelfSignedCertificate() {
+        TrustManager tm = new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+                LOG.info("client:{}:{}", s, x509Certificates);
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+                LOG.info("server:{}:{}", s, x509Certificates);
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return new X509Certificate[0];
+            }
+        };
+        try {
+            SSLContext context = SSLContext.getInstance(SSLSocketFactory.TLS);
+            context.init(null, new TrustManager[]{tm}, null);
+            manager.getSchemeRegistry().register(new Scheme("https", 443,
+                    new SSLSocketFactory(context, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER)
+            ));
+        } catch (NoSuchAlgorithmException e) {
+            LOG.warn("Cannot found TLS", e);
+        } catch (KeyManagementException e) {
+            LOG.warn("Key manager exception", e);
+        }
+    }
+
     public HttpClient(int maxConPerHost, int conTimeOutMs, int soTimeOutMs,
                       int maxSize) {
         manager = new PoolingClientConnectionManager(
@@ -159,7 +201,7 @@ public class HttpClient implements java.io.Serializable {
                 3,
                 TimeUnit.MINUTES);
         manager.setDefaultMaxPerRoute(maxConPerHost);
-
+        bypassSelfSignedCertificate();
         HttpParams clientParams = new SyncBasicHttpParams();
         // Connection Timeout
         HttpClientParams.setConnectionManagerTimeout(clientParams, conTimeOutMs);

@@ -25,7 +25,7 @@ public class DirectMessagesTest {
 
     @Test
     public void testSendDirectMessage() throws Exception {
-        DirectMessage dm = weibo.getDirectMessageService().sendDirectMessage("1246205697", "时不我待啊，" + new Date());
+        DirectMessage dm = weibo.getDirectMessageService().sendDirectMessage("2399566160", "时不我待啊，" + new Date());
         assertNotNull(dm);
         LOG.info("{}", dm);
         assertTrue(dm.getId() > 0);
